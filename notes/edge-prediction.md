@@ -68,6 +68,8 @@ Here are some ways to formalise the prediction task. Here, $A$ and $B$ are the t
 
 Let's look at how we might interpret and convert between these. In subsequent discussion, $a$ is an arbitrary element in $A$ and $b$ is an arbitrary element in $B$.
 
+We'll skip $s$ and $t$ since $s(A, B, E) = (A, B, t(A, B, E) = (A, B, E \cup r(A, B))$, though we note that these could be implemented differently in practice (e.g. $t$ could make use of existing edge information unavailable to $r$).
+
 ## $f : A \times B \to \mathbb R$
 
 $f$ can be thought of as scoring each possible combination of $a$ and $b$, or scoring each edge. To get a concrete graph, we may then (for example) threshold the scores or choose the maximising edge(s) for each node.
@@ -78,8 +80,6 @@ There's not always a unique way to map between $f$ and the other functions, but 
 3. $h(a) = \underset{b \in B}{\mathrm{argmax}}\ f(a, b)$
 4. $q(a) = \{b \mid b \in B \land f(a, b) > \theta\}$
 5. $r(A, B) = \{(a, b) \mid a \in A \land b \in B \land f(a, b) > \theta\}$
-6. $s(A, B, E) = (A, B, E \cup \{(a, b) \mid a \in A \land b \in B \land f(a, b) > \theta\})$
-7. $t(A, B, E) = E \cup \{(a, b) \mid a \in A \land b \in B \land f(a, b) > \theta\}$
 
 We can also write some example implementations. Take $\phi_A$ and $\phi_B$ to be feature maps for $A$ and $B$ respectively. Then some implementations are:
 
@@ -88,58 +88,40 @@ We can also write some example implementations. Take $\phi_A$ and $\phi_B$ to be
 - $f(x_a, x_b) = (w_a + w)^T \phi_B(x_b)$ (Chen+18)
 - $f(x_a, x_b) = w_a^T \phi_B(x_b)$ (e.g. Joachims+09; this is multiclass classification with $|A|$ classes)
 
-<!-- Alger+18 formalise this as binary classification by classifying all potential host galaxies as either hosts or not hosts with a classifier $f$. The probability that a radio object $r$ and a potential host galaxy $s$ are associated is
+## $g : A \times B \to \mathbb B$
+
+This is in some sense the most "direct" way to predict edges: Given two nodes, $g$ tells you if there's an edge between them. This is a stronger version of $f$, since the range of $g$ is a subset of the range of $f$. As such, we can't reconstruct $f$, but we can write down the other forms in terms of $g$ (again ignoring additional constraints):
+
+3. $h(a) = \underset{b \in B}{\mathrm{argmax}}\ g(a, b)$
+4. $q(a) = \{b \mid b \in B \land g(a, b)\}$
+5. $r(A, B) = \{(a, b) \mid a \in A \land b \in B \land g(a, b)\}$
+
+We can think of $f$ as a probabilistic version of $g$ where
 
 $$
-    p(r, s) = f(s) \mathcal{N}(\mathrm{separation}(r, s) \mid 0, \sigma)
+    f(a, b) = p(g(a, b)).
 $$
 
-where $\mathrm{separation}(x, y)$ is the angular separation of objects $x$ and $y$.
+Example implementations are thresholded versions of those for $f$.
 
-Define the set of radio objects $R$ and the set of infrared galaxies $S$.
- We can then define a set of edges $\hat E = \{(r, s) \mid s \text{ is the host galaxy of } r\}$, giving a bipartite graph of cross-identifications $(R, S, E)$.
+## $h : A \to B$
 
-The predicted set of edges $E$ can be found from the predicted probability $p(r, s)$:
+$h$ is different to $f$ and $g$ in that it bakes-in constraints: $h$ implicitly assumes that there is exactly one edge from each element in $A$. Again ignoring additional constraints, we can write some of the other functions in terms of $h$:
 
-$$
-E = \left\{\left(r, \underset{s \in S}{\mathrm{argmax}}\ p(r, s)\right) \mid r \in R\right\}.
-$$
+2. $g(a, b) = \begin{cases}\top & b = h(a)\\\bot & \mathrm{otherwise}\end{cases}$
+4. $q(a) = h(a)$
+5. $r(A, B) = \{(a, h(a)) \mid a \in A \land h(a) \in B\}$
 
-This is a cold-start problem because of the constraint that there is only one edge per radio object, meaning that we can't have any known edges for a given test radio object $r$ (or we've already solved the task!).
+## $q : A \to 2^B$
 
-## Music playlist recommendation
+$q$ take node and returns a set of nodes connected to that node. This is in some sense an "inverse" of $h$, in the sense that $q(a)$ can represent the set of all inputs to $h$ that output $a$. $q$ is as strong as $g$ and can represent the same set of graphs.
 
-*Music playlist recommendation* (Chen+18) is the problem of generating playlists for users. There are four scenarios:
+2. $g(a, b) = b \in q(a)$
+5. $r(A, B) = \{(a, b) \mid a \in A \land b \in (q(a) \cap B)\}$
 
-- *playlist extension*, where we are given a set of newly-released songs (i.e. not in any playlist) and want to extend existing playlists;
-- *playlist creation*, where we are given a user (and their existing playlists) and we want to make a new playlist for them; and
-- *new user playlist creation*, where we are given a new user (with no playlists) and we want to make a new playlist for them.
+## $r : 2^A \times 2^B \to 2^E$
 
-These tasks are challenging because the data are sparse (most songs aren't in many playlists and most users only have a few playlists) and noisy (feature noise plus users may make random playlists). The latter three tasks are cold-start tasks.
+$r$ takes two sets of nodes and returns a set of edges. This is as strong as $g$. We can think of it as a version of $g$ that has been lifted to work on sets.
 
-The simplest problem is playlist extension, so we will focus on that for now. A common approach to solving playlist extension is matrix factorisation. Let $S_{\mathrm{old}}$ be the set of songs in playlists and $S_{\mathrm{new}}$ be the set of newly-released songs. Let $S = S_{\mathrm{old}} \cup S_{\mathrm{new}}$ be the set of songs and $P$ be the set of playlists. Index them arbitarily and let $s_i \in S$ and $p_i \in P$. Define the solution recommendation matrix $\hat M \in \mathbb{R}^{|S| \times |P|}$:
-
-$$
-\hat M_{ij} = \begin{cases}1 & s_i \in p_j\\0 & s_i \notin p_j\end{cases}.
-$$
-
-Define the problem matrix $M \in \mathbb{R}^{|S| \times |P|}$ as a partially-observed variant of $\hat M$, where rows corresponding to new songs are unobserved:
-
-$$
-M_{ij} = \begin{cases}\hat M_{ij} & s_i \in S_{\mathrm{old}}\\? & s_i \in S_{\mathrm{new}}\end{cases}.
-$$
-
-Define a mask $J \in \{0, 1\}^{|S| \times |P|}$ such that $J_{ij} = 0 \iff M_{ij} = ?$. Note that $\hat M \odot J = M \odot J$ where $\odot$ is the elementwise matrix product.
-
-We assume that $M$ can be factorised into two low-rank matrices $U \in \mathbb{R}^{|S| \times k}$ and $V \in \mathbb{R}^{|P| \times k}$:
-
-$$
-M \approx UV^T.
-$$
-
-We can think of $U_i$ as the features of $s_i$ and $V_i$ as the features of $p_i$. We then seek to minimise $\mathcal{L}(U, V)$:
-
-$$
-\mathcal{L}(U, V) = ||(M - UV^T) \odot J||.
-$$
--->
+2. $g(a, b) = \begin{cases}\bot & r(\{a\}, \{b\}) = \emptyset\\\top & \mathrm{otherwise}\end{cases}$
+4. $q(a) = \{b \mid (a, b) \in r(\{a\}, B)\}$
