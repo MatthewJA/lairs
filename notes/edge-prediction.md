@@ -125,3 +125,4 @@ $r$ takes two sets of nodes and returns a set of edges. This is as strong as $g$
 
 2. $g(a, b) = \begin{cases}\bot & r(\{a\}, \{b\}) = \emptyset\\\top & \mathrm{otherwise}\end{cases}$
 4. $q(a) = \{b \mid (a, b) \in r(\{a\}, B)\}$
+
