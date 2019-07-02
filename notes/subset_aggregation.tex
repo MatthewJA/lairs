@@ -1,0 +1,122 @@
+%!tex engine=xelatex
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{EB Garamond}
+
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+    \title{Aggregating Labels of Subsets of Examples}
+    \author{Matthew J. Alger}
+    \maketitle
+
+    Normally when you have a multi-annotator labelling task you have a set of examples to label that is selected, uniformly at random, from a larger set of examples (perhaps unobserved). What if it isn't uniformly selected? I have a case where I have three subsets of a larger set that are each selected in a different way loosely corresponding to difficulty, so I expect some subsets to be genuinely harder to label. It doesn't make sense to model annotator accuracy over this set, as it will not be representative of the real example set. But we still expect correlations; someone bad at easy examples might well be bad at hard examples too. What if we know which subset they're labelling? What if we know exactly how we biased our dataset?
+
+    Consider a set of objects $x_i \in \mathcal X$ which has been labelled by $R$ noisy annotators with labels $y^1_i, \dots, y^R_i$. Let $y_i$ be the true label for $x_i$, which is unobserved. Raykar et al. (2010) model annotators with a sensitivity-specificity model, giving each annotator $j$ two parameters:
+    \begin{align}
+        \alpha^j &= p(y^j = 1 \mid y = 1)\text{ (sensitivity)}\\
+        \beta^j &= p(y^j = 0 \mid y = 0)\text{ (specificity)}.
+    \end{align}
+    This model assumes that these values do not depend on $x$. Let's change that. Assume that $x_i$ is drawn from one of $K$ subsets of $\mathcal X$. Call this subset $z_i$, where $z_i \in [1, \dots, K]$. Encode this as a one-hot vector $(\tilde z_i)_k = \delta_{z_i = k}$. Further, assume we \emph{know} this value, and we know the marginal distribution $p(z)$. We will take a logistic regression approach much like Yan et al. (2010):
+    \begin{align}
+        \alpha^j_k &= p(y^j = 1 \mid y = 1, z) = \sigma(\phi_{z}^j + \gamma^j) \text{ (sensitivity)}\\
+        \beta^j_k &= p(y^j = 0 \mid y = 0, z) = \sigma(\psi_{z}^j + \delta^j) \text{ (specificity)}.
+    \end{align}
+    Note that because $\tilde z$ is a one-hot vector, this is like doing logistic regression on $\tilde z$.
+
+    Now given a set of $x_i, y_i^j$, with $N$ examples and $R$ annotators, we want to estimate the most likely $y$. Let $X = \{x_1, \dots, x_N\}$, $Y = \{y_1^1, \dots, y_N^R\}$, $\phi = \{\phi^1, \dots, \phi^R\}$, etc. Let $\Theta = \{\phi, \psi, \gamma, \delta\}$ be our parameters to find, and let $T = \{y_1, \dots, y_N\}$ be our latent vector of true labels. The likelihood of our model under the observed labels is:
+    \begin{equation}
+        p(Y \mid \Theta) = \prod_{i = 1}^N p(y_i^1, \dots, y_i^R \mid z_i, \Theta) = \prod_{i = 1}^N \prod_{j = 1}^R p(y_i^j \mid z_i, \Theta^j)
+    \end{equation}
+    assuming annotators are independent. Condition on the true label $y_i$:
+    \begin{equation}
+        p(Y \mid \Theta) = \prod_{i = 1}^N \prod_{j = 1}^R p(y_i^j \mid z_i, \Theta^j, y_i = 0) p(y_i = 0 \mid z_i) + p(y_i^j \mid z_i, \Theta^j, y_i = 1) p(y_i = 1 \mid z_i)
+    \end{equation}
+
+    Then we can substitute $\alpha$ and $\beta$.
+    \begin{equation}
+        p(Y \mid \Theta) = \prod_{i = 1}^N b_i (1 - p_k) + a_i p_k
+    \end{equation}
+    where
+    \begin{align}
+        a_i &= \prod_{j = 1}^R (\alpha^j)^{y_i^j} (1 - \alpha^j)^{1 - y_i^j} = \prod_{j = 1}^R \sigma(\phi_{z_i}^j + \gamma^j)^{y_i^j} (1 - \sigma(\phi_{z_i}^j + \gamma^j))^{1 - y_i^j}\\
+        b_i &= \prod_{j = 1}^R (\beta^j)^{1 - y_i^j} (1 - \beta^j)^{y_i^j} = \prod_{j = 1}^R \sigma(\psi_{z_i}^j + \delta^j)^{1 - y_i^j} (1 - \sigma(\psi_{z_i}^j + \delta^j))^{y_i^j}\\
+        p_k &= p(y = 1 \mid z).
+    \end{align}
+    $p(y)$ can be estimated as an average over the (unknown) true labels:
+    \begin{equation}
+        p(y = 1) = \frac{1}{N} \sum_{i = 1}^{N} y_i.
+    \end{equation}
+    So $p(y \mid z)$ is a sum over the (unknown) true labels in a subset:
+    \begin{equation}
+        p(y = 1 \mid z = k) = \frac{1}{N_k} \sum_{i \mid z_i = k} y_i.
+    \end{equation}
+    where $N_k$ is how many elements are in subset $k$.
+
+    We then want to maximise the log-likelihood:
+    \begin{equation}
+        \ell(\Theta) = \sum_{i = 1}^N \log \left(b_i (1 - p_k)\right) + \log \left(a_i p_k\right).
+    \end{equation}
+
+    We can use expectation-maximisation (EM) with $y_i$ as the missing data. If only we knew the missing data, then we could instead use the likelihood $p(Y, T \mid \Theta)$ to obtain:
+    \begin{equation}
+        \ell(\Theta) = \sum_{i = 1}^N (1 - y_i) \log \left(b_i (1 - p_k)\right) + y_i \log \left(a_i p_k\right).
+    \end{equation}
+
+    To conduct the EM algorithm, first start with an estimation of $\Theta$. Then calculate the expectation value of $\ell$ based on the current estimated labels $\mu_i = p(y_i \mid y_i^1, \dots, y_i^R, \Theta, z_i)$:
+    \begin{equation}
+        \mathbb E[\ell(\Theta)] = \sum_{i = 1}^N (1 - \mu_i) \log \left(b_i (1 - p_k)\right) + \mu_i \log \left(a_i p_k\right).
+    \end{equation}
+    By Bayes rule,
+    \begin{align}
+        \mu_i &= p(y_i = 1\mid y_i^1, \dots, y_i^R, \Theta, z_i)\\
+         &= \frac{p(y_i^1, \dots, y_i^R \mid y_i = 1, \Theta, z_i) p_k}{p(y_i^1, \dots, y_i^R \mid y_i = 1, \Theta, z_i) p_k + p(y_i^1, \dots, y_i^R \mid y_i = 0, \Theta, z_i) (1 - p_k)}\\
+         &= \frac{a_i p_k}{a_i p_k + b_i (1 - p_k)}.
+    \end{align}
+    Then estimate $p_k$ as
+    \begin{equation}
+        p_k = \frac{1}{N_k} \sum_{i \mid z_i = k} \mu_i.
+    \end{equation}
+
+    The maximisation step is to maximise $\mathbb E[\ell(\Theta)]$ with fixed $\mu_i, p_k$. Differentiate and set to zero:
+    \begin{align}
+        0 &= \sum_{i = 1}^N (1 - \mu_i) \frac{d}{d\Theta} \log \left(b_i (1 - p_k)\right) + \mu_i \frac{d}{d\Theta} \log \left(a_i p_k\right)\\
+            &= \sum_{i = 1}^N (1 - \mu_i) \frac{d}{d\Theta} \log b_i + \mu_i \frac{d}{d\Theta} \log a_i\\
+    \end{align}
+    Then for each parameter:
+    \begin{align}
+        \frac{d}{d\phi_k^l} \log a_i &= \sum_{j = 1}^R y_i^j \frac{d}{d\phi_k^l} \log\left(\sigma(\phi_{z_i}^j + \gamma^j)\right) + \left(1 - y_i^j\right) \frac{d}{d\phi_k^l} \log \left(1 - \sigma(\phi_{z_i}^j + \gamma^j)\right)\\
+            &= \delta_{z_i = k} \left(y_i^l \left(1 - \sigma(\phi_{z_i}^l + \gamma^l)\right) - \left(1 - y_i^l\right) \sigma(\phi_{z_i}^l + \gamma^l)\right)\\
+            &= \delta_{z_i = k} \left(y_i^l - y_i^l \sigma(\phi_{z_i}^l + \gamma^l) - \sigma(\phi_{z_i}^l + \gamma^l) + y_i^l \sigma(\phi_{z_i}^l + \gamma^l)\right)\\
+            &= \delta_{z_i = k} \left(y_i^l - \sigma(\phi_{z_i}^l + \gamma^l)\right)\\
+        \frac{d}{d\psi_k^l} \log b_i &= \sum_{j = 1}^R \left(1 - y_i^j\right)\frac{d}{d\psi_k^l} \log\left(\sigma(\psi_{z_i}^j + \delta^j)\right) + y_i^j \frac{d}{d\psi_k^l} \log \left(1 - \sigma(\psi_{z_i}^j + \delta^j)\right)\\
+            &= \delta_{z_i = k} \left(\left(1 - y_i^l\right)\left(1 - \sigma(\psi_{z_i}^l + \delta^l)\right) - y_i^l \sigma(\psi_{z_i}^l + \delta^l)\right)\\
+            &= \delta_{z_i = k} \left(\left(1 - \sigma(\psi_{z_i}^l + \delta^l)\right) - \left(1 - \sigma(\psi_{z_i}^l + \delta^l)\right) y_i^l - y_i^l \sigma(\psi_{z_i}^l + \delta^l)\right)\\
+            &= \delta_{z_i = k} \left(1 - \sigma(\psi_{z_i}^l + \delta^l) - y_i^l + y_i^l \sigma(\psi_{z_i}^l + \delta^l) - y_i^l \sigma(\psi_{z_i}^l + \delta^l)\right)\\
+            &= \delta_{z_i = k} \left(1 - \sigma(\psi_{z_i}^l + \delta^l) - y_i^l\right)\\
+        \frac{d}{d\gamma^l} \log a_i &= y_i^l - \sigma(\phi_{z_i}^l + \gamma^l)\\
+        \frac{d}{d\delta^l} \log b_i &= 1 - \sigma(\psi_{z_i}^l + \delta^l) - y_i^l\\
+        \frac{d}{d\psi_k^l} \log a_i &= \frac{d}{d\phi_k^l} \log b_i = \frac{d}{d\delta^l} \log a_i = \frac{d}{d\gamma^l} \log b_i = 0
+    \end{align}
+
+Then substitute the derivatives and solve:
+\begin{align}
+    \frac{d\ell}{d\phi^l_k} &= \sum_{i = 1}^N \mu_i \delta_{z_i = k} \left(y_i^l - \sigma(\phi_{z_i}^l + \gamma^l)\right)\\
+         &= \sum_{i = 1}^N \mu_i \delta_{z_i = k} y_i^l - \sigma(\phi_k^l + \gamma^l) \sum_{i = 1}^N \mu_i \delta_{z_i = k}\\
+         &= 0\\
+    \Rightarrow \phi_k^l &= \mathrm{logit}\left(\frac{\sum_{i \mid z_i = k} \mu_i y_i^l}{\sum_{i \mid z_i = k} \mu_i}\right) - \gamma^l\\
+    \frac{d\ell}{d\psi^l_k} &= \sum_{i = 1}^N (1 - \mu_i) \delta_{z_i = k} \left(1 - \sigma(\psi_{z_i}^l + \delta^l) - y_i^l\right)\\
+         &= \sum_{i \mid z_i = k} 1 - \mu_i - y_i^l + \mu_i y_i^l - \sigma(\psi_k^l + \delta^l) \sum_{i \mid z_i = k} (1 - \mu_i)\\
+    \Rightarrow \psi_k^l &= \mathrm{logit}\left(\frac{\sum_{i \mid z_i = k} (1 - \mu_i) (1 - y_i^l)}{\sum_{i \mid z_i = k} (1 - \mu_i)}\right) - \delta^l\\
+    \frac{d\ell}{d\gamma^l} &= \sum_{i = 1}^N \mu_i \left(y_i^l - \sigma(\phi_{z_i}^l + \gamma^l)\right)\\
+        &= \sum_{k = 1}^K \sum_{i \mid z_i = k} \mu_i y_i^l - \sigma(\phi_k^l + \gamma^l) \sum_{i \mid z_i = k} \mu_i\\
+        &= \sum_{k = 1}^K \sum_{i \mid z_i = k} \mu_i y_i^l - N_k p_k \sigma(\phi_k^l + \gamma^l)\\
+    \frac{d\ell}{d\delta^l} &= \sum_{i = 1}^N (1 - \mu_i) \left((1 - y_i^l) - \sigma(\psi_{z_i}^l + \delta^l)\right)\\
+        &= \sum_{k = 1}^K \sum_{i \mid z_i = k} (1 - \mu_i) (1 - y_i^l) - N_k (1 - p_k) \sigma(\psi_k^l + \delta^l)
+\end{align}
+$\delta^l$ and $\gamma^l$ can't be found analytically, so we have to maximise with gradient ascent instead.
+
+If we set $\delta^l = \gamma^l = 0$, then we recover the solution from Raykar et al., but only summing over examples in each subset. $\gamma^l$ and $\delta^l$ add a nonlinear term between the subsets.
+
+\end{document}
