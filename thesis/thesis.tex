@@ -25,7 +25,7 @@
 \usepackage[normalem]{ulem}
 \usepackage[table]{xcolor}
 \usepackage{makeidx}
-\usepackage{cleveref}
+% \usepackage{cleveref}
 \usepackage[centerlast]{caption2}
 \usepackage{float}
 \urlstyle{sf}
@@ -35,6 +35,8 @@
 
 \usepackage{multirow}
 
+% Thesis style guide:
+% https://policies.anu.edu.au/ppl/document/ANUP_012815
 
 \renewcommand*{\backref}[1]{}
 \renewcommand*{\backrefalt}[4]{
@@ -49,7 +51,8 @@
 
 
 
-\input{macros}            
+\input{macros}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Preamble
 \title{Learning to Identify Extragalactic Radio Sources}
@@ -102,14 +105,8 @@
 %% Here begins the main text
 \mainmatter
 
-%% Introduction
 \input{intro}
-
-%% Chapters
-\input{background}
-\input{design}
-\input{methodology}
-\input{results}
+\input{atlas}
 \input{conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
