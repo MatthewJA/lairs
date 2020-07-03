@@ -31,11 +31,11 @@
     \]
     $\phi$ is the \defn{Faraday depth}, measured in $\mathrm{rad}\ \mathrm{m}^{-2}$. This is interpretable as a measure of how much rotation an intervening medium gives to an intrinsic polarisation angle as a linear function of $\lambda^2$. Note that this looks a lot like a Fourier transform of $F(\phi)$, which we call the \defn{Faraday spectrum}. For a simple source with rotation at just one Faraday depth $\phi_0$, $F(\phi) = \delta(\phi - \phi_0)$ and
     \begin{align*}
-        P(\lambda) &= \int_{-\infty}^{\infty} e^{2i\phi\lambda^2} \delta(\phi - \phi_0)\ d\phi\\
-            &= e^{2i\phi_0\lambda^2}\\
-            &= \cos (2\phi_0\lambda^2) + i \sin (2\phi_0\lambda^2).
+        P(\lambda) &= pI \int_{-\infty}^{\infty} e^{2i\phi\lambda^2} \delta(\phi - \phi_0)\ d\phi\\
+            &= pI e^{2i\phi_0\lambda^2}\\
+            &= pI \cos (2\phi_0\lambda^2) + i pI \sin (2\phi_0\lambda^2).
     \end{align*}
-    We can then identify $Q = \cos(2 \phi_0 \lambda^2), U = \sin(2 \phi_0 \lambda^2)$ and hence the polarisation angle $\chi$ can be written
+    We can then identify $Q = pI \cos(2 \phi_0 \lambda^2), U = pI \sin(2 \phi_0 \lambda^2)$ and hence the polarisation angle $\chi$ can be written
     \[
         \frac{1}{2} \mathrm{arctan}\ \frac{U}{Q} = \phi_0 \lambda^2,
     \]
@@ -61,6 +61,36 @@
     \section{Faraday Complexity}
 
     \defn{Faraday complexity} is a measure of how complex a polarised Faraday spectrum is. It's unclear exactly what a good Faraday complexity metric would look like, but at minimum a spectrum can be \defn{Faraday simple} if it is well-fit by a single Faraday screen. A spectrum that is not Faraday simple is then \defn{Faraday complex}. Perhaps we could even have some kind of `score', where higher numbers indicate `more' Faraday complexity.
+
+    A brief summary of Faraday complexity classification methods can be found in Section 4.5 of \citet{anderson15faraday}. Another summary can be found in POSSUM Report \#68 \citep{purcell17complexity}. Methods include
+    \begin{enumerate}
+        \item nonlinearity of $\chi(\lambda^2)$ \citep{goldstein84-3c27},
+        \item frequency-dependent change in $p$ \citep{farnes14catalogue},
+        \item non-sinusoidal variation in $q$ and $u$ \citep{osullivan12agn},
+        \item detection of multiple Faraday depth components after deconvolution \citep{law11spectropolarimetry},
+        \item the second moment of the Faraday spectrum \citep{brown11report09},
+        \item a convolutional neural network trained on simulated sources \citep{brown19classification}.
+    \end{enumerate}
+    There are problems with each of these approaches:
+    \begin{enumerate}
+        \item $\chi(\lambda^2)$ can be linear even for Faraday complex sources,
+        \item $p$ is biased in hard-to-debias ways,
+        \item works best (only?) for Faraday thin sources,
+        \item requires deconvolution (itself an error-prone and complicated process),
+        \item has many false negatives (but no false positives),
+        \item works only for two-screen models and has been tested only on simulated data.
+    \end{enumerate}
+
+    \section{Complexity in POSSUM}
+
+    One open question is ``how often are sources Faraday complex?''. \citet{anderson16faraday} suggest that with sufficiently dense frequency sampling \emph{almost all} sources are Faraday complex. At lower sampling density they find about half of their sources are Faraday complex. We have little idea how common Faraday complex sources are in general (and this is compounded by the lack of good definition of `Faraday complex'). An estimation of upper and lower complexity rates in POSSUM would be extremely valuable to the survey as well as future polarisation studies.
+
+    It also remains an open question as to how much influence the Galactic magnetic field has on Faraday complexity of extragalactic sources. The Galactic magnetic field should induce a co-dependency between nearby sources, i.e. the polarisation spectrum of neighbouring sources isn't independent. Anywhere there is additional Faraday rotation besides the Galaxy we should observe Faraday complexity in its simplest definition (as non-Faraday simple). Questions in this domain include
+    \begin{itemize}
+        \item Can we explicitly account for/model the Galactic magnetic field, either for eliminating it or learning its structure?
+        \item Can we utilise the dependencies in neighbouring sources to improve our model fits and complexity estimates?
+        \item Can we define a Faraday complexity measure that excludes the Galactic magnetic field?
+    \end{itemize}
 
     \bibliography{faraday-complexity}
 
