@@ -1,0 +1,44 @@
+"Learning to Identify Extragalactic Radio Sources"
+
+dissertation structure
+
+0. front matter
+    a. acknowledgements
+    b. statement of originality
+    c. summary of works conducted during thesis
+1. introduction (to results of dissertation)                        [deadline 5]
+    a. motivations and aims
+    b. structure of the dissertation
+    c. contributions
+2. background   (includes literature review;                        [deadline 1]
+        demonstrate the current SOTA before this dissertation)
+    a. astrophysics of radio AGN
+        i. synchrotron radiation
+        ii. measurable polarisation
+        iii. faraday complexity
+    b. radio astronomy for radio AGN
+    c. machine learning for radio astroinformatics
+        i. fundamental challenges of labels (like we showed james)
+        ii. the tv chef problem
+        iii. domain adaptation
+3. cross-identification of radio sources                            [deadline 2]
+    a. introduction and motivation
+    b. binary cross-identification
+    c. crowdsourced data and radio galaxy zoo
+    d. results (from ATLAS and FIRST)
+    e. basically the entire ATLAS paper
+4. making radio luminosity functions? [deadline 3]
+    make it abundantly clear that I'm not a consumer of RLFs: I understand the limitations and motivations and I am here to use ML to help make RLFs
+    a. background on radio luminosity functions
+    b. revisiting cross-id: going from binary cross-identification to making catalogues
+        i. graph partitioning
+        ii. uncertainties?
+    c. basically the entire FIRST paper
+5. faraday complexity                                               [deadline 4]
+    a. physics of faraday complexity
+        i. complex sources are fundamentally extended radio sources
+    b. faraday space information geometry deep dive
+    c. basically the entirety of sugar glider
+6. conclusion and future work                                       [deadline 5]
+
+todo: decide these deadlines

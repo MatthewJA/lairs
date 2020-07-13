@@ -1,3 +1,5 @@
+%!tex use_biblatex=true
+%!tex spellcheck=en_AU
 
 \documentclass[11pt, a4paper]{book}
 \usepackage{svn-multi}
@@ -14,14 +16,21 @@
             citecolor=blue,
             plainpages=false,
             pdfpagelabels,
-            pagebackref=true,
+            % pagebackref=true,
             hyperfootnotes=false]{hyperref}
 \usepackage[all]{hypcap}
 \usepackage[palatino]{anuthesis}
 \usepackage{afterpage}
 \usepackage{graphicx}
 \usepackage{thesis}
-\usepackage[square]{natbib}
+
+% bib options
+% \usepackage[square]{natbib}
+\usepackage[english]{babel}
+\usepackage[style=authoryear,natbib=true,uniquename=false,uniquelist=false]{biblatex}
+\addbibresource{thesis.bib}
+\addbibresource{atlas.bib}
+
 \usepackage[normalem]{ulem}
 \usepackage[table]{xcolor}
 \usepackage{makeidx}
@@ -30,24 +39,28 @@
 \usepackage{float}
 \urlstyle{sf}
 \renewcommand{\sfdefault}{uop}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[scaled]{beramono}
 
+\usepackage{csquotes}
 \usepackage{multirow}
+
+\usepackage{subcaption}
 
 % Thesis style guide:
 % https://policies.anu.edu.au/ppl/document/ANUP_012815
 
-\renewcommand*{\backref}[1]{}
-\renewcommand*{\backrefalt}[4]{
-  \ifcase #1 %
-    %
-  \or
-    (cited on page #2)%
-  \else
-    (cited on pages #2)%
-  \fi
-}
+% \renewcommand*{\backref}[1]{}
+% \renewcommand*{\backrefalt}[4]{
+%   \ifcase #1 %
+%     %
+%   \or
+%     (cited on page #2)%
+%   \else
+%     (cited on pages #2)%
+%   \fi
+% }
 
 
 
@@ -119,8 +132,9 @@
 
 \backmatter
 
-\bibliographystyle{anuthesis}
-\bibliography{thesis}
+\printbibliography
+% \bibliographystyle{anuthesis}
+% \bibliography{thesis}
 
 \printindex
 

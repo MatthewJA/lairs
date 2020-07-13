@@ -57,12 +57,12 @@
 \newcommand{\mccenter}[1]{\multicolumn{1}{c|}{#1}}
 
 % these from first paper
-\usepackage{hyperref} %
-\usepackage{natbib}
+% \usepackage{hyperref} %
+% \usepackage{natbib}
 % \usepackage{aastexmacros}
 \usepackage{tikz}
 \usepackage[algoruled]{algorithm2e}
-\usepackage{subfig}
+% \usepackage{subfig}
 \usepackage[mediumspace,mediumqspace,squaren]{SIunits}
 % \usepackage{pdflscape}
 
@@ -154,3 +154,12 @@
 \newcommand{\defn}[1]{\emph{#1}}
 \newcommand{\deriv}[2]{\frac{\mathrm{d}{#1}}{\mathrm{d}{#2}}}
 \usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\addto\extrasenglish{%
+  \renewcommand{\subsectionautorefname}{Section}%
+  \renewcommand{\subsubsectionautorefname}{Section}%
+}
+
+\usepackage{aastexmacros}
