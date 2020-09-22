@@ -1,5 +1,7 @@
 %!tex use_biblatex=true
 %!tex spellcheck=en_AU
+%!tex output_directory=_latex_aux
+%!tex copy_output_on_build=true
 
 \documentclass[11pt, a4paper]{book}
 \usepackage{svn-multi}
@@ -30,6 +32,7 @@
 \usepackage[style=authoryear,natbib=true,uniquename=false,uniquelist=false]{biblatex}
 \addbibresource{thesis.bib}
 \addbibresource{atlas.bib}
+\addbibresource{sugar-glider.bib}
 
 \usepackage[normalem]{ulem}
 \usepackage[table]{xcolor}
@@ -128,7 +131,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Here begins the end matter
 
-%%\input{appendix}
+\input{appendix}
 
 \backmatter
 
