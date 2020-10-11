@@ -62,7 +62,6 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
         \end{equation}
         The spectral index for astronomical objects tends to range from -2 to 2\citeneeded.
 
-
     \subsection{Polarisation}
     \label{sec:polarisation}
 
@@ -72,7 +71,7 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
         \begin{equation}
             \vec E = (\hat x E_x \exp(i \varphi_x) + \hat y E_y \exp(i \varphi_y)) \exp(i (\vec k \cdot \hat z - \omega t)).
         \end{equation}
-        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$ and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component, called \defn{Stokes parameters}. These are \citep{condon_essential_2016}:
+        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$, and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component, called \defn{Stokes parameters}. These are \citep{condon_essential_2016}:
         \begin{align}
             \label{eq:stokes-i}
             I &= \frac{1}{R_0} \mathbb E_t[E_x^2 + E_y^2],\\
@@ -83,12 +82,12 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
             \label{eq:stokes-v}
             V &= \frac{1}{R_0} \mathbb E_t[2 E_x^2 E_y^2 \sin (\varphi_x - \varphi_y)].
         \end{align}
-        $I$ is the \defn{total intensity}. $Q$ and $U$ together describe the linear polarisation and together can be used to define the \defn{polarisation angle} $\chi$:
+        $\mathbb E_t$ denotes the expectation value over time. $I$ is the \defn{total intensity} of the radiation. $Q$ and $U$ together describe the linear polarisation and together can be used to define the \defn{polarisation angle} $\chi$:
         \begin{equation}
             \label{eq:polarisation-angle}
             \tan (2 \chi) = \frac{U}{Q}.
         \end{equation}
-        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the circular polarisation is zero \citeneeded because \todo{reasons}. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out: this is called \defn{unpolarised} or \defn{partially-polarised} respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} and is given by
+        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the circular polarisation is zero \citeneeded because \todo{reasons} and we only observe linear polarisation. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out: this is called \defn{unpolarised} or \defn{partially-polarised} radiation respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} $P$ and is given by
         \begin{equation}
             \label{eq:polarised-intensity}
             P^2 = Q^2 + U^2 + V^2.
@@ -105,13 +104,36 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
             \label{eq:faraday-depth}
             \phi(x, y) = \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \int_{\mathrm{there}}^{\mathrm{here}} n_e(x, y, z) \vec B(x, y, z) \cdot \mathrm{d}\hat{z}\ \mathrm{rad}\ \mathrm{m}^{-2}.
         \end{equation}
-        Here $\mathrm{d}\vec r$ is the infinitesimal path length in pc \citep{brentjens_faraday_2005} \todo{Check the units on this, and maybe get the actual form for 0.81.}. Within the synthesised beam of a radio telescope\todo{forward reference to beams}, multiple Faraday depths may exist. If the polarised spectrum of the source is observed at multiple frequencies, then these multiple depths can be disentangled even though they spatially overlap in the radio image. This can provide insight into the polarised structure of the source as well as the intervening medium. The leading constant is around $2.62 \times 10^{-13}$~T$^{-1}$, more commonly written as 0.812 pc $\upmu$G$^{-1}$ cm$^{-1}$ in CGS units with $B$ in $\upmu$G and $z$ in pc.
-
-        If the entire beam has precisely one Faraday depth $\phi$, then the polarised structure is called a \defn{Faraday screen}. In this degenerate case, the relationship between the polarisation angle $\chi$ and the squared wavelength $\lambda^2$ is linear:
+        Here $\mathrm{d}\vec r$ is the infinitesimal path length in pc \citep{brentjens_faraday_2005} \todo{Check the units on this.}. Within the synthesised beam of a radio telescope\todo{forward reference to beams} there may be multiple lines-of-sight that go through different media and hence have different Faraday depths. An example of this is a radio galaxy that is sufficiently far away that its structure is unresolved by the telescope, and yet has different polarisation properties across its breadth. The leading constant of \autoref{eq:faraday-depth} is around $2.62 \times 10^{-13}$~T$^{-1}$, more commonly written as 0.812 pc $\upmu$G$^{-1}$ cm$^{-1}$ in CGS units with $B$ in $\upmu$G and $z$ in pc. The amount of polarised radiation at each Faraday depth can be characterised by the \defn{Faraday dispersion function} (FDF) or \defn{Faraday spectrum} of the source, usually denoted $F(\phi) \in \mathbb C$. $F$ is defined implicitly by its relationship with the polarised radiation $P$ observed at wavelength $\lambda$:
         \begin{equation}
-            \chi = \chi_0 + \phi \lambda^2.
+            \label{eq:faraday-dispersion-function}
+            P(\lambda^2) = \int_{-\infty}^\infty F(\phi) e^{2i\lambda^2\phi}\ \mathrm{d}\phi.
         \end{equation}
-        $\phi$ is then called the \defn{rotation measure}. Until very recently, the frequency resolution of polarised surveys was insufficient to meaningfully separate most complex arrangements of Faraday depths, and so most sources were characterised entirely in terms of their rotation measure \citep[e.g.][]{taylor_rotation_2009}. Advancing telescope technology and emphasis on polarisation science has opened new frontiers in spectropolarimetry and upcoming and ongoing surveys (e.g. RACS and POSSUM) will likely produce Faraday depth catalogues instead of rotation measures. Of course, no physical source has a precise Faraday depth, as there is always intrinsic scatter. Along the line of sight, if we assume Gaussian noise in an otherwise-constant $n_e$ i.e. $n_e(z) \sim \mathcal N(\overline n_e, \sigma_{n_e}^2)$, and a constant $B$ for simplicity, then we find
+        One useful way of thinking about this equation is that $F$ is the decomposition of $P(\lambda^2)$ into complex sinusoids of the form $e^{2i\lambda^2\phi}$.
+
+        If observed radiation has precisely one Faraday depth $\phi$, then the polarised structure is called a \defn{Faraday screen} and the source is called \defn{Faraday simple}. In this degenerate case, the relationship between the polarisation angle $\chi$ and the squared wavelength $\lambda^2$ is linear:
+        \begin{equation}
+            \chi = \chi_0 + \phi \lambda^2,
+        \end{equation}
+        and the FDF is a delta distribution:
+        \begin{equation}
+            F(\varphi) = \delta(\varphi - \phi).
+        \end{equation}
+        $\phi$ is then called the \defn{rotation measure} (RM). If the source is not Faraday simple, then it is called \defn{Faraday complex}, and the question of whether a source is Faraday simple or Faraday complex is called \defn{Faraday complexity}. Until very recently, the frequency resolution of polarised surveys was insufficient to meaningfully separate most complex arrangements of Faraday depths, and so most sources were assumed to be simple and characterised entirely in terms of their rotation measure \citep[e.g.][]{taylor_rotation_2009}. Advancing telescope technology and emphasis on polarisation science has opened new frontiers in spectropolarimetry and upcoming and ongoing surveys (e.g. RACS and POSSUM) will likely report Faraday complexity and produce Faraday depth catalogues instead of rotation measures.
+
+        If the polarised spectrum of a Faraday complex source is observed at multiple frequencies, then the multiple Faraday depths comprising it can be disentangled even though they spatially overlap in the radio image. This can provide insight into the polarised structure of the source as well as the intervening medium. This disentanglement is accomplished by inverting \autoref{eq:faraday-dispersion-function}, a process called \defn{RM synthesis} \citep{brentjens_faraday_2005}:
+        \begin{equation}
+            \label{eq:rm-synthesis}
+            F(\phi) = \int_{-\infty}^\infty P(\lambda^2) e^{-2i\lambda^2\phi}\ \mathrm{d}\lambda^2.
+        \end{equation}
+        In reality we do not observe $P(\lambda^2)$ at all wavelengths nor with infinite resolution. In RM synthesis this is accounted for by the introduction of a \defn{weighting function} \citep[or \defn{windowing function}, e.g.][]{heald09faraday} $W(\lambda^2)$. $W(\lambda^2)$ is nonzero if and only if an observation was taken with wavelength $\lambda$. Substituting $P(\lambda^2) \to P(\lambda^2) W(\lambda^2)$ into \autoref{eq:rm-synthesis} results in a sum which can be numerically evaluated:
+        \begin{equation}
+            \label{eq:weighted-rm-synthesis}
+            F(\phi) \approx \int_{-\infty}^\infty P(\lambda^2) W(\lambda^2) e^{-2i\lambda^2\phi}\ \mathrm{d}\lambda^2 = \sum_{j = 1}^J P(\lambda^2_j) W(\lambda^2_j) e^{-2i\lambda^2_j\phi}.
+        \end{equation}
+        $P(\lambda^2_j)$ is the observed polarisation at the $j$th value of wavelength, $W(\lambda^2_j$ is the corresponding $j$th weight, and $J$ is the total number of wavelengths for which measurements were taken. The weighting function $W$ is analogous to the weighting function in radio synthesis imaging. The most common choices of $W$ are 1) uniform weighting\footnote{The analogous weighting scheme in radio synthesis imaging would be natural weighting, rather than uniform---an unfortunate overlap in terminology.} with $W(\lambda_j^2) = 1$ for all nonzero values, and 2) 
+
+        Of course, no physical source has a precise Faraday depth, as there is always intrinsic scatter. Along the line of sight, if we assume Gaussian noise in an otherwise-constant $n_e$ i.e. $n_e(z) \sim \mathcal N(\overline n_e, \sigma_{n_e}^2)$, and a constant $B$ for simplicity, then we find
         \begin{equation}
             \phi \sim \mathcal N\left(\frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \overline n_e, \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \sigma_{n_e}^2\right),
         \end{equation}
