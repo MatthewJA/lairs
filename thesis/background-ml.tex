@@ -1,0 +1,71 @@
+%!tex root=./thesis.tex
+\chapter{Machine Learning and Astroinformatics}
+\label{cha:background-ml}
+
+    I'll need to explain the purpose of this chapter and give a brief outline. There'll be three sections, and I'll briefly summarise them here.
+
+    \begin{itemize}
+        \item machine learning in astronomy and radio astronomy (literature review)
+        \item summarising the basics of machine learning (later sections of course complicate these): \begin{itemize}
+            \item predictors
+            \item features
+            \item labels
+            \item optimisation
+            \item data
+            \item expertise
+        \end{itemize}
+        \item features: \begin{itemize}
+            \item feature selection and design, and the benefit of domain knowledge
+            \item feature extraction
+            \item neural networks
+        \end{itemize}
+        \item labels: \begin{itemize}
+            \item training labels and testing labels
+            \item where do labels come from? domain experts, crowdsourcing, citizen science, simulations...
+            \item label noise and unreliable annotators
+            \item multiple unreliable annotators
+        \end{itemize}
+        \item citizen science: \begin{itemize}
+            \item citizen science in astronomy
+            \item designing good citizen science
+            \item benefits and challenges of citizen science
+            \item challenges in ML on crowdsourcing/citizen science
+            \item rant about how citizen science is different to crowdsourcing from an ML perspective
+        \end{itemize}
+    \end{itemize}
+
+% Here we need to talk about the fundamentals of machine learning. We'll start with problem formulations and what machine learning is, then discuss terminology and classification. We need to cover the difficulties of labels and the lack of groundtruth in astronomy, the problem and handling of uncertainties, and feature selection. We also need to talk about the importance (or unimportance?) of interpretability and how this ties into astronomy, and the unique idea of using machine learning as a pathway to understand something important about physics.
+
+    Machine learning was once described to me by an anonymous supervisor as ``the statistics kept at the back of the textbook''. But even accepting its grounding in statistics, is this really an accurate description of the field? I think of machine learning as a data-driven way of formalising predictive problems mathematically, converting between different kinds of statistical problems, and an accompanying set of methods and practices for handling data and uncertainty. The eventual goal is to design some method or algorithm that automatically discovers useful information in (potentially very large) data sets. I will begin describing machine learning by exploring the concept of a predictor.
+    
+    % \citet{deisenroth_mathematics_2020} seperate machine learning into three core components: the data, the model, and learning.
+
+\section{Predictors}
+\label{sec:predictors}
+
+    A \defn{predictor} is some function that produces an output from some given input. A predictor can be represented as a function or as a probabilistic model, depending on the machine learning approach being undertaken. As a function, a predictor maps from some input domain $\mathcal X$ into some output domain $\mathcal Y$, and is usually written as
+    \begin{equation}
+        f : \mathcal X \to \mathcal Y.
+    \end{equation}
+    $\mathcal X$ and $\mathcal Y$ are commonly (but certainly not always) a real vector space $\mathbb R^n$. Because the goal of machine learning involves \emph{finding} a suitable function $f$ for the task at hand, the set of functions is usually constrained. For example, if $\mathcal X = \mathbb{R}^n$, we might require that $f$ is a linear function $\mathbb R^n \to \mathbb R$, easily parametrised by $n + 1$ constants. This constraint is called a \defn{model}.
+
+    As a probabilistic model, a predictor is a joint probability distribution between observations and hidden parameters \citep{deisenroth_mathematics_2020}. Using a probabilistic predictor allows us to formally describe and work with uncertainty both in the input space and output space. Such a predictor is usually parametrised by a finite set of parameters, which already includes most common probability distributions.
+
+    We will generally assume that our data are generated from some unobserved, true function called the \defn{groundtruth}. This might be a physical process, or a complicated sampling function from some unknown vector space. The assumptions we make on this generative function can greatly change the way we approach machine learning problems.
+
+    In some sense, the goal of machine learning is to identify a good predictor from within the space of all possible predictors. Of course, this begs the question: what is a `good' predictor? We will return to this when we discuss learning, but for now, a good predictor is one that well-approximates the groundtruth.
+
+\section{Data and representation}
+\label{sec:data-and-representation}
+
+    Machine learning is centred on data and the extraction of information from that data. Data can include anything from numeric information, documents, or images, to spectra or galaxies. A collection of data is called a \defn{dataset} and an element of this dataset is (interchangably) called an \defn{example} or \defn{instance}. Generally, data are not easy to work with in their original form and must be converted into a numerical representation before use. As it is relatively easy to work with both numerically and analytically, we usually convert our data into real vectors in $\mathbb R^n$. Each axis of this vector space is called a \defn{feature} and the space as a whole is called the \defn{feature space}. Features are non-trivial to choose, and finding good features often requires the expertise of a human who is well-versed in the original dataset (a \defn{domain expert}). The process of finding features is called \defn{feature selection}, or \defn{feature design}.
+
+    What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, or easy to extract. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on good methods for automatically developing features (generally called \defn{feature extraction}, and much early \emph{applied} machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training.
+
+\section{Classification}
+    
+    \defn{Classification} is the machine learning task of predicting discrete, unstructured values \citep{deisenroth_mathematics_2020}. These values are called \defn{classes}. Classification is arguably the most important prediction task, as many other problems can be formalised as classification. Astronomy has its fair share of classification task, from classical astronomy tasks like galaxy morphology classification \citep[appearing in machine learning literature as e.g.][]{dieleman15cnn} to transient detection \citeneeded.
+    \subsection{Classification}
+    \label{sec:classification}
+
+    \defn{Classification} is the problem of categorising objects into classes. 
