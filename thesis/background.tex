@@ -1,5 +1,5 @@
 %!tex root=./thesis.tex
-\chapter{Extended Radio Sources and Astroinformatics}
+\chapter{Extended Radio Sources}
 \label{cha:background}
 
 I'll need to explain the purpose of this chapter and give a brief outline. There'll be three sections, and I'll briefly summarise them here.
@@ -13,13 +13,13 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
 \label{sec:extragalactic-radio-sky}
 
     The extragalactic sky appears quite different at different wavelengths. While an optical observer may look at a distant galaxy and see spirals and halos, an infrared observer will see discs and dust. What does the radio astronomer see? 
-    \autoref{fig:gleam} shows a false-colour image of the radio sky. The plane of the Milky Way is clearly visible through the centre, but nearly every other object in this image is a galaxy. These galaxies fall into two main categories: those that emit radio due to star formation (called \defn{star-forming galaxies}), and those that emit radio due to \defn{active galactic nuclei} (AGN).
+    \autoref{fig:gleam} shows a false-colour image of the radio sky. The plane of the Milky Way is clearly visible through the centre, but nearly every other object in this image is a galaxy. These galaxies fall into two main categories: those that emit radio due to star formation (called \defn{star-forming galaxies}), and those that emit radio due to \defn{active galactic nuclei} (AGN) (called \defn{radio galaxies} in this thesis).
 
     Non-AGN emission from distant galaxies traces the recent star-formation rate (SFR). Besides low-power thermal emission, stellar radio emission from galaxies mainly comes from massive ($\gtrapprox 8$ M$_\odot$) stars, through two emission mechanisms. The first is through H~II regions, which are ionised by such stars. The ionised electrons emit bremsstrahlung radiation at radio wavelengths. The second emission mechanism is supernovae. Massive stars may end their lives in Type II and Type Ib supernova, which can result in supernova remnants. These remnants emit synchrotron radiation. Massive stars like these are short-lived ($\lessapprox 3 \times 10^7$ yr), and the corresponding emitting electrons have similarly short lifetimes ($\lessapprox 10^8$ yr). The radio effects of these stars are therefore also short-lived, which is why radio emission traces the recent SFR \citep{condon_radio_1992}. Star formation-associated emission is mainly found in the disc of spiral galaxies, as this is where the star formation rate is highest. In particular, there is no star-forming radio emission extending outside of the galaxy proper. The radio power emitted by these galaxies at 1.4~GHz is on the order of $10^{18}$--$10^{23}$~W~Hz$^{-1}$ \citep{condon_radio_1992}. For a radio survey like the NVSS, with a detection limit of 2.3~mJy, this luminosity range corresponds to a maximum redshift range of $0.0004$--$0.1272$. Upcoming surveys such as EMU, with 5$\sigma$ detection thresholds of 50~$\upmu${}Jy \citep{norris_emu_2011}, will push this range to $0.0030$--$0.6684$.
 
-    AGN are energetic objects at the centre of galaxies, powered by supermassive black holes. They emit synchrotron radiation from accelerating relativistic electrons in strongly-magnetised plasma. The radio luminosity of AGN ranges from $10^{22}$--$10^{30}$ W~Hz$^{-1}$\citeneeded at 1.4~GHz, making them some of the most luminous objects in the universe \citeneeded. They are therefore visible throughout the universe, with the most distant AGN detected at a redshift of 7 \citeneeded. Depending on the orientation and type of AGN, the radio emission may be very extended outside of the galaxy itself---up to megaparsec scales---and this emission may have complex structure. Perhaps the most impressive local example is Centaurus A (Cen A), the prominent double-lobed cloud in the upper-right of \autoref{fig:gleam} extending over 8 degrees across the sky. \autoref{sec:agn} discusses AGN in more detail.
+    AGN are energetic objects at the centre of galaxies, powered by supermassive black holes. The extended, strongly-magnetised plasma they eject emits synchrotron radiation from accelerating relativistic electrons, which is what we see when we observe a radio galaxy. The radio luminosity of a radio galaxy can range from $10^{22}$--$10^{30}$ W~Hz$^{-1}$\citeneeded at 1.4~GHz, making them some of the most luminous objects in the universe \citeneeded. They are therefore visible throughout the universe, with the most distant AGN detected at a redshift of 7.5 \citep{banados_800-million-solar-mass_2018}. Depending on the orientation and type of AGN, as well as its interaction with its host galaxy, the radio emission may extend far beyond the galaxy itself---up to megaparsec scales---and this emission may have complex structure. Perhaps the most impressive local example is Centaurus A (Cen A), the prominent double-lobed cloud in the upper-right of \autoref{fig:gleam} extending over 8 degrees across the sky. \autoref{sec:agn} discusses AGN in more detail.
 
-    Most AGN are compact and unresolved in any given radio survey due to the distance at which they can be detected and their orientation or type. This means that their structure does not always help distinguish AGN radio emission from star-forming radio emission. How can we tell these apart? Synchrotron emission has a considerably steeper spectral index than bremsstrahlung, but synchrotron emission dominates the bremsstrahlung in star-forming galaxies \citep{condon_radio_1992}. Some division can be made with access to optical spectral information about the host galaxy of the radio emission \citep[e.g.][]{mauch_radio_2007, groves_distinguishing_2008}, but radio emission is detectable at much greater distances than good quality optical spectra can be obtained at, making this solution impractical for many galaxies. \todo{so how do we do it then?}
+    Most radio galaxies are compact and unresolved in any given radio survey due to the distance at which they can be detected and their orientation or type. This means that their structure does not always help distinguish AGN radio emission from star-forming radio emission. How can we tell these apart? Synchrotron emission has a considerably steeper spectral index than bremsstrahlung, but synchrotron emission dominates the bremsstrahlung in star-forming galaxies \citep{condon_radio_1992}. Truly star-forming galaxies can be distinguished from AGN host galaxies by using optical spectroscopy \citep[e.g.][]{mauch_radio_2007, groves_distinguishing_2008}, but radio emission is detectable at much greater distances than good quality optical spectra can be obtained at, making this solution impractical for many galaxies. Separating star-forming galaxies from AGN host galaxies at radio wavelengths remains an open problem in radio astronomy. \todo{are there any good ideas?}
 
     From the size scales described above, it should be clear that a survey of extended radio sources will be dominated by AGN. Nevertheless, star-forming galaxies present a significant part of the radio population, and the fraction of the radio sky they comprise varies significantly with survey parameters.
 
@@ -39,20 +39,138 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
     %     \item what gets in our way of seeing extragalactic stuff?
     % \end{itemize}
 
+\section{Radio galaxies and active galactic nuclei}
+\label{sec:agn}
+    % \begin{itemize}
+    %     \item AGN: \begin{itemize}
+    %         \item jets
+    %         \item lobes
+    %         \item the unified model
+    %         \item classes including FRI and FRII, radio loud and radio quiet... etc
+    %         \item polarisation structure
+    %         \item spectral index
+    %         \item environmental interaction with jets and lobes, including how much power they inject according to simulations and literature
+    %         \item host galaxies
+    %     \end{itemize}
+    %     \item AGN throughout the universe: \begin{itemize}
+    %         \item expected RLF/distribution
+    %         \item getting brighter back in time
+    %         \item FRI/FRII? radio loud, radio quiet?
+    %         \item how many AGN are there?
+    %         \item how do AGN tie into galaxy evolution and feedback?
+    %     \end{itemize}
+    % \end{itemize}
+
+    AGN are some of the most energetic objects in the Universe. They both provide a laboratory for extreme physics and are a key part of the life cycle of a galaxy \citep{heckman_coevolution_2014}. Powered by a supermassive black hole, they convert gravitational potential energy into intense electromagnetic radiation at a broad range of frequencies. AGN that produce strong radio emission are called radio AGN, and methods of observing the complex structures that these radio AGN form as radio galaxies are the focus of this thesis.
+
+    \subsection{What we see when we look at AGN}
+    \label{sec:what-we-see-agn}
+
+        Observations are the crux of astronomy. While there are many models of how AGN evolve and how they interact with their surroundings --- and indeed, the actual structure of an AGN is very much an open question in astronomy --- the evidence presented by observations is reliable and a good place to start discussing the structure, behaviour, and importance of AGN throughout the universe.
+
+        \begin{figure}
+            \centering
+            \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=\textwidth]{images/3C_272.1.jpg}
+                \caption{M84/3C 272.1}
+                \label{fig:m84}
+            \end{subfigure}
+            \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=\textwidth]{images/3C_223.jpg}
+                \caption{3C 223}
+                \label{fig:3C223}
+            \end{subfigure}
+            \caption[Examples of a FRI and a FRII radio galaxy.]{\label{fig:fri-frii} Examples of (a) a FRI \citep{laing_rotation_1987} and (b) a FRII radio galaxy \citep{leahy_vla_1991}. Both are shown with an arcsinh stretch and were observed with the VLA.}
+        \end{figure}
+
+        As powerful sources of radio emission, radio AGN and their associated extended structure can be seen throughout the universe. Sufficiently close or large radio galaxies can be resolved by telescopes and their structure examined, while more distant or smaller radio galaxies may be unresolved and point-like. A well-resolved radio galaxy can be a striking thing: from the central AGN extend two opposing, tightly-collimated jets, which widen into huge lobes of radio-bright plasma. These lobes may have further structure, particularly bright regions called \defn{hot-spots}, and the jets and lobes may be bent and distorted as they travel away from their host galaxy. For any given radio galaxy, some of these features may or may not be present. In particular, radio galaxies are often divided into two classes based on the kinds of extended structure that are visible, called Fanaroff-Riley type I (FRI) and Fanaroff-Riley type II (FRII) radio galaxies. FRI have wavy, diffuse lobes, appearing brighter toward the host galaxy and dimming further out (e.g. \autoref{fig:m84}). FRII, on the other hand, have long, tightly-collimated jets and sharp-edged lobes with bright hot-spots \citep{urry_unified_1995} at the very end of the lobes, and are brighter further away from the host galaxy (e.g. \autoref{fig:3C223}). FRII are also generally higher-luminosity \citep{fanaroff_morphology_1974} than FRI, and therefore make up the majority of observed extended radio sources throughout the universe, but this is by no means the clear-cut divide it was once thought to be \citep{mingo_revisiting_2019} with the difference now being attributed largely to environmental effects rather than jet power. The current understanding is that FRII jets remain at relativistic energies up until the edge of the lobe, where they terminate in a shock that appears as a hot-spot, while FRI jets decelerate within the galaxy itself \citep{hardcastle_radio_2020}, so this sharp difference in extended structure begins with environmental interactions at the very centre of the galaxy.
+
+        A radio galaxy can be tremendously extended, with increasingly many radio galaxies being found with a length of over one megaparsec. Such large galaxies are called \defn{giant radio galaxies}, but even non-giants are still quite big, regularly extending well outside the stellar component of the host galaxy. We will discuss the extended structure in \autoref{sec:extended-structure-of-agn}.
+
+        An AGN interacts with its host galaxy, and so the host galaxy of an AGN can also provide interesting insights into the structure and behaviour of the AGN. Early research indicated that the split between FRI and FRII radio galaxies was dependent on the mid-infrared and optical brightness (and therefore density) of the host galaxy \citep{ledlow_20_1996,bicknell_relativistic_1995} though more recent work suggests this may not be a strong effect if it exists at all \citep{hardcastle_radio_2020}.
+
+    \subsection{Extended structure}
+    \label{sec:extended-structure-of-agn}
+
+        The jets and lobes of AGN can be very extended, with the largest known radio galaxies measuring over 4 Mpc end-to-end \citep{machalski_understanding_2011}. This is much larger than the radius of their host galaxies, and so the jets and lobes of AGN are uniquely posed to interact with the local environment. Environmental interactions both within and outside the host galaxy warp and distort the jets and lobes. Within the galaxy, the jets drive a bubble of energy in the interstellar medium \citep[ISM;][]{mukherjee_relativistic_2016}, transferring energy into the ISM with different effects depending on the jet power \citep{mukherjee_relativistic_2018}; the ISM on the other hand suppresses the jets and distorts them to varying amounts depending on the degree of interaction \citep{mukherjee_relativistic_2018}. Outside the galaxy, the jets and lobes are bent by the intra-cluster medium and neighbouring galaxies \citep[ICM;][]{garon_radio_2019, rodman_radio_2019} and this structure may even be used as a probe for cluster environments \citep{banfield_radio_2016,sakelliou_3c40_2008}.
+
+        \begin{figure}
+            \centering
+            \begin{subfigure}{0.3\textwidth}
+                \includegraphics[width=\textwidth]{images/3C_83.1B.jpg}
+                \caption{3C 83.1B}
+                \label{fig:3C83-1B}
+            \end{subfigure}
+            \begin{subfigure}{0.3\textwidth}
+                \includegraphics[width=\textwidth]{images/3C_315.jpg}
+                \caption{3C 315}
+                \label{fig:3C315}
+            \end{subfigure}
+            \begin{subfigure}{0.3\textwidth}
+                \includegraphics[width=\textwidth]{images/3C_433.jpg}
+                \caption{3C 433}
+                \label{fig:3C433}
+            \end{subfigure}
+            \caption[Three radio galaxies with interesting structure.]{Radio galaxies, displayed with an arcsinh colour scale. All images were taken with the VLA. (a) is a narrow-angled tail radio galaxy \citep{leahy_atlas_nodate}, (b) is an X-shaped radio galaxy \citep{leahy_polarization_1986}, and (c) is a very unusually-shaped radio galaxy \citep{black_study_1992}.}
+            \label{fig:interesting}
+        \end{figure}
+
+        The strong interaction of AGN with their environment leads to a great variety of exotic-shaped radio galaxies. Some morphological classes of this `radio galaxy zoo' include X-shaped galaxies, which have two sets of lobes roughly perpendicular to each other; wide- and narrow-angled tail galaxies, which are bent about the core with large and small angles respectively; head-tail galaxies, which are so bent that the two lobes seem to be the same or nearly the same; double-doubles, which have two sets of lobes on each side; and many, many more. Some examples of radio galaxies with interesting structure are shown in \autoref{fig:interesting}. Large-scale automated identification of these galaxies can be tricky owing to their variety, extent, and often disconnected structure.
+
+        AGN cores tend to have flat or inverted spectral indices around -0.5--1 \citeneeded. Moving out from the host galaxy, the spectral index steepens as the electrons are older and less energetic, with the spectral index of the lobes usually at about -0.7 \citeneeded. The hotspots of FRII galaxies have spectral indices between -0.5 -- -0.7, becoming shallower as the electrons reaccelerate \citeneeded. The jets do not strongly emit and are only detectable for particularly deep observations or nearby radio galaxies \citeneeded.
+
+    \subsection{The unified model}
+    \label{sec:unified-model}
+
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{images/agn.eps}
+            \caption{\label{fig:agn} The unified model of AGN.}
+        \end{figure}
+
+        At their core, AGN are an accreting \defn{supermassive black hole}: a body so dense that even light cannot escape its gravitational pull, with mass on the order of $10^7$--$10^9\ \mathrm{M}_\odot$ \citeneeded{}. Such black holes seem to exist at the centre of galaxies\citeneeded{} and these galaxies are called \defn{host galaxies}. The current understanding of the structure of an AGN is as follows \citep{urry_unified_1995}. The black hole is surrounded by an accretion disc emitting in ultraviolet and X-ray. Beyond this is the broad-line region, named for the Doppler-broadened emission lines emitted by the energetic clouds of material surrounding the accretion disc. The broad-line region and accretion disc are themselves surrounded by a dusty torus (or some other disc-like structure) which prevents light from the centre of the AGN being observed from the sides. Further still from the accretion disc is the narrow-line region, where lower-energy gas produces narrow emission lines. From either side of the disc, an AGN produces two collimated outflows of relativistic plasma called {jets}, and these jets may interact with gas in the host galaxy to produce bright radio emission. The jets are not always visible. As the jets disperse further out from the centre of the AGN they widen into plumes of plasma known as \defn{lobes}. This model of AGN unifies different observed classes of AGN by their orientation and luminosity, and is hence known as the \defn{unified model} \citep{antonucci_unified_1993}. Recent work suggests that the unified model of AGN is not the full story \citep[e.g.][]{zhuang_interplay_2020}\todo{Explain alternatives to the unified model?}.
+
+        There are many different ways to divide the set of radio AGN into classes. By morphology, radio AGN are often divided by the structure of the jets and lobes: Fanaroff-Riley type I (FRI) and Fanaroff-Riley type II (FRII) are the most striking examples, with FRI having wavy, diffuse lobes; and FRII having long, tightly-collimated jets and sharp-edged lobes with bright hot-spots \citep{urry_unified_1995}. FRII are also generally higher-luminosity \citep{fanaroff_morphology_1974} than FRI and therefore make up the majority of observed extended radio sources throughout the Universe. AGN can also be divided into \defn{radiative-mode} and \defn{jet-mode} by how they expel their energy \citep{heckman_coevolution_2014}. Radiative-mode AGN produce radiative energy in amounts higher than 1 percent of their Eddington limit, while jet-mode AGN mainly output energy through their jets. The Eddington limit describes the maximum luminosity that a compact object can emit, and is given in \autoref{eq:eddington} \citep{rybicki_radiative_1979}:
+        \begin{equation}
+            L_{\mathrm{Eddington}}(M) = \frac{4\pi G M m_p c}{\sigma_T}.
+            \label{eq:eddington}
+        \end{equation}
+        Optical emission observed near the centre of the AGN can be used to divide radio AGN into broad-line and narrow-line galaxies. The former have broad spectral lines while the latter have narrow spectral lines, with broader spectral lines indicative of higher thermal energies. The most common interpretation, under the unified model, is that broad-line AGN are those seen end-on and narrow-line are those seen edge-on with the dusty torus obscuring the broad-line region.\todo{include an alternative explanation} These narrow-line galaxies are usually the only ones for which we see significant extended structure.
+
+    \subsection{Polarised structure}
+    \label{sec:polarised-structure-of-agn}
+
+        The magnetic field of AGN is thought to be critical to their structure \citep{sikora_magnetic_2013}.
+
+    \subsection{The host galaxies of AGN}
+    \label{sec:host-galaxies}
+
+        This section will discuss the host galaxies of AGN, with necessary reference to their infrared colours as probes of the physics within. How do AGN interact with their host galaxies and vice-versa?
+
+    \subsection{AGN throughout the universe}
+    \label{sec:agn-throughout-the-universe}
+
+        What is the expected distribution of AGN? What do simulations say, and what do observations say? Note that AGN get brighter back in time.
+
+    \subsection{The role of AGN}
+    \label{sec:role-of-agn}
+
+        How do AGN tie into galaxy evolution and feedback? Why do we need them in our models and theories? Why are they important?
+
 \section{Radio emission}
-\label{sec:radio-astronomy}
+\label{sec:radio-astronomy}\todo{Henry says: Shorten and simplify this section, as it goes too hard too fast.}
 
     Electromagnetic radiation in radio frequencies---about 10~MHz--1~THz \citep{condon_essential_2016}---is called \defn{radio emission}. This is a very broad range of frequencies and so radio astronomy covers a very broad range of astrophysical phenomena, from cosmological background radiation to neutron stars. The focus of this thesis is the exciting, dynamic, and so-called `violent universe' of radio galaxies. These galaxies are observed through their emission of synchrotron radiation and are studied through their observed physical structure, the intensity and spectroscopic properties of their radiation, and the polarisation and spectropolarimetric properties that are uniquely visible in radio. This section introduces synchrotron radiation and radio polarisation.
 
     \subsection{Synchrotron radiation}
     \label{sec:synchrotron}
 
-        Most radio emission from AGN is \defn{synchrotron radiation}, produced by relativistic charged particles accelerating in a magnetic field. A non-relativistic charged particle will spiral with a fixed angular frequency when it moves in a magnetic field in a process called \defn{gyro radiation}. Synchrotron radiation is a relativistic effect: it can be thought of as gyro radiation Lorentz transformed to energies much greater than $mc^2$. The spectrum of synchrotron radiation follows a power law \citep{condon_essential_2016}:
+        Most radio emission from radio galaxies is \defn{synchrotron radiation}, produced by relativistic charged particles accelerating in a magnetic field. A non-relativistic charged particle will spiral with a fixed angular frequency when it moves in a magnetic field in a process called \defn{gyro radiation}. Synchrotron radiation is a relativistic effect: it can be thought of as gyro radiation Lorentz transformed to energies much greater than $mc^2$. The spectrum of synchrotron radiation follows a power law \citep{condon_essential_2016}:
         \begin{equation}
             \label{eq:spectral-index}
             S(\nu) \propto \nu^{\alpha}.
         \end{equation}
-        $\alpha$ is called the \defn{spectral index}\footnote{Note that the sign of $\alpha$ varies by convention, and both $S \propto \nu^{\alpha}$ and $S \propto \nu^{-\alpha}$ exist in the literature.}. It is related to the energy distribution of the emitting electrons: assuming that the electron energy distribution follows a power law (which it generally does\citeneeded), where the number density of electrons at a given energy $E$ is given by
+        $\alpha$ is called the \defn{spectral index}\footnote{Note that the sign of $\alpha$ varies by convention, and both $S \propto \nu^{\alpha}$ and $S \propto \nu^{-\alpha}$ exist in the literature.}. It is related to the energy distribution of the emitting electrons: assuming that the electron energy distribution follows a power law \citep[which it generally does,][]{rybicki_radiative_2008}, where the number density of electrons at a given energy $E$ is given by
         \begin{equation}
             n(E) \propto E^\Gamma,
         \end{equation}
@@ -63,15 +181,15 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
         The spectral index for astronomical objects tends to range from -2 to 2\citeneeded.
 
     \subsection{Polarisation}
-    \label{sec:polarisation}
+    \label{sec:polarisation}\todo{Add some figures to this section to break it up a bit.}
 
-        Electromagnetic radiation consists of waves of self-propagating, orthogonal electric and magnetic fields. The orthogonality of these two waves allows us to characterise the radiation just by the electric field. As a transverse wave, the electric field travels at an angle. This angle and its behaviour is called the \defn{polarisation} of the wave.
+        Electromagnetic radiation consists of waves of self-propagating, orthogonal electric and magnetic fields. The orthogonality of these two waves allows us to characterise the radiation just by the electric field. As a transverse wave, the electric field travels at an angle \todo{An angle with respect to what? Can we have a diagram here?}. This angle and its behaviour is called the \defn{polarisation} of the wave.
 
         The polarisation can be characterised by decomposing the electric field into orthogonal components $E_x$ and $E_y$, letting $\hat z$ denote the axis of propagation:
         \begin{equation}
             \vec E = (\hat x E_x \exp(i \varphi_x) + \hat y E_y \exp(i \varphi_y)) \exp(i (\vec k \cdot \hat z - \omega t)).
         \end{equation}
-        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$, and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component, called \defn{Stokes parameters}. These are \citep{condon_essential_2016}:
+        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$, and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component, called \defn{Stokes parameters}\todo{Cite the original Stokes parameters paper.}. These are \citep{condon_essential_2016}:
         \begin{align}
             \label{eq:stokes-i}
             I &= \frac{1}{R_0} \mathbb E_t[E_x^2 + E_y^2],\\
@@ -87,7 +205,7 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
             \label{eq:polarisation-angle}
             \tan (2 \chi) = \frac{U}{Q}.
         \end{equation}
-        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the circular polarisation is zero \citeneeded because \todo{reasons} and we only observe linear polarisation. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out: this is called \defn{unpolarised} or \defn{partially-polarised} radiation respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} $P$ and is given by
+        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the circular polarisation is zero or nearly zero \citep{rayner_radio_2000,saikia_polarization_1988} because of the roughly equal contributions of left- and right-handed circularly polarised radiation which cancel each other out \citeneeded{}, and we only observe linear polarisation. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out: this is called \defn{unpolarised} or \defn{partially-polarised} radiation respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} $P$ and is given by
         \begin{equation}
             \label{eq:polarised-intensity}
             P^2 = Q^2 + U^2 + V^2.
@@ -97,9 +215,9 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
             p = \frac{P}{I}.
         \end{equation}
 
-        The synchrotron radiation from AGN is polarised, though this polarisation is not always detectable \citeneeded \todo{forward reference to AGN?}. Additionally, the most common non-AGN cause for radio emission is star-formation, which does not have detectable polarisation. Polarisation is therefore an excellent way to confirm that a radio source is an AGN.
+        The synchrotron radiation from radio galaxies is polarised, though this polarisation is not always detectable as the polarised signal tends to be much weaker than the total intensity, on the order of ten per cent \citeneeded \todo{forward reference to AGN?}. Additionally, the most common non-AGN cause for radio emission is star formation, which does not generally have detectable polarisation\todo{Why?}. Polarisation is therefore an excellent way to confirm that a radio source is an AGN.
 
-        Polarisation can also be used to describe the magnetic structure of both AGN and intervening medium. As polarised light from distant galaxies makes its way to us, magnetised plasma along the way can cause the polarisation angle to rotate due to the Faraday effect. The amount of rotation is called the \defn{Faraday depth} $\phi$, and is related to the electron density $n_e$ and the line-of-sight magnetic field strength $\vec B \cdot \hat{z}$ of the intervening medium:
+        Polarisation can also be used to describe the magnetic structure of both the radio galaxy jets and lobes as well as the intervening medium. As polarised light from distant galaxies makes its way to us, magnetised plasma along the way can cause the polarisation angle to rotate due to the Faraday effect. The amount of rotation is called the \defn{Faraday depth} $\phi$, and is related to the electron density $n_e$ and the line-of-sight magnetic field strength $\vec B \cdot \hat{z}$ of the intervening medium:
         \begin{equation}
             \label{eq:faraday-depth}
             \phi(x, y) = \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \int_{\mathrm{there}}^{\mathrm{here}} n_e(x, y, z) \vec B(x, y, z) \cdot \mathrm{d}\hat{z}\ \mathrm{rad}\ \mathrm{m}^{-2}.
@@ -111,7 +229,7 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
         \end{equation}
         One useful way of thinking about this equation is that $F$ is the decomposition of $P(\lambda^2)$ into complex sinusoids of the form $e^{2i\lambda^2\phi}$.
 
-        If observed radiation has precisely one Faraday depth $\phi$, then the polarised structure is called a \defn{Faraday screen} and the source is called \defn{Faraday simple}. In this degenerate case, the relationship between the polarisation angle $\chi$ and the squared wavelength $\lambda^2$ is linear:
+        If observed radiation has precisely one Faraday depth $\phi$, then the polarised structure is called a \defn{Faraday screen} and the source is called \defn{Faraday simple}\todo{Include a graphic}. In this degenerate case, the relationship between the polarisation angle $\chi$ and the squared wavelength $\lambda^2$ is linear:
         \begin{equation}
             \chi = \chi_0 + \phi \lambda^2,
         \end{equation}
@@ -149,113 +267,6 @@ I'll need to explain the purpose of this chapter and give a brief outline. There
 
         \todo{Need a bit on Faraday screens, Faraday complexity?}
 
-\section{Active Galactic Nuclei}
-\label{sec:agn}
-    % \begin{itemize}
-    %     \item AGN: \begin{itemize}
-    %         \item jets
-    %         \item lobes
-    %         \item the unified model
-    %         \item classes including FRI and FRII, radio loud and radio quiet... etc
-    %         \item polarisation structure
-    %         \item spectral index
-    %         \item environmental interaction with jets and lobes, including how much power they inject according to simulations and literature
-    %         \item host galaxies
-    %     \end{itemize}
-    %     \item AGN throughout the universe: \begin{itemize}
-    %         \item expected RLF/distribution
-    %         \item getting brighter back in time
-    %         \item FRI/FRII? radio loud, radio quiet?
-    %         \item how many AGN are there?
-    %         \item how do AGN tie into galaxy evolution and feedback?
-    %     \end{itemize}
-    % \end{itemize}
-
-    AGN are some of the most energetic objects in the Universe. They both provide a laboratory for extreme physics and are a key part of the life cycle of a galaxy \citep{heckman_coevolution_2014}. Powered by a supermassive black hole, they convert gravitational potential energy into intense electromagnetic radiation at a broad range of frequencies. AGN that produce strong radio emission are called radio AGN, and methods of observing the complex structures that these radio AGN form are the focus of this thesis.
-
-    \subsection{The unified model}
-    \label{sec:unified-model}
-
-        \begin{figure}
-            \centering
-            \includegraphics[width=\textwidth]{images/agn.eps}
-            \caption{\label{fig:agn} The unified model of AGN.}
-        \end{figure}
-
-        \begin{figure}
-            \centering
-            \begin{subfigure}{0.45\textwidth}
-                \includegraphics[width=\textwidth]{images/3C_272.1.jpg}
-                \caption{M84/3C 272.1}
-                \label{fig:m84}
-            \end{subfigure}
-            \begin{subfigure}{0.45\textwidth}
-                \includegraphics[width=\textwidth]{images/3C_223.jpg}
-                \caption{3C 223}
-                \label{fig:3C223}
-            \end{subfigure}
-            \caption[Examples of a FRI and a FRII radio galaxy.]{\label{fig:fri-frii} Examples of (a) a FRI \citep{laing_rotation_1987} and (b) a FRII radio galaxy \citep{leahy_vla_1991}. Both are shown with an arcsinh stretch and were observed with the VLA.}
-        \end{figure}
-
-        At their core, AGN are an accreting \defn{supermassive black hole}: a body so dense that even light cannot escape its gravitational pull, with mass on the order of $10^7$--$10^9\ \mathrm{M}_\odot$ \citeneeded{}. Such black holes seem to exist at the centre of galaxies\citeneeded{} and these galaxies are called \defn{host galaxies}. The current understanding of the structure of an AGN is as follows \citep{urry_unified_1995}. The black hole is surrounded by an accretion disc emitting in ultraviolet and X-ray. Beyond this is the broad-line region, named for the Doppler-broadened emission lines emitted by the energetic clouds of material surrounding the accretion disc. The broad-line region and accretion disc are themselves surrounded by a dusty torus (or some other disc-like structure) which prevents light from the centre of the AGN being observed from the sides. Further still from the accretion disc is the narrow-line region, where lower-energy gas produces narrow emission lines. From either side of the disc, an AGN produces two collimated outflows of relativistic plasma called {jets}, and these jets interact with gas in the host galaxy to produce bright radio emission. As the jets disperse further out from the centre of the AGN they widen into plumes of plasma known as \defn{lobes}. This model of AGN unifies different observed classes of AGN by their orientation and luminosity, and is hence known as the \defn{unified model} \citep{antonucci_unified_1993}.
-
-        There are many different ways to divide the set of radio AGN into classes. By morphology, radio AGN are often divided by the structure of the jets and lobes: Fanaroff-Riley type I (FRI) and Fanaroff-Riley type II (FRII) are the most striking examples, with FRI having wavy, diffuse lobes; and FRII having long, tightly-collimated jets and sharp-edged lobes with bright hot-spots \citep{urry_unified_1995}. FRII are also generally higher-luminosity \citep{fanaroff_morphology_1974} than FRI and therefore make up the majority of observed extended radio sources throughout the Universe. AGN can also be divided into \defn{radiative-mode} and \defn{jet-mode} by how they expel their energy \citep{heckman_coevolution_2014}. Radiative-mode AGN produce radiative energy in amounts higher than 1 percent of their Eddington limit, while jet-mode AGN mainly output energy through their jets. The Eddington limit describes the maximum luminosity that a compact object can emit, and is given in \autoref{eq:eddington} \citep{rybicki_radiative_1979}:
-        \begin{equation}
-            L_{\mathrm{Eddington}}(M) = \frac{4\pi G M m_p c}{\sigma_T}.
-            \label{eq:eddington}
-        \end{equation}
-        Optical emission observed near the centre of the AGN can be used to divide radio AGN into broad-line and narrow-line galaxies: the former are AGN seen end-on, and the latter are AGN seen edge-on with the dusty torus obscuring the broad-line region. These narrow-line galaxies are usually the only ones for which we see significant extended structure.
-
-    \subsection{Extended structure}
-    \label{sec:extended-structure-of-agn}
-
-        The jets and lobes of AGN can be very extended, with the largest known radio galaxies measuring over 4 Mpc end-to-end \citep{machalski_understanding_2011}. This is much larger than the radius of their host galaxies, and so the jets and lobes of AGN are uniquely posed to interact with the local environment. Environmental interactions both within and outside the host galaxy warp and distort the jets and lobes. Within the galaxy, \todo{something about internal pressures? simulations??}. Outside the galaxy, the jets and lobes are bent by the intra-cluster medium and neighbouring galaxies \citep[ICM;][]{garon_radio_2019, rodman_radio_2019} and this structure may even be used as a probe for cluster environments \citep{banfield_radio_2016}.
-
-        \begin{figure}
-            \centering
-            \begin{subfigure}{0.3\textwidth}
-                \includegraphics[width=\textwidth]{images/3C_83.1B.jpg}
-                \caption{3C 83.1B}
-                \label{fig:3C83-1B}
-            \end{subfigure}
-            \begin{subfigure}{0.3\textwidth}
-                \includegraphics[width=\textwidth]{images/3C_315.jpg}
-                \caption{3C 315}
-                \label{fig:3C315}
-            \end{subfigure}
-            \begin{subfigure}{0.3\textwidth}
-                \includegraphics[width=\textwidth]{images/3C_433.jpg}
-                \caption{3C 433}
-                \label{fig:3C433}
-            \end{subfigure}
-            \caption[Three radio galaxies with interesting structure.]{Radio galaxies, displayed with an arcsinh colour scale. All images were taken with the VLA. (a) is a narrow-angled tail radio galaxy \citep{leahy_atlas_nodate}, (b) is an X-shaped radio galaxy \citep{leahy_polarization_1986}, and (c) is a very unusually-shaped radio galaxy \citep{black_study_1992}.}
-            \label{fig:interesting}
-        \end{figure}
-
-        The strong interaction of AGN with their environment leads to a great variety of exotic-shaped radio galaxies. Some morphological classes of this `radio galaxy zoo' include X-shaped galaxies, which have two sets of lobes roughly perpendicular to each other; wide- and narrow-angled tail galaxies, which are bent about the core with large and small angles respectively; head-tail galaxies, which are so bent that the two lobes seem to be the same or nearly the same; double-doubles, which have two sets of lobes on each side; and many, many more. Some examples of radio galaxies with interesting structure are shown in \autoref{fig:interesting}. Large-scale automated identification of these galaxies can be tricky owing to their variety, extent, and often disconnected structure.
-
-        \todo{How does the spectral index vary over the jets and lobes? How much power do AGN inject into their environment?}
-        AGN cores tend to have flat or inverted spectral indices around -0.5--1 \citeneeded, while the spectral index of the lobes is steeper at about -0.7 \citeneeded. The hotspots of FRII galaxies have spectral indices between -0.5 -- -0.7. The jets do not strongly emit and are only detectable for particularly deep observations or nearby radio galaxies \citeneeded.
-
-    \subsection{Polarised structure}
-    \label{sec:polarised-structure-of-agn}
-
-        This section is where I will talk about how polarisation varies over the extended structure of a radio galaxy! Heavy reference to Julie's thesis here.
-
-    \subsection{The host galaxies of AGN}
-    \label{sec:host-galaxies}
-
-        This section will discuss the host galaxies of AGN, with necessary reference to their infrared colours as probes of the physics within. How do AGN interact with their host galaxies and vice-versa?
-
-    \subsection{AGN throughout the universe}
-    \label{sec:agn-throughout-the-universe}
-
-        What is the expected distribution of AGN? What do simulations say, and what do observations say? Note that AGN get brighter back in time.
-
-    \subsection{The role of AGN}
-    \label{sec:role-of-agn}
-
-        How do AGN tie into galaxy evolution and feedback? Why do we need them in our models and theories? Why are they important?
 
 
         % The most general form of the electric field in an electromagnetic wave, propagating in the $\hat z$ direction, is
@@ -352,67 +363,3 @@ This section needs to talk about how the physics of AGN affects observations and
             \item POSSUM, EMU, RACS
         \end{itemize}
     \end{itemize}
-
-
-\section{Machine Learning for Radio Astroninformatics}
-\label{sec:radio-astroinformatics}
-    \begin{itemize}
-        \item machine learning in astronomy and radio astronomy (literature review)
-        \item summarising the basics of machine learning (later sections of course complicate these): \begin{itemize}
-            \item predictors
-            \item features
-            \item labels
-            \item optimisation
-            \item data
-            \item expertise
-        \end{itemize}
-        \item features: \begin{itemize}
-            \item feature selection and design, and the benefit of domain knowledge
-            \item feature extraction
-            \item neural networks
-        \end{itemize}
-        \item labels: \begin{itemize}
-            \item training labels and testing labels
-            \item where do labels come from? domain experts, crowdsourcing, citizen science, simulations...
-            \item label noise and unreliable annotators
-            \item multiple unreliable annotators
-        \end{itemize}
-        \item citizen science: \begin{itemize}
-            \item citizen science in astronomy
-            \item designing good citizen science
-            \item benefits and challenges of citizen science
-            \item challenges in ML on crowdsourcing/citizen science
-            \item rant about how citizen science is different to crowdsourcing from an ML perspective
-        \end{itemize}
-    \end{itemize}
-
-% Here we need to talk about the fundamentals of machine learning. We'll start with problem formulations and what machine learning is, then discuss terminology and classification. We need to cover the difficulties of labels and the lack of groundtruth in astronomy, the problem and handling of uncertainties, and feature selection. We also need to talk about the importance (or unimportance?) of interpretability and how this ties into astronomy, and the unique idea of using machine learning as a pathway to understand something important about physics.
-
-    Machine learning was once described to me by an anonymous supervisor as ``the statistics kept at the back of the textbook''. But even accepting its grounding in statistics, is this really an accurate description of the field? I think of machine learning as a data-driven way of formalising predictive problems mathematically, converting between different kinds of statistical problems, and an accompanying set of methods and practices for handling data and uncertainty. The eventual goal is to design some method or algorithm that automatically discovers useful information in (potentially very large) data sets. The machine learning component of this thesis will require an understanding of linear algebra, probability, statistics, and vector calculus. I will begin describing machine learning by exploring the concept of a predictor.
-    % \citet{deisenroth_mathematics_2020} seperate machine learning into three core components: the data, the model, and learning.
-
-    \subsection{Predictors}
-    \label{sec:predictors}
-
-        A \defn{predictor} is some function that produces an output from some given input. They can be represented as functions or as probabilistic models, depending on the machine learning approach being undertaken. As a function, a predictor maps from some input domain $\mathcal X$ into some output domain $\mathcal Y$, and is usually written as
-        \begin{equation}
-            f : \mathcal X \to \mathcal Y.
-        \end{equation}
-        $\mathcal X$ and $\mathcal Y$ are commonly (but certainly not always) a real vector space $\mathbb R^n$. Because the goal of machine learning involves \emph{finding} a suitable function $f$ for the task at hand, the set of functions is usually constrained. For example, if $\mathcal X = \mathbb{R}^n$, we might require that $f$ is a linear function $\mathbb R^n \to \mathbb R$, easily parametrised by $n + 1$ constants.
-
-        As a probabilistic model, a predictor is a joint probability distribution between observations and hidden parameters \citep{deisenroth_mathematics_2020}. Using a probabilistic predictor allows us to formally describe and work with uncertainty both in the input space and output space. Such a predictor is usually parametrised by a finite set of parameters, which already includes most common probability distributions.
-
-    \subsection{Data and representation}
-    \label{sec:data-and-representation}
-
-        Machine learning is centred on data and the extraction of information from that data. Data can include anything from numeric information, documents, or images to spectra or galaxies. A collection of data is called a \defn{dataset} and an element of this dataset is (interchangably) called an \defn{example} or \defn{instance}. Generally, data are not easy to work with in their original form and must be converted into a numerical representation before use. As it is relatively easy to work with both numerically and analytically, we usually convert our data into real vectors in $\mathbb R^n$. Each axis of this vector space is called a \defn{feature}. Features are non-trivial to choose, and finding good features often requires the expertise of a human who is well-versed in the original dataset (a \defn{domain expert}).
-        
-
-        % This conversion is called an \defn{embedding} of that data into a space. One way to embed data into a vector space is to use real numbers representative of different features and details of the original data. These values are called \defn{features} and the resulting embedding is called a \defn{feature representation}. 
-
-    % There are many sub-fields of machine learning, divided mainly by the kind of predictions required. The most important sub-field that we will use in this thesis is classification.
-
-    \subsection{Classification}
-    \label{sec:classification}
-
-        \defn{Classification} is the problem of categorising objects into classes. 
