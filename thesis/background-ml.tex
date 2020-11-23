@@ -55,17 +55,23 @@
 
     In some sense, the goal of machine learning is to identify a good predictor from within the space of all possible predictors. Of course, this begs the question: what is a `good' predictor? We will return to this when we discuss learning, but for now, a good predictor is one that well-approximates the groundtruth.
 
+\section{Classification}
+\label{sec:classification}
+    \defn{Classification} is the machine learning task of predicting discrete, unstructured values \citep{deisenroth_mathematics_2020}. These values are called \defn{classes}. Classification is arguably the most important prediction task, as many other problems can be formalised as classification. Astronomy has its fair share of classification task, from classical astronomy tasks like galaxy morphology classification \citep[appearing in machine learning literature as e.g.][]{dieleman15cnn} to transient detection \citeneeded.
+
+    A classifiation problem seeks a predictor where $\mathcal Y$ is a finite, discrete set of classes. Classification tasks are usually delineated by the number of classes: much like astronomy's fascination with metals, classification tasks either have two classes, or more than two classes. The former are called \defn{binary classification} tasks and the latter are \defn{multiclass classification} tasks. The reason for this split is that binary classes are dramatically easier to reason about and analyse, and many special cases exist for binary where they do not for multiclass.
+
+    The two most common representations of $\mathcal Y$ for a binary task are $\mathcal Y = \{0, 1\}$ and $\mathcal Y = \{-1, 1\}$. In both cases $1$ is called the \defn{positive class}; $0$ and $-1$ are both called the \defn{negative class}. Throughout this thesis we will maintain the former convention with $0$ and $1$ as the negative and positive classes. 
+
+    Many different tasks can be
+
 \section{Data and representation}
 \label{sec:data-and-representation}
 
     Machine learning is centred on data and the extraction of information from that data. Data can include anything from numeric information, documents, or images, to spectra or galaxies. A collection of data is called a \defn{dataset} and an element of this dataset is (interchangably) called an \defn{example} or \defn{instance}. Generally, data are not easy to work with in their original form and must be converted into a numerical representation before use. As it is relatively easy to work with both numerically and analytically, we usually convert our data into real vectors in $\mathbb R^n$. Each axis of this vector space is called a \defn{feature} and the space as a whole is called the \defn{feature space}. Features are non-trivial to choose, and finding good features often requires the expertise of a human who is well-versed in the original dataset (a \defn{domain expert}). The process of finding features is called \defn{feature selection}, or \defn{feature design}.
 
     What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, or easy to extract. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on good methods for automatically developing features (generally called \defn{feature extraction}, and much early \emph{applied} machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training.
-
-\section{Classification}
-    
-    \defn{Classification} is the machine learning task of predicting discrete, unstructured values \citep{deisenroth_mathematics_2020}. These values are called \defn{classes}. Classification is arguably the most important prediction task, as many other problems can be formalised as classification. Astronomy has its fair share of classification task, from classical astronomy tasks like galaxy morphology classification \citep[appearing in machine learning literature as e.g.][]{dieleman15cnn} to transient detection \citeneeded.
-    \subsection{Classification}
     \label{sec:classification}
 
-    \defn{Classification} is the problem of categorising objects into classes. 
+    Another very important piece of the machine learning puzzle are \defn{labels}. Training a predictor with supervised learning requires some known pairs of inputs and outputs, and the known outputs are called labels. Like features, labels also need to be encoded in some way, and this depends on the specific task. \todo
+
