@@ -78,7 +78,7 @@
 
     Machine learning is centred on data and the extraction of information from that data. Data can include anything from numeric information, documents, or images, to spectra or galaxies. A collection of data is called a \defn{dataset} and an element of this dataset is (interchangably) called an \defn{example} or \defn{instance}. Generally, data are not easy to work with in their original form and must be converted into a numerical representation before use. As it is relatively easy to work with both numerically and analytically, we usually convert our data into real vectors in $\mathbb R^n$. Each axis of this vector space is called a \defn{feature} and the space as a whole is called the \defn{feature space}. Features are non-trivial to choose, and finding good features often requires the expertise of a human who is well-versed in the original dataset (a \defn{domain expert}). The process of finding features is called \defn{feature selection}, or \defn{feature design}.
 
-    What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, or easy to extract. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on good methods for automatically developing features (generally called \defn{feature extraction}), and much early \emph{applied} machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training. A good feature space will have a structure that reflects the components of the intrinsic structure of the input data which are useful for the prediction task at hand. Good features may also be useful in other related tasks, such as dataset exploration, dataset visualisation, or other prediction tasks. \autoref{cha:faraday-faraday} largely focuses on finding good features for identifying Faraday complexity in polarised sources.
+    What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, or easy to extract. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on good methods for automatically developing features (generally called \defn{feature extraction}), and much early \emph{applied} machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training. A good feature space will have a structure that reflects the components of the intrinsic structure of the input data which are useful for the prediction task at hand. Good features may also be useful in other related tasks, such as dataset exploration, dataset visualisation, or other prediction tasks. \autoref{cha:faraday} largely focuses on finding good features for identifying Faraday complexity in polarised sources.
 
     Another very important piece of the machine learning puzzle are \defn{labels}. Training a predictor with supervised learning requires some known pairs of inputs and outputs, and the known outputs are called labels. Like features, labels also need to be encoded in some way, and this depends on the specific task. Much like features, we want to embed the labels into a space which is easy to work with and has a meaningful structure. For problems where we know the outputs we wish to obtain, this can be a lot simpler than feature selection. For example, a binary classification problem will have only two possible outputs. Common representations for this would be $\{0, 1\}$ as described in \autoref{sec:classification}, but we could also represent the labels as $\{[1, 0]^T, [0, 1]^T\}$, called a \defn{one-hot encoding}. The advantage of the former is its simplicity and ease of integration into binary classification equations, but the advantage of the latter is that it is easily extended into multiclass classification without imposing order on the classes. Despite being simpler to encode, labels can carry a lot more difficulty than features due to their comparative rarity: in essence, features are cheap and labels are expensive. We will discuss labels in more detail in \autoref{sec:labels}.
 
@@ -132,7 +132,34 @@
             \begin{equation}
                 \mathcal L(f; T, X) = \frac{1}{2} \sum_{i = 1}^n (t_i - f(x_i))^2.
             \end{equation}
-            The factor of half helps keep the derivative tidy, which will be useful later on.
+            The factor of half helps keep the derivative tidy:
+            \begin{equation}
+                \frac{\mathrm{d}\mathcal L}{\mathrm{d}\theta}(f; T, X) = \sum_{i = 1}^n (t_i - f(x_i)) \frac{\mathrm{d}f}{\mathrm{d}\theta}(x_i).
+            \end{equation}
+
+        \subsubsection{Loss function for binary classification}
+        \label{sec:loss-classification}
+
+            \todo{Here I would derive binary cross-entropy loss and arrive at the following result}
+
+            \begin{equation}
+                \mathcal L(f; T, X) = \sum_{i = 1}^n (1 - t_i) \log (1 - f(x_i)) + t_i \log f(x_i).
+            \end{equation}
+            \begin{equation}
+                \frac{\mathrm{d}\mathcal L}{\mathrm{d}\theta}(f; T, X) = \sum_{i = 1}^n -\frac{1 - t_i}{1 - f(x_i)} \log (1 - f(x_i)) + t_i \log f(x_i).
+            \end{equation}
+
+    \subsection{Gradient descent}
+    \label{sec:gradient-descent}
+
+        Given a loss function and a parametrised model, how can we find parameters for the model that minimise the loss function? There are many optimisation strategies but if both the loss function and model are differentiable with respect to the parameters then we can employ a particularly efficient approach: \defn{gradient descent}. Assume we have a model $f(x; \vec w)$ parametrised by some vector $\vec w$ and a loss function $\mathcal L(\vec w; T, X)$. Then the value of $\vec w$ after the $k + 1$th update of gradient descent is
+        \begin{equation}
+            \label{sec:gradient-descent}
+            \vec w^{(k + 1)} = \vec w^{(k)} - \lambda \nabla_{\vec w} \mathcal L(\vec w^{(t)}; T, X)
+        \end{equation}
+        where $\lambda > 0$ is a small scalar called the \defn{learning rate}. With an appropriately small choice of $\lambda$ $\vec w$ will converge to a local minimum of $\mathcal L$. Many variations on this concept exist which attempt to avoid local minima.
+
+        \todo{continue talking about this a bit}
 
 \section{Models}
 \label{sec:models}
@@ -157,6 +184,12 @@
         The output of logistic regression applied to an example $x$ is the probability that $x$ is in the positive class. $\sigma$, and thus logistic regression, has a domain of $(-\infty, \infty)$ and a range of $(0, 1)$. This enforces the output to be like a probability. $w^T x$ defines a $d$-dimensional hyperplane, called the \defn{separating hyperplane} or \defn{decision surface}.
 
         Logistic regression is differentiable, which allows us to optimise its parameters $w$ using gradient descent.
+
+    \subsection{Decision tree ensembles}
+    \label{sec:decision-trees}
+
+    \subsection{Convolutional neural networks}
+    \label{sec:cnns}
 
 \section{Labels}
 \label{sec:labels}

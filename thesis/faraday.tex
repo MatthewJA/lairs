@@ -1,23 +1,23 @@
 %!tex root=./thesis.tex
 \chapter{Faraday Complexity}
-\label{cha:faraday-faraday}
+\label{cha:faraday}
 
-This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Complexity Classification}, by M. J. Alger, C. S. Ong, J. D. Livingston, J. L. Nabaglo, N. M. McClure-Griffiths, and O. I. Wong.
+This chapter is based on my paper \emph{Interpretable Faraday Complexity Classification}, by M. J. Alger, C. S. Ong, J. D. Livingston, J. L. Nabaglo, N. M. McClure-Griffiths, and O. I. Wong; submitted to the Publications of the Astronomical Society of Australia (PASA).
 
-  Faraday complexity describes whether a spectropolarimetric observation has simple or complex magnetic structure. Quickly determining the Faraday complexity of a spectropolarimetric observation is important for processing large, polarised radio surveys. Finding simple sources lets us build rotation measure grids, and finding complex sources lets us follow these sources up with slower analysis techniques or further observations. In this chapter, we introduce five features that can be used to train simple, interpretable machine learning classifiers for estimating Faraday complexity. We train logistic regression and extreme gradient boosted tree classifiers on simulated polarised spectra using our features, analyse their behaviour, and demonstrate our features are effective for both simulated and real data. With 95 per cent accuracy on simulated ASKAP data and 90 per cent accuracy on simulated ATCA data, our method performs comparably to state-of-the-art convolutional neural networks while being simpler and easier to interpret. Logistic regression trained with our features behaves sensibly on real data and its outputs are useful for sorting polarised sources by apparent Faraday complexity.
+Faraday complexity describes whether a spectropolarimetric observation has simple or complex magnetic structure. Quickly determining the Faraday complexity of a spectropolarimetric observation is important for processing large, polarised radio surveys. Finding simple sources lets us build rotation measure grids, and finding complex sources lets us follow these sources up with slower analysis techniques or further observations. We introduce five features that can be used to train simple, interpretable machine learning classifiers for estimating Faraday complexity. We train logistic regression and extreme gradient boosted tree classifiers on simulated polarised spectra using our features, analyse their behaviour, and demonstrate our features are effective for both simulated and real data. This is the first application of machine learning methods to real spectropolarimetry data. With 95 per cent accuracy on simulated ASKAP data and 90 per cent accuracy on simulated ATCA data, our method performs comparably to state-of-the-art convolutional neural networks while being simpler and easier to interpret. Logistic regression trained with our features behaves sensibly on real data and its outputs are useful for sorting polarised sources by apparent Faraday complexity.
 
-  M.J.A. and J.D.L. were supported by the Australian Government Research Training Program. M.J.A. was supported by the Astronomical Society of Australia.
+M.J.A. and J.D.L. were supported by the Australian Government Research Training Program. M.J.A. was supported by the Astronomical Society of Australia.
 
 \section{Introduction}
 \label{sec:faraday-intro}
 
-  As polarised radiation from distant galaxies makes its way to us, magnetised plasma along the way can cause the polarisation angle to change due to the Faraday effect. The amount of rotation depends on the squared wavelength of the radiation, and the rotation per squared wavelength is called the Faraday depth. Multiple Faraday depths may exist along one line-of-sight, and if a polarised source is observed at multiple wavelengths then these multiple depths can be disentangled. This can provide insight into the polarised structure of the source.
+  As polarised radiation from distant galaxies makes its way to us, magnetised plasma along the way can cause the polarisation angle to change due to the Faraday effect. The amount of rotation depends on the squared wavelength of the radiation, and the rotation per squared wavelength is called the Faraday depth. Multiple Faraday depths may exist along one line-of-sight, and if a polarised source is observed at multiple wavelengths then these multiple depths can be disentangled. This can provide insight into the polarised structure of the source or the intervening medium.
 
   Faraday rotation measure synthesis (RM synthesis) is a technique for decomposing a spectropolarimetric observation into flux at its Faraday depths $\phi$, the resulting distribution of depths being called a `Faraday dispersion function' (FDF) or a `Faraday spectrum'. It was introduced by \citet{brentjens_faraday_2005} as a way to rapidly and reliably analyse the polarisation structure of complex and high-Faraday depth polarised observations.
 
-  A `Faraday simple' observation is one for which there is only one Faraday depth, and in this simple case the Faraday depth is also known as a `rotation measure' (RM). All Faraday simple observations can be modelled as a polarised source with a single set of thermal plasma \citep[a `Faraday screen';][]{brentjens_faraday_2005,anderson_broadband_2015} between the observer and the source. A `Faraday complex' observation is one which is not Faraday simple, and may differ from a Faraday simple source due to plasma emission or composition of multiple screens \citep{brentjens_faraday_2005}. The complexity of a source tells us important details about the polarised structure of the source and along the line-of-sight, such as whether the intervening medium emits polarised radiation, or whether there are turbulent magnetic fields or different electron densities in the neighbourhood. The complexity of nearby sources taken together can tell us about the magneto-ionic structure of the galactic and intergalactic medium between the sources and us as observers. \autoref{fig:simple-fdf} and \autoref{fig:complex-fdf} show an example of a simple and a complex FDF respectively, as well as the corresponding polarised observation.
+  A `Faraday simple' observation is one for which there is only one Faraday depth, and in this simple case the Faraday depth is also known as a `rotation measure' (RM). All Faraday simple observations can be modelled as a polarised source with a thermal plasma of constant electron density and magnetic field \citep[a `Faraday screen';][]{brentjens_faraday_2005,anderson_broadband_2015} between the observer and the source. A `Faraday complex' observation is one which is not Faraday simple, and may differ from a Faraday simple source due to plasma emission or composition of multiple screens \citep{brentjens_faraday_2005}. The complexity of a source tells us important details about the polarised structure of the source and along the line-of-sight, such as whether the intervening medium emits polarised radiation, or whether there are turbulent magnetic fields or different electron densities in the neighbourhood. The complexity of nearby sources taken together can tell us about the magneto-ionic structure of the galactic and intergalactic medium between the sources and us as observers. \citet{osullivan_broad-band_2017} show examples of simple and complex sources, and \autoref{fig:faraday-simple-fdf} and \autoref{fig:faraday-complex-fdf} show an example of a simulated simple and complex FDF respectively.
 
-  Identifying when an observation is Faraday complex is an important problem in polarised surveys \citep{sun15comparison}, and with surveys now being conducted larger than ever before, methods that can quickly characterise Faraday complexity en masse are increasingly useful. Being able to identify which sources are simple lets us produce a reliable rotation measure grid from background sources, and being able to identify which sources might be complex allows us to find sources to follow-up with slower polarisation analysis methods that may require manual oversight. In this chapter, we introduce a set of five simple, interpretable features representing polarised spectra, use these features to train machine learning classifiers to identify Faraday complexity, and demonstrate their effectiveness on real and simulated data. We construct our features by comparing observed polarised sources to idealised polarised sources. The features are intuitive and can be estimated from real FDFs.
+  Identifying when an observation is Faraday complex is an important problem in polarised surveys \citep{sun15comparison}, and with current surveys such as the Polarised Sky Survey of the Universe's Magnetism (POSSUM) larger than ever before, methods that can quickly characterise Faraday complexity en masse are increasingly useful. Being able to identify which sources are simple lets us produce a reliable rotation measure grid from background sources, and being able to identify which sources might be complex allows us to find sources to follow-up with slower polarisation analysis methods that may require manual oversight, such as QU fitting \citep[as seen in e.g.][]{miyashita19qu,osullivan_broad-band_2017}. In this chapter, we introduce five simple, interpretable features representing polarised spectra, use these features to train machine learning classifiers to identify Faraday complexity, and demonstrate their effectiveness on real and simulated data. We construct our features by comparing observed polarised sources to idealised polarised sources. The features are intuitive and can be estimated from real FDFs.
 
   % We demonstrate the effectiveness of our method on both simulated and real data. Using simulated data, we compare our method to the state-of-the-art CNN Faraday complexity estimation methods.
 
@@ -26,7 +26,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
 \section{Faraday Complexity}
 \label{sec:faraday-background}
 
-    Faraday complexity is an observational property of a source: if multiple Faraday depths are observed within the same apparent source (e.g. due to multiple lines-of-sight being combined within a beam), then the source is complex, and otherwise it is simple. A source composed of multiple Faraday screens may be consistent with many other models \citep{sun15comparison}, including simple sources, so there is some overlap between simple and complex sources. Faraday thickness is also a source of Faraday complexity: when the intervening medium between a polarised source and the observer also emits polarised light, the FDF cannot be characterised by a simple Faraday screen. As discussed in \autoref{sec:faraday-fdfs} we defer Faraday thick sources to future work. In this section we summarise existing methods of Faraday complexity estimation and explain our assumptions and model of simple and complex polarised FDFs.
+    Faraday complexity is an observational property of a source: if multiple Faraday depths are observed within the same apparent source (e.g. due to multiple lines-of-sight being combined within a beam), then the source is complex. A source composed of multiple Faraday screens may produce observations consistent with many models \citep{sun15comparison}, including simple sources, so there is some overlap between simple and complex sources. Faraday thickness is also a source of Faraday complexity: when the intervening medium between a polarised source and the observer also emits polarised light, the FDF cannot be characterised by a simple Faraday screen. As discussed in \autoref{sec:faraday-fdfs} we defer Faraday thick sources to future work. In this section we summarise existing methods of Faraday complexity estimation and explain our assumptions and model of simple and complex polarised FDFs.
 
   \subsection{Prior work}
   \label{sec:faraday-prior-work}
@@ -41,13 +41,13 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     \begin{figure}
       \includegraphics[width=\linewidth]{faraday-images/spectra_simple.pdf}
       \caption{A simple FDF and its corresponding polarised spectra: (a) groundtruth FDF $F$, (b) noise-free polarised spectrum $P$, (c) noisy observed FDF $\hat F$, (d) noisy polarised spectrum $\hat P$. Blue and orange mark real and imaginary components respectively.}
-      \label{fig:simple-fdf}
+      \label{fig:faraday-simple-fdf}
     \end{figure}
 
     \begin{figure}
       \includegraphics[width=\linewidth]{faraday-images/spectra.pdf}
       \caption{A complex FDF and its corresponding polarised spectra: (a) groundtruth FDF $F$, (b) noise-free polarised spectrum $P$, (c) noisy observed FDF $\hat F$, (d) noisy polarised spectrum $\hat P$. Blue and orange mark real and imaginary components respectively.}
-      \label{fig:complex-fdf}
+      \label{fig:faraday-complex-fdf}
     \end{figure}
 
     Before we can classify FDFs as Faraday complex or Faraday simple, we need to define FDFs and any assumptions we make about them. An FDF is a function that maps Faraday depth $\phi$ to complex polarisation. It is the distribution of Faraday depths in an observed polarisation spectrum. For a given observation, we assume there is a true, noise-free FDF $F$ composed of at most two Faraday screens. This accounts for most actual sources \citep{anderson_broadband_2015} and extension to three screens would cover most of the remainder---\citet{osullivan_broad-band_2017} found that 89 per cent of their sources were best explained by two or less screens, while the remainder were best explained by three screens. We model the screens by Dirac delta distributions:
@@ -70,9 +70,9 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
       \label{eq:faraday-rm-synthesis}
       \hat F(\phi) = \frac{1}{D} \sum_{j = 1}^D \hat P(\lambda^2_j) e^{-2i\phi\lambda^2_j}.
     \end{equation}
-    Examples of $F$, $\hat F$, $P$, and $\hat P$ for simple and complex observations are shown in \autoref{fig:simple-fdf} and \autoref{fig:complex-fdf} respectively. Note that there are two reasons that the observed FDF $\hat F$ does not match the groundtruth FDF $F$. The first is the noise in $\hat P$. The second arises from the incomplete sampling of $\hat P$.
+    Examples of $F$, $\hat F$, $P$, and $\hat P$ for simple and complex observations are shown in \autoref{fig:faraday-simple-fdf} and \autoref{fig:faraday-complex-fdf} respectively. Note that there are two reasons that the observed FDF $\hat F$ does not match the groundtruth FDF $F$. The first is the noise in $\hat P$. The second arises from the incomplete sampling of $\hat P$.
 
-    We do not consider external or internal Faraday dispersion in this work. External Faraday dispersion would broaden the delta functions of \autoref{eq:faraday-true-fdf} into peaks, and internal Faraday dispersion would broaden them into top-hat functions. All sources have at least a small amount of dispersion as the Faraday depth is a bulk property of the intervening medium and is subject to noise, but the assumption we make is that this dispersion is sufficiently small that the groundtruth FDFs are well-modelled with delta functions. Faraday thick sources would also invalidate our assumptions, and we assume that there are none in our data as Faraday thickness is hard to observe anyway \citeneeded{}. Nevertheless some external Faraday dispersion would be covered by our model, as depending on observing parameters Faraday thick sources may appear as two screens \citep{vaneck17faraday}.
+    We do not consider external or internal Faraday dispersion in this work. External Faraday dispersion would broaden the delta functions of \autoref{eq:faraday-true-fdf} into peaks, and internal Faraday dispersion would broaden them into top-hat functions. All sources have at least a small amount of dispersion as the Faraday depth is a bulk property of the intervening medium and is subject to noise, but the assumption we make is that this dispersion is sufficiently small that the groundtruth FDFs are well-modelled with delta functions. Faraday thick sources would also invalidate our assumptions, and we assume that there are none in our data as Faraday thickness can be consistent with a two-component model depending on the wavelength sampling \citep[e.g.][]{ma_broad-band_2019,brentjens_faraday_2005}. Nevertheless some external Faraday dispersion would be covered by our model, as depending on observing parameters Faraday thick sources may appear as two screens \citep{vaneck17faraday}.
 
     To simulate observed FDFs we follow the method of \citet{brown_classifying_2018}, which we describe in \autoref{sec:faraday-simulating}.
 
@@ -89,12 +89,12 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
         \label{eq:faraday-f-simple}
         \hat F_{\mathrm{simple}}(\phi; \phi_s) &= R(\phi - \phi_s).
     \end{align}
-    $\phi_s$ traces out a curve in the space of all possible FDFs. In other words, $\hat F_{\mathrm{simple}}$ is a manifold parametrised by $\phi_s$. Our features are derived from relating an observed FDF to the manifold of simple FDFs (the `simple manifold'). We can characterise an FDF by its distance to the simple manifold using some distance measure $D_f$:
+    where $R$ is the rotation measure spread function (RMSF), the Fourier transform of the wavelength sampling function which is 1 at all observed wavelengths and 0 otherwise. $\phi_s$ traces out a curve in the space of all possible FDFs. In other words, $\hat F_{\mathrm{simple}}$ is a manifold parametrised by $\phi_s$. Our features are derived from relating an observed FDF to the manifold of simple FDFs (the `simple manifold'). We measure the distance of an observed FDF to the simple manifold using distance measure $D_f$, that take all values of the FDF into account:
     \begin{equation}
         \label{eq:faraday-complexity-model}
         \varsigma_f(\hat F) = \min_{\phi_s \in \mathbb{R}} D_f\infdivx{\hat F(\phi)}{\hat F_{\mathrm{simple}}(\phi; \phi_s)}.
     \end{equation}
-    This distance has nice properties, as it is:
+    We propose two distances that have nice properties:
     \begin{itemize}
         \item invariant over changes in complex phase,
         \item translationally invariant in Faraday depth,
@@ -107,7 +107,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     we look for the simple FDF $\hat{F}_{\mathrm{simple}}$ that is ``closest'' to the observed FDF $\hat{F}$.
     The minimiser $\phi_s$ is the Faraday depth of the simple FDF.
 
-    While we could choose any distance that operates on functions, we used the 2-Wasserstein ($W_2$) distance \eqref{eq:faraday-W2-distance} and the Euclidean distance \eqref{eq:faraday-Euclidean-distance}. The $W_2$ distance operates on probability distributions and can be thought of as the minimum cost to `move' one probability distribution to the other, where the cost of moving one unit of probability mass is the squared distance it is moved. Under $W_2$ distance, the minimiser $\phi_w$ in \autoref{eq:faraday-complexity-model} can be interpreted as the Faraday depth that the FDF $\hat F$ would be observed to have if its complexity was unresolved (i.e. the weighted mean of its components). The Euclidean distance is the square root of the least-squares loss which is often used for fitting $\hat{F}_{\mathrm{simple}}$ to the FDF $\hat F$. Under Euclidean distance, the minimiser $\phi_s$ is equivalent to the depth of the best-fitting single component under assumption of Gaussian noise in $\hat F$.
+    While we could choose any distance that operates on functions, we used the 2-Wasserstein ($W_2$) distance \eqref{eq:W2-distance} and the Euclidean distance \eqref{eq:Euclidean-distance}. The $W_2$ distance operates on probability distributions and can be thought of as the minimum cost to `move' one probability distribution to the other, where the cost of moving one unit of probability mass is the squared distance it is moved. Under $W_2$ distance, the minimiser $\phi_w$ in \autoref{eq:faraday-complexity-model} can be interpreted as the Faraday depth that the FDF $\hat F$ would be observed to have if its complexity was unresolved (i.e. the weighted mean of its components). The Euclidean distance is the square root of the least-squares loss which is often used for fitting $\hat{F}_{\mathrm{simple}}$ to the FDF $\hat F$. Under Euclidean distance, the minimiser $\phi_s$ is equivalent to the depth of the best-fitting single component under assumption of Gaussian noise in $\hat F$.
     We calculated the $W_2$ distance using \texttt{Python Optimal Transport} \citep{flamary17pot}, and we calculated the Euclidean distance using \texttt{scipy.spatial.distance.euclidean} \citep{scipy2020}.
     Further intuition about the two distances is provided in \autoref{sec:faraday-interpreting-distances}.
 
@@ -117,7 +117,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
        \phi_w &= \underset{\phi_w}{\mathrm{argmin}}\ D_{W_2}\infdivx{\hat F(\phi)}{\hat F_{\mathrm{simple}}(\phi; \phi_w)},\\
        \phi_e &= \underset{\phi_e}{\mathrm{argmin}}\ D_E\infdivx{\hat F(\phi)}{\hat F_{\mathrm{simple}}(\phi; \phi_e)}.
      \end{align*}
-     These features are depicted on an example FDF in \autoref{fig:features-on-fdf}.
+     These features are depicted on an example FDF in \autoref{fig:faraday-features-on-fdf}.
      For simple observed FDFs, the fitted Faraday depths $\phi_w$ and $\phi_e$ both tend to be
      close to the peak of the observed FDF. However for complex observed FDFs, $\phi_w$ tends
      to be at the average depth between the two major peaks of the observed FDF, being closer
@@ -141,7 +141,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     \begin{figure}
       \centering
       \includegraphics[width=\linewidth]{faraday-images/features_on_graph.pdf}
-      \caption{\label{fig:features-on-fdf} An example of how an observed FDF $\hat F$ relates to our features. $\phi_w$ is the $W_2$-minimising Faraday depth, and $\phi_a$ is the $\hat F$-maximising Faraday depth (approximately equal to the Euclidean-minimising Faraday depth). The remaining two features are the $W_2$ and Euclidean distances between the depicted FDFs.}
+      \caption{\label{fig:faraday-features-on-fdf} An example of how an observed FDF $\hat F$ relates to our features. $\phi_w$ is the $W_2$-minimising Faraday depth, and $\phi_a$ is the $\hat F$-maximising Faraday depth (approximately equal to the Euclidean-minimising Faraday depth). The remaining two features are the $W_2$ and Euclidean distances between the depicted FDFs.}
     \end{figure}
 
     In summary, we provide the following features to the classifier:
@@ -173,12 +173,12 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
   \subsection{Classifiers}
   \label{sec:faraday-classifiers}
 
-    We trained two classifiers on simulated observations using these features: logistic regression (LR) and extreme gradient boosted trees (XGB). These classifiers are useful together for understanding Faraday complexity classification. LR is a linear classifier that is readily interpretable by examining the weights it applies to each feature. XGB is a powerful off-the-shelf non-linear ensemble classifier. We used the \texttt{scikit-learn} implementation of LR and we use the \texttt{XGBoost} library for XGB. We optimised hyperparameters for XGB using a fork of \texttt{xgboost-tuner} \footnote{\url{https://github.com/chengsoonong/xgboost-tuner}} as utilised by \citet{zhu20mutagenic}. We used 1~000 iterations of randomised parameter tuning and the hyperparameters we found are tabulated in \autoref{tab:hyperparameters-xgb}. We optimised hyperparameters for LR using a 5-fold cross-validation grid search implemented in \texttt{sklearn.model\textunderscore{}selection.GridSearchCV}. The resulting hyperparameters are tabulated in \autoref{tab:hyperparameters-lr}.
+    We trained two classifiers on simulated observations using these features: logistic regression (LR) and extreme gradient boosted trees (XGB). These classifiers are useful together for understanding Faraday complexity classification. LR is a linear classifier that is readily interpretable by examining the weights it applies to each feature. XGB is a powerful off-the-shelf non-linear ensemble classifier. We used the \texttt{scikit-learn} implementation of LR and we use the \texttt{XGBoost} library for XGB. We optimised hyperparameters for XGB using a fork of \texttt{xgboost-tuner} \footnote{\url{https://github.com/chengsoonong/xgboost-tuner}} as utilised by \citet{zhu20mutagenic}. We used 1~000 iterations of randomised parameter tuning and the hyperparameters we found are tabulated in \autoref{tab:faraday-hyperparameters-xgb}. We optimised hyperparameters for LR using a 5-fold cross-validation grid search implemented in \texttt{sklearn.model\textunderscore{}selection.GridSearchCV}. The resulting hyperparameters are tabulated in \autoref{tab:faraday-hyperparameters-lr} in the Appendix.
 
 \section{Experimental method and results}
 \label{sec:faraday-experiment-classification}
 
-  We applied our classifiers to classify simulated (\autoref{sec:faraday-cnn-comparison} and \ref{sec:results-simulated}) and real (\autoref{sec:faraday-results-observed}) FDFs. We replicated the experimental setup of \citet{brown_classifying_2018} for comparison with the state-of-the-art CNN classification method, and we also applied our method to 142 real FDFs observed with the Australia Telescope Compact Array (ATCA) from Livingston et al. (in prep.) and \citet{osullivan_broad-band_2017}.
+  We applied our classifiers to classify simulated (\autoref{sec:faraday-cnn-comparison} and \ref{sec:results-simulated}) and real (\autoref{sec:faraday-results-observed}) FDFs. We replicated the experimental setup of \citet{brown_classifying_2018} for comparison with the state-of-the-art CNN classification method, and we also applied our method to 142 real FDFs observed with the Australia Telescope Compact Array (ATCA) from Livingston et al. (2020, submitted) and \citet{osullivan_broad-band_2017}.
 
   \subsection{Data}
 
@@ -197,35 +197,35 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
   \subsubsection{Observational data}
   \label{sec:faraday-observational-data}
 
-    We used two real datasets containing a total of 142 sources: 42 polarised spectra from Livingston et al. (in prep.) and 100 polarised spectra from \citet{osullivan_broad-band_2017}. These datasets were observed in similar frequency ranges on the same telescope (with different binning), but are in different parts of the sky. The Livingston data were taken near the Galactic Centre, and the O'Sullivan data were taken away from the plane of the Galaxy. There are more Faraday complex sources near the Galactic Centre compared to more Faraday simple sources away from the plane of the Galaxy (Livingston et al.). The similar frequency channels used in the two datasets result in almost identical RMSFs over the Faraday depth range we considered (-500 to 500 rad m$^{-2}$), so we expected that the classifiers would work equally well on both datasets with no need to re-train. We discarded the 26 Livingston sources with modelled Faraday depths outside of this Faraday depth range, which we do not expect to affect the applicability of our methods to wide-area surveys because these fairly high depths are not common.
+    We used two real datasets containing a total of 142 sources: 42 polarised spectra from Livingston et al. (2020, submitted) and 100 polarised spectra from \citet{osullivan_broad-band_2017}. These datasets were observed in similar frequency ranges on the same telescope (with different binning), but are in different parts of the sky. The Livingston data were taken near the Galactic Centre, and the O'Sullivan data were taken away from the plane of the Galaxy. There are more Faraday complex sources near the Galactic Centre compared to more Faraday simple sources away from the plane of the Galaxy (Livingston et al.). The similar frequency channels used in the two datasets result in almost identical RMSFs over the Faraday depth range we considered (-500 to 500 rad m$^{-2}$), so we expected that the classifiers would work equally well on both datasets with no need to re-train. We discarded the 26 Livingston sources with modelled Faraday depths outside of this Faraday depth range, which we do not expect to affect the applicability of our methods to wide-area surveys because these fairly high depths are not common.
 
     Livingston et al. (in prep) used RM-CLEAN \citep{heald09faraday} to identify significant components in their FDFs. Some of these components had very high Faraday depths up to 2000 rad m$^{-2}$, but we chose to ignore these components in this chapter as they are much larger than might be expected in a wide-area survey like POSSUM. They used the second Faraday moment \citep{Brown11report} to estimate Faraday complexity, with Faraday depths determined using \texttt{scipy.signal.find\textunderscore{}peaks} on the cleaned FDFs, with a cutoff of 7 times the noise of the polarised spectrum. Using this method, they estimated that 89 per cent of their sources were Faraday complex i.e. had a Faraday moment greater than 0.
 
     \citet{osullivan_broad-band_2017} used the QU-fitting and model selection technique described in \citet{osullivan12agn}. The QU-fitting models contained up to three Faraday screen components as well as a term for internal and external Faraday dispersion. We ignore the Faraday thickness and dispersion for the purposes of this chapter, as most sources were not found to have Faraday thickness and dispersion is beyond the scope of our current work. 37 sources had just one component, 52 had two, and the remaining 11 had three.
 
-  \subsection{Results on ``ASKAP'' dataset}
+  \subsection{Results on `ASKAP' dataset}
   \label{sec:faraday-cnn-comparison}
 
-    The accuracy of the LR and XGB classifiers on the ``ASKAP'' testing set was 94.4 and 95.1 per cent respectively. The confusion matrices are shown in \autoref{tab:cm-lr-askap12} and \autoref{tab:cm-xgb-askap12}. These results are very close to the CNN presented by \citet{brown_classifying_2018}, with a slightly higher true negative rate and a slightly lower true positive rate (recalling that positive sources are complex, and negative sources are simple). The accuracy of the CNN was 94.9, slightly lower than our XGB classifier and slightly higher than our LR classifier. Both of our classifiers therefore produce similar classification performance to the CNN, with faster training time and easier interpretation.
+    The accuracy of the LR and XGB classifiers on the `ASKAP' testing set was 94.4 and 95.1 per cent respectively. The confusion matrices are shown in \autoref{tab:faraday-cm-lr-askap12} and \autoref{tab:faraday-cm-xgb-askap12}. These results are very close to the CNN presented by \citet{brown_classifying_2018}, with a slightly higher true negative rate and a slightly lower true positive rate (recalling that positive sources are complex, and negative sources are simple). The accuracy of the CNN was 94.9, slightly lower than our XGB classifier and slightly higher than our LR classifier. Both of our classifiers therefore produce similar classification performance to the CNN, with faster training time and easier interpretation.
 
-  \subsection{Results on ``ATCA'' dataset}
+  \subsection{Results on `ATCA' dataset}
   \label{sec:faraday-results-simulated}
 
-    The accuracy of the LR and XGB classifiers on the ``ATCA'' dataset was 89.2 and 90.5 per cent respectively. The major differences between the ``ATCA'' and the ``ASKAP'' experiments are the range of the simulated Faraday depths and the distribution of noise levels. The ``ASKAP'' dataset, to match past CNN work, only included depths from $-50$ to $50$ rad m$^{-2}$, while the ``ATCA'' dataset includes depths from $-500$ to $500$ rad m$^{-2}$. The confusion matrices are shown in \autoref{tab:cm-lr} and \autoref{tab:cm-xgb}.
+    The accuracy of the LR and XGB classifiers on the `ATCA' dataset was 89.2 and 90.5 per cent respectively. The major differences between the `ATCA' and the `ASKAP' experiments are the range of the simulated Faraday depths and the distribution of noise levels. The `ASKAP' dataset, to match past CNN work, only included depths from $-50$ to $50$ rad m$^{-2}$, while the `ATCA' dataset includes depths from $-500$ to $500$ rad m$^{-2}$. The confusion matrices are shown in \autoref{tab:faraday-cm-lr} and \autoref{tab:faraday-cm-xgb}.
 
     \begin{figure}
       \begin{subfigure}{\linewidth}
         \includegraphics[width=\linewidth]{faraday-images/mean_xgb_prediction_dphi_amp.pdf}
-        \caption{\label{fig:mean-xgb-pred}}
+        \caption{\label{fig:faraday-mean-xgb-pred}}
       \end{subfigure}
       \begin{subfigure}{\linewidth}
         \includegraphics[width=\linewidth]{faraday-images/mean_lr_prediction_dphi_amp.pdf}
-        \caption{\label{fig:mean-lr-pred}}
+        \caption{\label{fig:faraday-mean-lr-pred}}
       \end{subfigure}
-      \caption{\label{fig:amps-dphi-mean} Mean prediction as a function of component depth separation and minimum component amplitude for (a) XGB and (b) LR.}
+      \caption{\label{fig:faraday-amps-dphi-mean} Mean prediction as a function of component depth separation and minimum component amplitude for (a) XGB and (b) LR.}
     \end{figure}
 
-    As we know the true Faraday depths of the components in our simulation, we can investigate the behaviour of these classifiers as a function of physical properties. \autoref{fig:amps-dphi-mean} shows the mean classifier prediction as a function of component depth separation and minimum component amplitude. This is tightly related to the mean accuracy, as the entire plot domain contains complex spectra besides the left and bottom edge: by setting the threshold to a value on this plot, the accuracy will be one hundred per cent on the non-edge for all higher values.
+    As we know the true Faraday depths of the components in our simulation, we can investigate the behaviour of these classifiers as a function of physical properties. \autoref{fig:faraday-amps-dphi-mean} shows the mean classifier prediction as a function of component depth separation and minimum component amplitude. This is tightly related to the mean accuracy, as the entire plot domain contains complex spectra besides the left and bottom edge: by thresholding the classifier prediction to a certain value, the accuracy will be one hundred per cent on the non-edge for all sources with higher prediction values.
 
   \subsection{Results on observed FDFs}
   \label{sec:faraday-results-observed}
@@ -235,12 +235,12 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     %   \begin{subfigure}{0.45\linewidth}
     %     \includegraphics[width=\linewidth]{faraday-images/livingston_false_positive.pdf}
     %     \caption{Predicted complex.}
-    %     \label{fig:livingston-false-positive}
+    %     \label{fig:faraday-livingston-false-positive}
     %   \end{subfigure}%
     %   \begin{subfigure}{0.45\linewidth}
     %     \includegraphics[width=\linewidth]{faraday-images/livingston_false_negative.pdf}
     %     \caption{Predicted simple.}
-    %     \label{fig:livingston-false-negative}
+    %     \label{fig:faraday-livingston-false-negative}
     %   \end{subfigure}
     %   \begin{subfigure}{0.45\linewidth}
     %     \includegraphics[width=\linewidth]{faraday-images/osullivan_false_positive.pdf}
@@ -251,68 +251,66 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     %     \caption{Predicted simple.}
     %   \end{subfigure}
     %   \caption{Randomly-selected misclassified FDFs. (a) and (b) are from the Livingston dataset, and (c) and (d) are from the O'Sullivan dataset. (a) and (c) were misclassified as complex while (b) and (d) were misclassified as simple.}
-    %   \label{fig:misclassified}
+    %   \label{fig:faraday-misclassified}
     % \end{figure*}
 
     \begin{figure*}
       \centering
       \includegraphics[width=\linewidth]{faraday-images/pca_with_overlay.pdf}
       \caption{Principal component analysis for simulated data (coloured dots) with observations overlaid (black-edged circles). Observations are coloured by their XGB or LR estimated probability of being complex, with blue indicating `most simple' and pink indicating `most complex'.}
-      \label{fig:pca}
+      \label{fig:faraday-pca}
     \end{figure*}
     \begin{figure}
       \centering
       \includegraphics[width=\linewidth]{faraday-images/pc_complex_curves.pdf}
       \caption{Estimated rates of Faraday complexity for the Livingstone and O'Sullivan datasets as functions of threshold. The horizontal lines indicate the rates of Faraday complexity estimated by Livingston and O'Sullivan respectively.}
-      \label{fig:complexity-rates}
+      \label{fig:faraday-complexity-rates}
     \end{figure}
 
-    We used the LR and XGB classifiers which were trained on the ATCA simulation to estimate the probability that our 142 observed FDFs (\autoref{sec:faraday-observational-data}) were Faraday complex. As these classifiers were trained on simulated data, they face the issue of the `domain gap': the distribution of samples from a simulation differs from the distribution of real sources, and this affects performance on real data. Solving this issue is called `domain adaptation' and how to do this is an open research question in machine learning \citep{zhang2019transfer,pan10transfer}. Nevertheless, the features of our observations mostly fall in the same region of feature space as the simulations (\autoref{fig:pca}) and so we expect reasonably good domain transfer.
+    We used the LR and XGB classifiers which were trained on the `ATCA' dataset to estimate the probability that our 142 observed FDFs (\autoref{sec:faraday-observational-data}) were Faraday complex. As these classifiers were trained on simulated data, they face the issue of the `domain gap': the distribution of samples from a simulation differs from the distribution of real sources, and this affects performance on real data. Solving this issue is called `domain adaptation' and how to do this is an open research question in machine learning \citep{zhang2019transfer,pan10transfer}. Nevertheless, the features of our observations mostly fall in the same region of feature space as the simulations (\autoref{fig:faraday-pca}) and so we expect reasonably good domain transfer.
 
-    Two apparently complex sources in the Livingston sample are classified as simple with high probability by XGB. These outliers are on the very edge of the training sample (\autoref{fig:pca}) and the underdensity of training data here is likely the cause of this issue. LR does not suffer the same issue, producing plausible predictions for the entire dataset, and these sources are instead classified as complex with high probability.
+    Two apparently complex sources in the Livingston sample are classified as simple with high probability by XGB. These outliers are on the very edge of the training sample (\autoref{fig:faraday-pca}) and the underdensity of training data here is likely the cause of this issue. LR does not suffer the same issue, producing plausible predictions for the entire dataset, and these sources are instead classified as complex with high probability.
 
-    With a threshold of 0.5, LR predicted that 96 and 83 per cent of the Livingston and O'Sullivan sources were complex respectively. This is in line with expectations that the Livingston data should have more Faraday complex sources than the O'Sullivan data due to their location near the Galactic Centre. XGB predicted that 93 and 100 per cent of the Livingston and O'Sullivan sources were complex respectively. Livingston et al. (in prep) found that 90 per cent of their sources were complex, and \citet{osullivan_broad-band_2017} found that 64 per cent of their sources were complex. This suggests that our classifiers are overestimating complexity, though it could also be the case that the methods used by Livingston and O'Sullivan underestimate complexity. Modifying the prediction threshold from 0.5 changes the estimated rate of Faraday complexity, and we show the estimated rates against threshold for both classifiers in \autoref{fig:complexity-rates}. We suggest that this result is indicative of our probabilities being uncalibrated, and a higher threshold should be chosen in practice. We chose to keep the threshold at 0.5 as this had the highest accuracy on the simulated validation data. The very high complexity rates of XGB and two outlying classifications indicate that the XGB classifier may be overfitting to the simulation and that it is unable to generalise across the domain gap.
+    With a threshold of 0.5, LR predicted that 96 and 83 per cent of the Livingston and O'Sullivan sources were complex respectively. This is in line with expectations that the Livingston data should have more Faraday complex sources than the O'Sullivan data due to their location near the Galactic Centre. XGB predicted that 93 and 100 per cent of the Livingston and O'Sullivan sources were complex respectively. Livingston et al. (in prep) found that 90 per cent of their sources were complex, and \citet{osullivan_broad-band_2017} found that 64 per cent of their sources were complex. This suggests that our classifiers are overestimating complexity, though it could also be the case that the methods used by Livingston and O'Sullivan underestimate complexity. Modifying the prediction threshold from 0.5 changes the estimated rate of Faraday complexity, and we show the estimated rates against threshold for both classifiers in \autoref{fig:faraday-complexity-rates}. We suggest that this result is indicative of our probabilities being uncalibrated, and a higher threshold should be chosen in practice. We chose to keep the threshold at 0.5 as this had the highest accuracy on the simulated validation data. The very high complexity rates of XGB and two outlying classifications indicate that the XGB classifier may be overfitting to the simulation and that it is unable to generalise across the domain gap.
 
-    \autoref{fig:all-observed-fdfs-lr} and \autoref{fig:all-observed-fdfs-xgb} show every observed FDF ordered by estimated Faraday complexity, alongside the models predicted by Livingston and O'Sullivan, for LR and XGB respectively. There is a clear visual trend of increasingly complex sources with increasing predicted probability of being complex. %The complex FDFs in the Livingston dataset that were identified as simple by the classifier tend to have very different component amplitudes and a very high signal-to-noise main peak, while the simple FDFs identified as complex tend to be very noisy.
+    \autoref{fig:faraday-all-observed-fdfs-lr} and \autoref{fig:faraday-all-observed-fdfs-xgb} show every observed FDF ordered by estimated Faraday complexity, alongside the models predicted by Livingston and \citet{osullivan_broad-band_2017}, for LR and XGB respectively. There is a clear visual trend of increasingly complex sources with increasing predicted probability of being complex. %The complex FDFs in the Livingston dataset that were identified as simple by the classifier tend to have very different component amplitudes and a very high signal-to-noise main peak, while the simple FDFs identified as complex tend to be very noisy.
 
 \section{Discussion}
 \label{sec:faraday-discussion}
 
-  % \todo{Changing the bias of the classifiers would allow us to optimise for high precision or high recall depending on the use case of the classifier, but we optimised for maximum accuracy here.}
-
-  On simulated data (\autoref{sec:faraday-results-simulated}) we achieve state-of-the-art accuracy. Our results on observed FDFs show that our classifiers produce plausible results, with \autoref{fig:all-observed-fdfs-lr} and \autoref{fig:all-observed-fdfs-xgb} showing a clear trend of apparent complexity. Some issues remain: we discuss the intrinsic overlap between simple and complex FDFs in \autoref{sec:faraday-overlap} and the limitations of our method in \autoref{sec:faraday-limitations}.
+  On simulated data (\autoref{sec:faraday-results-simulated}) we achieve state-of-the-art accuracy. Our results on observed FDFs show that our classifiers produce plausible results, with \autoref{fig:faraday-all-observed-fdfs-lr} and \autoref{fig:faraday-all-observed-fdfs-xgb} showing a clear trend of apparent complexity. Some issues remain: we discuss the intrinsic overlap between simple and complex FDFs in \autoref{sec:faraday-overlap} and the limitations of our method in \autoref{sec:faraday-limitations}.
 
   % \subsection{Interpretable classification}
 
-  %   Our classifiers are interpretable. The features are easy to understand and have clear relationship to the true simulation parameters, and the classifiers themselves are simple enough that it is possible to understand how the classifier came to a given classification for a given source. LR is particularly simple, and similar enough in performance to XGB that it may be the preferable classifier for Faraday complexity estimation. We can examine its weights to find why it predicted a given FDF was simple or complex. For example, in \autoref{fig:misclassified}, a) was classified as complex due to its low maximum value of $|\hat F|$ and its high Euclidean distance from the simple manifold, b) and d) were both classified as simple due to their low Euclidean distance from the simple manifold, and c) was classified as complex due to its high maximum $|\hat F|$ and $W_2$ distance from the simple manifold (though the prediction is very close to the decision boundary because it has a low Euclidean distance from the simple manifold). Interpretability in a classifier is valuable in astronomy, as understanding the limitations and behaviour of our methods is important to ensure that any physical predictions we make from our results are sensible, well-motivated, and consistent with physics.
+  %   Our classifiers are interpretable. The features are easy to understand and have clear relationship to the true simulation parameters, and the classifiers themselves are simple enough that it is possible to understand how the classifier came to a given classification for a given source. LR is particularly simple, and similar enough in performance to XGB that it may be the preferable classifier for Faraday complexity estimation. We can examine its weights to find why it predicted a given FDF was simple or complex. For example, in \autoref{fig:faraday-misclassified}, a) was classified as complex due to its low maximum value of $|\hat F|$ and its high Euclidean distance from the simple manifold, b) and d) were both classified as simple due to their low Euclidean distance from the simple manifold, and c) was classified as complex due to its high maximum $|\hat F|$ and $W_2$ distance from the simple manifold (though the prediction is very close to the decision boundary because it has a low Euclidean distance from the simple manifold). Interpretability in a classifier is valuable in astronomy, as understanding the limitations and behaviour of our methods is important to ensure that any physical predictions we make from our results are sensible, well-motivated, and consistent with physics.
 
   \subsection{Complexity and seeming `not simple'}
   \label{sec:faraday-overlap}
 
     Through this work we found our methods limited by the significant overlap between complex and simple FDFs. Complex FDFs can be consistent with simple FDFs due to close Faraday components or very small amplitudes on the secondary component, and vice versa due to noise.
 
-    % \autoref{fig:livingston-false-negative} is an example of such a classification. Due to this effect we should expect a lower rate of complexity than the true complexity rate. We demonstrated this in \autoref{sec:faraday-results-observed} where our methods predict lower rates of Faraday complexity than the methods of Faraday moments and QU-fitting employed by Livingston and O'Sullivan respectively. Of course, issues like model overfitting (with QU-fitting) or high sensitivity to choice of noise cutoff (with RM-CLEAN and Faraday moments) may also inflate the rate of complexity in the O'Sullivan and Livingston models respectively, so we refrain from stating that either complexity estimation method is \emph{wrong}, just that they do not match. For any given source, both methods may produce plausible but disagreeing results.
+    % \autoref{fig:faraday-livingston-false-negative} is an example of such a classification. Due to this effect we should expect a lower rate of complexity than the true complexity rate. We demonstrated this in \autoref{sec:faraday-results-observed} where our methods predict lower rates of Faraday complexity than the methods of Faraday moments and QU-fitting employed by Livingston and O'Sullivan respectively. Of course, issues like model overfitting (with QU-fitting) or high sensitivity to choice of noise cutoff (with RM-CLEAN and Faraday moments) may also inflate the rate of complexity in the O'Sullivan and Livingston models respectively, so we refrain from stating that either complexity estimation method is \emph{wrong}, just that they do not match. For any given source, both methods may produce plausible but disagreeing results.
     % Surely this is a good place to discuss the merits of being conservative in developing a catalog?  For example, an RM catalogue of high S/N sources could be easily derived with your classifier because it would be conservative to selecting simple sources
 
-    The main failure mode of our classifiers is misclassifying a complex source as simple (\autoref{tab:cm-lr} and \autoref{tab:cm-xgb}). Whether sources with close components or small amplitudes should be considered complex is not clear, since for practical purposes they can be treated as simple: assuming the source is simple yields a very similar RM to the RM of the primary component, and thus would not negatively impact further data products such as an RM grid. The scenarios where we would want a Faraday complexity classifier rather than a polarisation structure model---large-scale analysis and wide-area surveys---do not seem to be disadvantaged by considering such sources simple. Additional sources similar to these are likely hidden in presumably `simple' FDFs by the frequency range and spacing of the observations, just as how these complex sources would be hidden in lower-resolution observations. Note also that misidentification of complex sources as simple is intrinsically a problem with complexity estimation even for models not well-represented by a simple FDF, as complex sources may conspire to appear as a wide range of viable models including simple \citep{sun15comparison}.
+    The main failure mode of our classifiers is misclassifying a complex source as simple (\autoref{tab:faraday-cm-lr} and \autoref{tab:faraday-cm-xgb}). Whether sources with close components or small amplitudes should be considered complex is not clear, since for practical purposes they can be treated as simple: assuming the source is simple yields a very similar RM to the RM of the primary component, and thus would not negatively impact further data products such as an RM grid. The scenarios where we would want a Faraday complexity classifier rather than a polarisation structure model -- large-scale analysis and wide-area surveys -- do not seem to be disadvantaged by considering such sources simple. Additional sources similar to these are likely hidden in presumably `simple' FDFs by the frequency range and spacing of the observations, just as how these complex sources would be hidden in lower-resolution observations. Note also that misidentification of complex sources as simple is intrinsically a problem with complexity estimation even for models not well-represented by a simple FDF, as complex sources may conspire to appear as a wide range of viable models including simple \citep{sun15comparison}.
 
     Conversely, high-noise simple FDFs may be consistent with complex FDFs. One key question is how Faraday complexity estimators should behave as the noise increases: should high noise result in a complex prediction or a simple prediction, given that a complex or simple FDF would both be consistent with a noisy FDF? Occam's razor suggests that we should choose the simplest suitable model, and so increasing noise should lead to predictions of less complexity. This is not how our classifiers operate, however: high-noise FDFs are different to the model simple FDFs and so are predicted to be `not simple'. In some sense our classifiers are not looking for complex sources, but are rather looking for `not simple' sources.
 
   \subsection{Limitations}
   \label{sec:faraday-limitations}
 
-    Our main limitations are our simplifying assumptions on FDFs and the domain gap between simulated and real observations.
+    Our main limitations are our simplifying assumptions on FDFs and the domain gap between simulated and real observations. However, our proposed features (Section~\autoref{sec:faraday-scores-method}) can be applied to future improved simulations.
 
-    It is unclear what the effect of our simplifying assumptions are on the effectiveness of our simulation. The three main simplifications we think may negatively affect our simulations are 1) limiting to two components, 2) assuming no external Faraday dispersion, and 3) assuming no internal Faraday dispersion (Faraday thickness). Future work will explore removing these simplifying assumptions, but will need to account for the increased difficulty in characterising the simulation with more components and no longer having Faraday screens as components. Additionally, more work will be required to make sure that the rates of internal and external Faraday dispersion match what might be expected from real sources, or risk making a simulation that has too large a range of consistent models for a given source: for example, a two-component source could also be explained as a sufficiently wide or resolved-out Faraday thick source or a three-component source with a small third component. This greatly complicates the classification task.
+    It is unclear what the effect of our simplifying assumptions are on the effectiveness of our simulation. The three main simplifications that may negatively affect our simulations are 1) limiting to two components, 2) assuming no external Faraday dispersion, and 3) assuming no internal Faraday dispersion (Faraday thickness). Future work will explore removing these simplifying assumptions, but will need to account for the increased difficulty in characterising the simulation with more components and no longer having Faraday screens as components. Additionally, more work will be required to make sure that the rates of internal and external Faraday dispersion match what might be expected from real sources, or risk making a simulation that has too large a range of consistent models for a given source: for example, a two-component source could also be explained as a sufficiently wide or resolved-out Faraday thick source or a three-component source with a small third component. This greatly complicates the classification task.
 
-    Previous machine learning work \citep[e.g.][]{brown_classifying_2018} has not been run before on real FDF data, so this chapter is the first example of the domain gap arising in Faraday complexity classification. This is a problem that requires further research to solve. We have no good way to ensure that our simulation matches reality, so some amount of domain adaptation will always be necessary to train classifiers on simulated data and then apply these classifiers to real data. But with the low source counts in polarisation science (high-resolution spectropolarimetric data currently numbers in the few hundreds) any machine learning method will need to be trained on simulations. This is not just a problem in Faraday complexity estimation, and domain adaptation is also an issue faced in the wider astroinformatics community: large quantities of labelled data are hard to come by, and some sources are very rare \citep[e.g. gravitational wave detections or fast radio bursts;][]{zevin17gravityspy, gebhard19convolutional, agarwal20fetch}. LR seems to handle the domain adaptation better than XGB, with only a slightly lower accuracy on simulated data. Our results are plausible and the distribution of our simulation well overlaps the distribution of our real data (\autoref{fig:pca}).
+    Previous machine learning work \citep[e.g.][]{brown_classifying_2018} has not been run before on real FDF data, so this chapter is the first example of the domain gap arising in Faraday complexity classification. This is a problem that requires further research to solve. We have no good way to ensure that our simulation matches reality, so some amount of domain adaptation will always be necessary to train classifiers on simulated data and then apply these classifiers to real data. But with the low source counts in polarisation science (high-resolution spectropolarimetric data currently numbers in the few hundreds) any machine learning method will need to be trained on simulations. This is not just a problem in Faraday complexity estimation, and domain adaptation is also an issue faced in the wider astroinformatics community: large quantities of labelled data are hard to come by, and some sources are very rare \citep[e.g. gravitational wave detections or fast radio bursts;][]{zevin17gravityspy, gebhard19convolutional, agarwal20fetch}. LR seems to handle the domain adaptation better than XGB, with only a slightly lower accuracy on simulated data. Our results are plausible and the distribution of our simulation well overlaps the distribution of our real data (\autoref{fig:faraday-pca}).
 
-    % \autoref{fig:acc-noise} demonstrates that the accuracy of our classifiers is dependent on the amount of noise in the simulated FDF in a surprising way: the correlation between noise and accuracy is not monotonic, and instead accuracy \emph{increases} as the noise increases up to the mean noise level of the training set. The classifier is forced to generalise over different amounts of noise with no good way to estimate how much noise is in a given FDF. This could be remedied by including noise as a feature, as suggested by \autoref{fig:acc-noise-retrained} which shows improved classifier behaviour when the training set was divided into different amounts of noise and the classifier was only trained and validated on FDFs with similar amounts of noise. But this is hard to generalise to real data: we would need not only a reliable noise estimate, but a reliable noise estimate that behaves in the same way to the simulated noise. The mean noise of the Livingston data was $0.028_{-0.022}^{+0.024}$, much lower than our simulated noise. This, combined with the fact that our simulated FDFs look very similar to the observed FDFs, suggests that either or both a) the injected noise and real noise have different units, or b) important aspects of the observed data are not captured by our simulation. This is another example of the domain gap in action and further research is required to unify the simulated and observed noise. The amount of noise can then be included as a feature for the classifier, which could greatly improve performance on both simulated and observed data.
+    % \autoref{fig:faraday-acc-noise} demonstrates that the accuracy of our classifiers is dependent on the amount of noise in the simulated FDF in a surprising way: the correlation between noise and accuracy is not monotonic, and instead accuracy \emph{increases} as the noise increases up to the mean noise level of the training set. The classifier is forced to generalise over different amounts of noise with no good way to estimate how much noise is in a given FDF. This could be remedied by including noise as a feature, as suggested by \autoref{fig:faraday-acc-noise-retrained} which shows improved classifier behaviour when the training set was divided into different amounts of noise and the classifier was only trained and validated on FDFs with similar amounts of noise. But this is hard to generalise to real data: we would need not only a reliable noise estimate, but a reliable noise estimate that behaves in the same way to the simulated noise. The mean noise of the Livingston data was $0.028_{-0.022}^{+0.024}$, much lower than our simulated noise. This, combined with the fact that our simulated FDFs look very similar to the observed FDFs, suggests that either or both a) the injected noise and real noise have different units, or b) important aspects of the observed data are not captured by our simulation. This is another example of the domain gap in action and further research is required to unify the simulated and observed noise. The amount of noise can then be included as a feature for the classifier, which could greatly improve performance on both simulated and observed data.
 
 \section{Conclusion}
 \label{sec:faraday-conclusion}
 
-  We developed a simple, interpretable machine learning method for estimating Faraday complexity. Our interpretable features were derived by comparing observed FDFs to idealised simple FDFs, which we could determine both for simulated and real observations. We demonstrated the effectiveness of our method on both simulated and real data. Using simulated data, we found that our classifiers were 95 per cent accurate, with near perfect recall of Faraday simple sources (specificity). On simulated data that matched existing observations, our classifiers obtained an accuracy of 90 per cent. Evaluating our classifiers on real data gave plausible results. Future work will need to narrow the domain gap to improve transfer of classifiers trained on simulations to real, observed data.
+  We developed a simple, interpretable machine learning method for estimating Faraday complexity. Our interpretable features were derived by comparing observed FDFs to idealised simple FDFs, which we could determine both for simulated and real observations. We demonstrated the effectiveness of our method on both simulated and real data. Using simulated data, we found that our classifiers were 95 per cent accurate, with near perfect recall (specificity) of Faraday simple sources. On simulated data that matched existing observations, our classifiers obtained an accuracy of 90 per cent. Evaluating our classifiers on real data gave the plausible results shown in \autoref{fig:faraday-all-observed-fdfs-lr}, and marks the first application of machine learning to observed FDFs. Future work will need to narrow the domain gap to improve transfer of classifiers trained on simulations to real, observed data.
 
   % If we were to run our classifiers at scale on the upcoming POSSUM survey, how would the limitations presented in \autoref{sec:faraday-results-simulated} affect derived statistics of Faraday complexity?
 
@@ -416,10 +414,10 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
 \section{Hyperparameters for LR and XGB}
 \label{sec:faraday-hyperparameters}
 
-  This section contains tables of the hyperparameters that we used for our classifiers. \autoref{tab:hyperparameters-xgb} and \autoref{tab:hyperparameters-lr} tabulate the hyperparameters for XGB and LR respectively for the ATCA dataset. \autoref{tab:hyperparameters-xgb-askap12} and \autoref{tab:hyperparameters-lr-askap12} tabulate the hyperparameters for XGB and LR respectively for the ASKAP dataset.
+  This section contains tables of the hyperparameters that we used for our classifiers. \autoref{tab:faraday-hyperparameters-xgb} and \autoref{tab:faraday-hyperparameters-lr} tabulate the hyperparameters for XGB and LR respectively for the `ATCA' dataset. \autoref{tab:faraday-hyperparameters-xgb-askap12} and \autoref{tab:faraday-hyperparameters-lr-askap12} tabulate the hyperparameters for XGB and LR respectively for the `ASKAP' dataset.
 
-  \begin{table}
-    \caption{\label{tab:hyperparameters-xgb} XGB hyperparameters for the ATCA dataset.}
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-xgb} XGB hyperparameters for the `ATCA' dataset.}
     \begin{tabular}{ll}
       \hline\hline
       Parameter & Value\\\hline
@@ -437,8 +435,8 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     \end{tabular}
   \end{table}
 
-  \begin{table}
-    \caption{\label{tab:hyperparameters-lr} LR hyperparameters for the ATCA dataset.}
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-lr} LR hyperparameters for the `ATCA' dataset.}
     \begin{tabular}{ll}
       \hline\hline
       Parameter & Value\\\hline
@@ -448,8 +446,8 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     \end{tabular}
   \end{table}
 
-  \begin{table}
-    \caption{\label{tab:hyperparameters-xgb-askap12} XGB hyperparameters for the ASKAP dataset.}
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-xgb-askap12} XGB hyperparameters for the `ASKAP' dataset.}
     \begin{tabular}{ll}
       \hline\hline
       Parameter & Value\\\hline
@@ -467,8 +465,8 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
     \end{tabular}
   \end{table}
 
-  \begin{table}
-    \caption{\label{tab:hyperparameters-lr-askap12} LR hyperparameters for the ASKAP dataset.}
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-lr-askap12} LR hyperparameters for the `ASKAP' dataset.}
     \begin{tabular}{ll}
       \hline\hline
       Parameter & Value\\\hline
@@ -481,10 +479,10 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
 \section{Confusion matrices}
 \label{sec:faraday-cms}
 
-  This section contains confusion matrices for our classifiers evaluated on simulated ATCA and ASKAP data, as well as a confusion matrix from the state-of-the-art CNN classifier on simulated ASKAP data. \autoref{tab:cm-lr-askap12}, \autoref{tab:cm-lr-askap12}, and \autoref{tab:cm-brown} are confusion matrices on the ASKAP data for LR, XGB, and CNN respectively. \autoref{tab:cm-lr} and \autoref{tab:cm-xgb} are confusion matrices on the ATCA data for LR and XGB respectively.
+  This section contains confusion matrices for our classifiers evaluated on simulated ATCA and ASKAP data, as well as a confusion matrix from the state-of-the-art CNN classifier on simulated ASKAP data. \autoref{tab:faraday-cm-lr-askap12}, \autoref{tab:faraday-cm-lr-askap12}, and \autoref{tab:faraday-cm-brown} are confusion matrices on the `ASKAP' dataset for LR, XGB, and CNN respectively. \autoref{tab:faraday-cm-lr} and \autoref{tab:faraday-cm-xgb} are confusion matrices on the `ATCA' dataset for LR and XGB respectively.
 
-    \begin{table}
-      \caption{\label{tab:cm-lr-askap12} Logistic regression confusion matrix for the ASKAP simulation.}
+    \begin{table}[htbp]
+      \caption{\label{tab:faraday-cm-lr-askap12} Logistic regression confusion matrix for the `ASKAP' dataset.}
       \begin{tabular}{r|cc}
         \hline\hline
         & Pred. simple & Pred. complex \\\hline
@@ -493,7 +491,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
         \hline\hline
       \end{tabular}\\
       \\
-      \caption{\label{tab:cm-xgb-askap12} XGB confusion matrix for the ASKAP simulation.}
+      \caption{\label{tab:faraday-cm-xgb-askap12} XGB confusion matrix for the `ASKAP' dataset.}
       \begin{tabular}{r|cc}
         \hline\hline
         & Pred. simple & Pred. complex \\\hline
@@ -502,7 +500,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
         \hline\hline
       \end{tabular}\\
       \\
-      \caption{\label{tab:cm-brown} CNN confusion matrix for the ASKAP simulation, adapted from \citet{brown_classifying_2018}.}
+      \caption{\label{tab:faraday-cm-brown} CNN confusion matrix for the `ASKAP', adapted from \citet{brown_classifying_2018}.}
       \begin{tabular}{r|cc}
         \hline\hline
         & Pred. simple & Pred. complex \\\hline
@@ -512,8 +510,8 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
       \end{tabular}
     \end{table}
 
-    \begin{table}
-      \caption{\label{tab:cm-lr} Logistic regression confusion matrix for the ATCA dataset.}
+    \begin{table}[htbp]
+      \caption{\label{tab:faraday-cm-lr} Logistic regression confusion matrix for the `ATCA' dataset.}
       \begin{tabular}{r|cc}
         \hline\hline
         & Pred. simple & Pred. complex \\\hline
@@ -522,7 +520,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
         \hline\hline
       \end{tabular}\\
       \\
-      \caption{\label{tab:cm-xgb} XGB confusion matrix for the ATCA dataset.}
+      \caption{\label{tab:faraday-cm-xgb} XGB confusion matrix for the `ATCA' dataset.}
       \begin{tabular}{r|cc}
         \hline\hline
         & Pred. simple & Pred. complex \\\hline
@@ -535,22 +533,22 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
 \section{Predictions on real data}
 \label{sec:faraday-real-data-fig}
 
-  This section contains \autoref{fig:all-observed-fdfs-lr} and \autoref{fig:all-observed-fdfs-xgb}, which shows the predicted probability of being Faraday complex for all real data used in this chapter, drawn from Livingston et al. (in prep.) and \citet{osullivan_broad-band_2017}.
+  This section contains \autoref{fig:faraday-all-observed-fdfs-lr} and \autoref{fig:faraday-all-observed-fdfs-xgb}, which shows the predicted probability of being Faraday complex for all real data used in this chapter, drawn from Livingston et al. (2020, submitted) and \citet{osullivan_broad-band_2017}.
 
   \begin{figure*}
     \centering
     \includegraphics[width=\linewidth]{faraday-images/both_spectra_lr.pdf}
     % \includegraphics[width=0.7\linewidth]{faraday-images/jack_spectra.pdf}
-    \caption{The 142 observed FDFs ordered by LR-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the XGB estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
-    \label{fig:all-observed-fdfs-lr}
+    \caption{The 142 observed FDFs ordered by LR-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the LR estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
+    \label{fig:faraday-all-observed-fdfs-lr}
   \end{figure*}
 
   \begin{figure*}
     \centering
     \includegraphics[width=\linewidth]{faraday-images/both_spectra_xgb.pdf}
     % \includegraphics[width=0.7\linewidth]{faraday-images/jack_spectra.pdf}
-    \caption{The 142 observed FDFs ordered by XGB-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the XGB estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
-    \label{fig:all-observed-fdfs-xgb}
+    \caption{The 142 observed FDFs ordered by XGB-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the XGB estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
+    \label{fig:faraday-all-observed-fdfs-xgb}
   \end{figure*}
 
 \section{Simulating observed FDFs}
@@ -594,7 +592,7 @@ This chapter is based on my to-be-submitted paper \emph{Interpretable Faraday Co
 
 \unappendix
 
-  % If we were to run our classifiers at scale on the upcoming POSSUM survey, how would the limitations presented in \autoref{sec:faraday-results-simulated} affect derived statistics of Faraday complexity? 
+  % If we were to run our classifiers at scale on the upcoming POSSUM survey, how would the limitations presented in \autoref{sec:faraday-faraday-results-simulated} affect derived statistics of Faraday complexity? 
 
   % \begin{itemize}
   %   \item Mention Brown cuts. What are the implications for POSSUM if we were to use our classifier? How does this affect what we can detect and can't?

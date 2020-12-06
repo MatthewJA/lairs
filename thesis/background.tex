@@ -25,6 +25,110 @@
 
     From the size scales described above, it should be clear that a survey of extended radio sources will be dominated by AGN. Nevertheless, star-forming galaxies present a significant part of the radio population, and the fraction of the radio sky they comprise varies significantly with survey parameters.
 
+\section{Radio emission}
+\label{sec:radio-astronomy}
+
+    Electromagnetic radiation in radio frequencies---about 10~MHz--1~THz \citep{condon_essential_2016}---is called \defn{radio emission}. This is a very broad range of frequencies and so radio astronomy covers a very broad range of astrophysical phenomena, from cosmological background radiation to neutron stars. The focus of this thesis is the exciting, dynamic, and so-called `violent universe' of radio galaxies. These galaxies are observed through their emission of synchrotron radiation and are studied through their observed physical structure, the intensity and spectroscopic properties of their radiation, and the polarisation and spectropolarimetric properties that are uniquely visible in radio. This section introduces synchrotron radiation and radio polarisation.
+
+    \subsection{Synchrotron radiation}
+    \label{sec:synchrotron}
+
+        Most radio emission from radio galaxies is \defn{synchrotron radiation}, produced by relativistic charged particles accelerating in a magnetic field. A non-relativistic charged particle will spiral with a fixed angular frequency when it moves in a magnetic field in a process called \defn{gyro radiation}. Synchrotron radiation is a relativistic effect: it can be thought of as gyro radiation Lorentz transformed to energies much greater than $mc^2$. The spectrum of synchrotron radiation follows a power law \citep{condon_essential_2016}:
+        \begin{equation}
+            \label{eq:spectral-index}
+            S(\nu) \propto \nu^{\alpha}.
+        \end{equation}
+        $\alpha$ is called the \defn{spectral index}\footnote{Note that the sign of $\alpha$ varies by convention, and both $S \propto \nu^{\alpha}$ and $S \propto \nu^{-\alpha}$ exist in the literature.}. It is related to the energy distribution of the emitting electrons: assuming that the electron energy distribution follows a power law \citep[which it generally does,][]{rybicki_radiative_2008}, where the number density of electrons at a given energy $E$ is given by
+        \begin{equation}
+            n(E) \propto E^\Gamma,
+        \end{equation}
+        then
+        \begin{equation}
+            \alpha = \frac{\Gamma - 1}{2}.
+        \end{equation}
+        The spectral index for astronomical objects tends to range from -2 to 2\citeneeded.
+
+    \subsection{Polarisation}
+    \label{sec:polarisation}\todo{Add some figures to this section to break it up a bit.}
+
+        Electromagnetic radiation consists of waves of self-propagating, orthogonal electric and magnetic fields. The orthogonality of these two waves allows us to characterise the radiation just by the electric field. As a transverse wave, the electric field travels at an angle \todo{An angle with respect to what? Can we have a diagram here?}. This angle and its behaviour is called the \defn{polarisation} of the wave.
+
+        The polarisation can be characterised by decomposing the electric field into orthogonal components $E_x$ and $E_y$, letting $\hat z$ denote the axis of propagation:
+        \begin{equation}
+            \vec E = (\hat x E_x \exp(i \varphi_x) + \hat y E_y \exp(i \varphi_y)) \exp(i (\vec k \cdot \hat z - \omega t)).
+        \end{equation}
+        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$, and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component, called \defn{Stokes parameters}\todo{Cite the original Stokes parameters paper.}. These are \citep{condon_essential_2016}:
+        \begin{align}
+            \label{eq:stokes-i}
+            I &= \frac{1}{R_0} \mathbb E_t[E_x^2 + E_y^2],\\
+            \label{eq:stokes-q}
+            Q &= \frac{1}{R_0} \mathbb E_t[E_x^2 - E_y^2],\\
+            \label{eq:stokes-u}
+            U &= \frac{1}{R_0} \mathbb E_t[2 E_x^2 E_y^2 \cos (\varphi_x - \varphi_y)],\\
+            \label{eq:stokes-v}
+            V &= \frac{1}{R_0} \mathbb E_t[2 E_x^2 E_y^2 \sin (\varphi_x - \varphi_y)].
+        \end{align}
+        $\mathbb E_t$ denotes the expectation value over time. $I$ is the \defn{total intensity} of the radiation. $Q$ and $U$ together describe the linear polarisation and together can be used to define the \defn{polarisation angle} $\chi$:
+        \begin{equation}
+            \label{eq:polarisation-angle}
+            \tan (2 \chi) = \frac{U}{Q}.
+        \end{equation}
+        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the circular polarisation is zero or nearly zero \citep{rayner_radio_2000,saikia_polarization_1988} because of the roughly equal contributions of left- and right-handed circularly polarised radiation which cancel each other out \citeneeded{}, and we only observe linear polarisation. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out: this is called \defn{unpolarised} or \defn{partially-polarised} radiation respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} $P$ and is given by
+        \begin{equation}
+            \label{eq:polarised-intensity}
+            P^2 = Q^2 + U^2 + V^2.
+        \end{equation}
+        Note that $P^2 \leq I^2$. The \defn{fractional polarisation} is the ratio between these two intensities:
+        \begin{equation}
+            p = \frac{P}{I}.
+        \end{equation}
+
+        The synchrotron radiation from radio galaxies is polarised, though this polarisation is not always detectable as the polarised signal tends to be much weaker than the total intensity, on the order of ten per cent \citeneeded \todo{forward reference to AGN?}. Additionally, the most common non-AGN cause for radio emission is star formation, which does not generally have detectable polarisation\todo{Why?}. Polarisation is therefore an excellent way to confirm that a radio source is an AGN.
+
+        Polarisation can also be used to describe the magnetic structure of both the radio galaxy jets and lobes as well as the intervening medium. As polarised light from distant galaxies makes its way to us, magnetised plasma along the way can cause the polarisation angle to rotate due to the Faraday effect. The amount of rotation is called the \defn{Faraday depth} $\phi$, and is related to the electron density $n_e$ and the line-of-sight magnetic field strength $\vec B \cdot \hat{z}$ of the intervening medium:
+        \begin{equation}
+            \label{eq:faraday-depth}
+            \phi(x, y) = \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \int_{\mathrm{there}}^{\mathrm{here}} n_e(x, y, z) \vec B(x, y, z) \cdot \mathrm{d}\hat{z}\ \mathrm{rad}\ \mathrm{m}^{-2}.
+        \end{equation}
+        Here $\mathrm{d}\vec r$ is the infinitesimal path length in pc \citep{brentjens_faraday_2005} \todo{Check the units on this.}. Within the synthesised beam of a radio telescope\todo{forward reference to beams} there may be multiple lines-of-sight that go through different media and hence have different Faraday depths. An example of this is a radio galaxy that is sufficiently far away that its structure is unresolved by the telescope, and yet has different polarisation properties across its breadth. The leading constant of \autoref{eq:faraday-depth} is around $2.62 \times 10^{-13}$~T$^{-1}$, more commonly written as 0.812 pc $\upmu$G$^{-1}$ cm$^{-1}$ in CGS units with $B$ in $\upmu$G and $z$ in pc. The amount of polarised radiation at each Faraday depth can be characterised by the \defn{Faraday dispersion function} (FDF) or \defn{Faraday spectrum} of the source, usually denoted $F(\phi) \in \mathbb C$. $F$ is defined implicitly by its relationship with the polarised radiation $P$ observed at wavelength $\lambda$:
+        \begin{equation}
+            \label{eq:faraday-dispersion-function}
+            P(\lambda^2) = \int_{-\infty}^\infty F(\phi) e^{2i\lambda^2\phi}\ \mathrm{d}\phi.
+        \end{equation}
+        One useful way of thinking about this equation is that $F$ is the decomposition of $P(\lambda^2)$ into complex sinusoids of the form $e^{2i\lambda^2\phi}$.
+
+        If observed radiation has precisely one Faraday depth $\phi$, then the polarised structure is called a \defn{Faraday screen} and the source is called \defn{Faraday simple}\todo{Include a graphic}. In this degenerate case, the relationship between the polarisation angle $\chi$ and the squared wavelength $\lambda^2$ is linear:
+        \begin{equation}
+            \chi = \chi_0 + \phi \lambda^2,
+        \end{equation}
+        and the FDF is a delta distribution:
+        \begin{equation}
+            F(\varphi) = \delta(\varphi - \phi).
+        \end{equation}
+        $\phi$ is then called the \defn{rotation measure} (RM). If the source is not Faraday simple, then it is called \defn{Faraday complex}, and the question of whether a source is Faraday simple or Faraday complex is called \defn{Faraday complexity}. Until very recently, the frequency resolution of polarised surveys was insufficient to meaningfully separate most complex arrangements of Faraday depths, and so most sources were assumed to be simple and characterised entirely in terms of their rotation measure \citep[e.g.][]{taylor_rotation_2009}. Advancing telescope technology and emphasis on polarisation science has opened new frontiers in spectropolarimetry and upcoming and ongoing surveys (e.g. RACS and POSSUM) will likely report Faraday complexity and produce Faraday depth catalogues instead of rotation measures.
+
+        If the polarised spectrum of a Faraday complex source is observed at multiple frequencies, then the multiple Faraday depths comprising it can be disentangled even though they spatially overlap in the radio image. This can provide insight into the polarised structure of the source as well as the intervening medium. This disentanglement is accomplished by inverting \autoref{eq:faraday-dispersion-function}, a process called \defn{RM synthesis} \citep{brentjens_faraday_2005}:
+        \begin{equation}
+            \label{eq:rm-synthesis}
+            F(\phi) = \int_{-\infty}^\infty P(\lambda^2) e^{-2i\lambda^2\phi}\ \mathrm{d}\lambda^2.
+        \end{equation}
+        In reality we do not observe $P(\lambda^2)$ at all wavelengths nor with infinite resolution. In RM synthesis this is accounted for by the introduction of a \defn{weighting function} \citep[or \defn{windowing function}, e.g.][]{heald09faraday} $W(\lambda^2)$. $W(\lambda^2)$ is nonzero if and only if an observation was taken with wavelength $\lambda$. Substituting $P(\lambda^2) \to P(\lambda^2) W(\lambda^2)$ into \autoref{eq:rm-synthesis} results in a sum which can be numerically evaluated:
+        \begin{equation}
+            \label{eq:weighted-rm-synthesis}
+            F(\phi) \approx \int_{-\infty}^\infty P(\lambda^2) W(\lambda^2) e^{-2i\lambda^2\phi}\ \mathrm{d}\lambda^2 = \sum_{j = 1}^J P(\lambda^2_j) W(\lambda^2_j) e^{-2i\lambda^2_j\phi}.
+        \end{equation}
+        $P(\lambda^2_j)$ is the observed polarisation at the $j$th value of wavelength, $W(\lambda^2_j)$ is the corresponding $j$th weight, and $J$ is the total number of wavelengths for which measurements were taken. The weighting function $W$ is analogous to the weighting function in radio synthesis imaging. The most common choices of $W$ are 1) uniform weighting\footnote{The analogous weighting scheme in radio synthesis imaging would be natural weighting, rather than uniform---an unfortunate overlap in terminology.} with $W(\lambda_j^2) = 1$ for all nonzero values, and 2) \todo{weighting by noise}. 
+
+        Of course, no physical source has a precise Faraday depth, as there is always intrinsic scatter. Along the line of sight, if we assume Gaussian noise in an otherwise-constant $n_e$ i.e. $n_e(z) \sim \mathcal N(\overline n_e, \sigma_{n_e}^2)$, and a constant $B$ for simplicity, then we find
+        \begin{equation}
+            \phi \sim \mathcal N\left(\frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \overline n_e, \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \sigma_{n_e}^2\right),
+        \end{equation}
+        that is, the depth has an uncertainty proportional to the magnetic field strength and the noise in $n_e$. A similar result follows for noise in $B$ only. There is no analytic solution for noise in both $B$ and $n_e$, but if we approximate the integrand as a Gaussian by calculating the mean and variance we find
+        \begin{equation}
+            \phi \sim \mathcal N\left(\frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \frac{\overline n_e \sigma_B^2 + \overline B \sigma_{n_e}^2}{\sigma_B^2 + \sigma_{n_e}^2}, \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \frac{\sigma_{n_e}^2 \sigma_B^2}{\sigma_{n_e}^2 + \sigma_B^2}\right).
+        \end{equation}
+        We observe multiple lines-of-sight that are coalesced into one within the beam. Due to this noise, even with constant $n_e$ and $B$ across a source, we can see multiple Faraday depths as each line-of-sight is a sample from the above distribution.
+
     % \item the extra-galactic radio sky (gotta start here to be interesting?): \begin{itemize}
     %     \item star-forming galaxies
     %     \item AGN
@@ -142,7 +246,7 @@
     \subsection{Polarised structure}
     \label{sec:polarised-structure-of-agn}
 
-        The magnetic field of AGN is thought to be critical to their structure \citep{sikora_magnetic_2013}. A strong magnetic field is required to eject and collimate the jets \citep{lovelace_dynamo_1976} and the magnetic environment influences the structure of the jets \citep{osullivan_magnetic_2015}. Polarisation provides a probe for measuring this magnetic field. Radiative- and jet- mode AGN have different fractional polarisations, with jet-mode AGN having a much wider range of fractional polarisations ($p \sim [0, 30]$ per cent) compared to radiative-mode AGN (limited to $p \lta 15$ per cent), with this difference attributable to the magnetic environment \citep{osullivan_magnetic_2015}. Steep-spectrum ($\alpha > 0.5$) and flat-spectrum ($\alpha < 0.5$) AGN have differing fractional polarisations, with steep-spectrum sources having much higher fractional polarisation for frequencies $> 5$~GHz and flat-spectrum sources having higher fractional polarisation for frequencies $< 1$~GHz due to frequency-dependent depolarisation of the steep-spectrum sources \citep{saikia_polarization_1988}. Hotspots of FRII radio galaxies have low polarisation ($<10$ per cent) while the more diffuse sections may have much greater polarisation ($>20$ per cent) \citep{saikia_polarization_1988}. The direction of the magnetic field is correlated with the direction of the total intensity of the source \citep{saikia_polarization_1988}. \todo{}
+        The magnetic field of AGN is thought to be critical to their structure \citep{sikora_magnetic_2013}. A strong magnetic field is required to eject and collimate the jets \citep{lovelace_dynamo_1976} and the magnetic environment influences the structure of the jets \citep{osullivan_magnetic_2015}. Polarisation provides a probe for measuring this magnetic field. Radiative- and jet- mode AGN have different fractional polarisations, with jet-mode AGN having a much wider range of fractional polarisations ($p \sim [0, 30]$ per cent) compared to radiative-mode AGN (limited to $p \lessapprox 15$ per cent), with this difference attributable to the magnetic environment \citep{osullivan_magnetic_2015}. Steep-spectrum ($\alpha > 0.5$) and flat-spectrum ($\alpha < 0.5$) AGN have differing fractional polarisations, with steep-spectrum sources having much higher fractional polarisation for frequencies $> 5$~GHz and flat-spectrum sources having higher fractional polarisation for frequencies $< 1$~GHz due to frequency-dependent depolarisation of the steep-spectrum sources \citep{saikia_polarization_1988}. Hotspots of FRII radio galaxies have low polarisation ($<10$ per cent) while the more diffuse sections may have much greater polarisation ($>20$ per cent) \citep{saikia_polarization_1988}. The direction of the magnetic field is correlated with the direction of the total intensity of the source \citep{saikia_polarization_1988}. \todo{}
 
     % \subsection{The host galaxies of AGN}
     % \label{sec:host-galaxies}
@@ -159,209 +263,46 @@
 
         How do AGN tie into galaxy evolution and feedback? Why do we need them in our models and theories? Why are they important? \todo{}
 
-\section{Radio emission}
-\label{sec:radio-astronomy}\todo{Henry says: Shorten and simplify this section, as it goes too hard too fast.}
+\section{Classifying AGN}
+\label{sec:classification-of-agn}
 
-    Electromagnetic radiation in radio frequencies---about 10~MHz--1~THz \citep{condon_essential_2016}---is called \defn{radio emission}. This is a very broad range of frequencies and so radio astronomy covers a very broad range of astrophysical phenomena, from cosmological background radiation to neutron stars. The focus of this thesis is the exciting, dynamic, and so-called `violent universe' of radio galaxies. These galaxies are observed through their emission of synchrotron radiation and are studied through their observed physical structure, the intensity and spectroscopic properties of their radiation, and the polarisation and spectropolarimetric properties that are uniquely visible in radio. This section introduces synchrotron radiation and radio polarisation.
+    As discussed in \autoref{sec:unified-model}, radio galaxies fall into many classes. Understanding the mechanisms underlying these class distinctions is critical to understanding AGN. As we have no way to directly see the core of an AGN (it's far too small to resolve at the distances AGN occur and may also be occluded), our only method to investigate AGN is by looking at their large-scale behaviour. Some classes may relate to the fundamental AGN core, some may be environmental, and some may be due to observation effects. Much of our knowledge about AGN (such as the unified model) come from analysing these classes and their differences. To investigate classes of AGN then a large sample of each class is required, and source classification approaches can divide a large dataset from a radio survey into useful subsets. Knowing what class a source is may also help analyse its properties as we can estimate its expected behaviour, perhaps with the aid of models and simulations. Some classes may have interesting structure or properties that can only be observed with additional detailed observations, so identifying which sources require follow-up is a tightly related problem in radio astronomy. An excellent, though now somewhat dated, summary of radio source classification is the review paper by \citet{urry_unified_1995}, which we recommend for further reading.
 
-    \subsection{Synchrotron radiation}
-    \label{sec:synchrotron}
+    Deciding which class a given radio galaxy falls into may be challenging, and doing this automatically even more so. This section discusses approaches to classifying radio galaxies.
 
-        Most radio emission from radio galaxies is \defn{synchrotron radiation}, produced by relativistic charged particles accelerating in a magnetic field. A non-relativistic charged particle will spiral with a fixed angular frequency when it moves in a magnetic field in a process called \defn{gyro radiation}. Synchrotron radiation is a relativistic effect: it can be thought of as gyro radiation Lorentz transformed to energies much greater than $mc^2$. The spectrum of synchrotron radiation follows a power law \citep{condon_essential_2016}:
-        \begin{equation}
-            \label{eq:spectral-index}
-            S(\nu) \propto \nu^{\alpha}.
-        \end{equation}
-        $\alpha$ is called the \defn{spectral index}\footnote{Note that the sign of $\alpha$ varies by convention, and both $S \propto \nu^{\alpha}$ and $S \propto \nu^{-\alpha}$ exist in the literature.}. It is related to the energy distribution of the emitting electrons: assuming that the electron energy distribution follows a power law \citep[which it generally does,][]{rybicki_radiative_2008}, where the number density of electrons at a given energy $E$ is given by
-        \begin{equation}
-            n(E) \propto E^\Gamma,
-        \end{equation}
-        then
-        \begin{equation}
-            \alpha = \frac{\Gamma - 1}{2}.
-        \end{equation}
-        The spectral index for astronomical objects tends to range from -2 to 2\citeneeded.
+    \subsection{Statistical classification of AGN}
+    \label{sec:manual-classification}
 
-    \subsection{Polarisation}
-    \label{sec:polarisation}\todo{Add some figures to this section to break it up a bit.}
+        Manual and statistical approaches to classifying AGN have dominated the radio astronomy literature until very recently, due to the comparative lack of computational power as well as a lack of good automated methods. Manual methods amount to examining the structure of a resolved source and determining its class: this is how we usually identify bent radio galaxies, head-tail radio galaxies, X-shaped radio galaxies, and those radio galaxies with more unusual morphologies. Statistical approaches identify properties of the source that can be combined and thresholded to separate the sources into categories en masse. Modern machine learning techniques for classification of radio sources can be thought of as an extension of these statistical methods, where the properties and their combinations are identified automatically, but we will discuss these separately in \autoref{sec:ml-classification-of-agn}.
 
-        Electromagnetic radiation consists of waves of self-propagating, orthogonal electric and magnetic fields. The orthogonality of these two waves allows us to characterise the radiation just by the electric field. As a transverse wave, the electric field travels at an angle \todo{An angle with respect to what? Can we have a diagram here?}. This angle and its behaviour is called the \defn{polarisation} of the wave.
+        Arguably the most well-known radio classification scheme, FRI and FRII, was originally defined on well-resolved radio galaxies by computing the ratio of the distance between the regions of highest brightness on opposite lobes and the total extent of the radio emission \citep{Fanaroff1974}. Sources with a ratio under 0.5 were called FRI and those with a ratio greater than 0.5 were called FRII. This classification has over time evolved into a less precise divide, with classification generally now morphological and based on the structure (diffuse, wavy plumes versus hotspots and lobes for FRI and FRII respectively). The FRI and FRII divide has been further complicated by other related categorisations such as the so-called "Fanaroff-Riley type 0" sources which seem to be the lower end of a continuum of radio sources with diffuse plumes \citep{garofalo_fr0_2019,capetti_lofar_2020}.
 
-        The polarisation can be characterised by decomposing the electric field into orthogonal components $E_x$ and $E_y$, letting $\hat z$ denote the axis of propagation:
-        \begin{equation}
-            \vec E = (\hat x E_x \exp(i \varphi_x) + \hat y E_y \exp(i \varphi_y)) \exp(i (\vec k \cdot \hat z - \omega t)).
-        \end{equation}
-        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$, and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component, called \defn{Stokes parameters}\todo{Cite the original Stokes parameters paper.}. These are \citep{condon_essential_2016}:
-        \begin{align}
-            \label{eq:stokes-i}
-            I &= \frac{1}{R_0} \mathbb E_t[E_x^2 + E_y^2],\\
-            \label{eq:stokes-q}
-            Q &= \frac{1}{R_0} \mathbb E_t[E_x^2 - E_y^2],\\
-            \label{eq:stokes-u}
-            U &= \frac{1}{R_0} \mathbb E_t[2 E_x^2 E_y^2 \cos (\varphi_x - \varphi_y)],\\
-            \label{eq:stokes-v}
-            V &= \frac{1}{R_0} \mathbb E_t[2 E_x^2 E_y^2 \sin (\varphi_x - \varphi_y)].
-        \end{align}
-        $\mathbb E_t$ denotes the expectation value over time. $I$ is the \defn{total intensity} of the radiation. $Q$ and $U$ together describe the linear polarisation and together can be used to define the \defn{polarisation angle} $\chi$:
-        \begin{equation}
-            \label{eq:polarisation-angle}
-            \tan (2 \chi) = \frac{U}{Q}.
-        \end{equation}
-        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the circular polarisation is zero or nearly zero \citep{rayner_radio_2000,saikia_polarization_1988} because of the roughly equal contributions of left- and right-handed circularly polarised radiation which cancel each other out \citeneeded{}, and we only observe linear polarisation. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out: this is called \defn{unpolarised} or \defn{partially-polarised} radiation respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} $P$ and is given by
-        \begin{equation}
-            \label{eq:polarised-intensity}
-            P^2 = Q^2 + U^2 + V^2.
-        \end{equation}
-        Note that $P^2 \leq I^2$. The \defn{fractional polarisation} is the ratio between these two intensities:
-        \begin{equation}
-            p = \frac{P}{I}.
-        \end{equation}
+        Many classes are defined by explicitly statistical means. Steep- and flat-spectrum sources are divided by spectral index at $\alpha = 0.5$; 
 
-        The synchrotron radiation from radio galaxies is polarised, though this polarisation is not always detectable as the polarised signal tends to be much weaker than the total intensity, on the order of ten per cent \citeneeded \todo{forward reference to AGN?}. Additionally, the most common non-AGN cause for radio emission is star formation, which does not generally have detectable polarisation\todo{Why?}. Polarisation is therefore an excellent way to confirm that a radio source is an AGN.
+    \subsection{Machine learning classification of AGN}
+    \label{sec:ml-classification-of-agn}
 
-        Polarisation can also be used to describe the magnetic structure of both the radio galaxy jets and lobes as well as the intervening medium. As polarised light from distant galaxies makes its way to us, magnetised plasma along the way can cause the polarisation angle to rotate due to the Faraday effect. The amount of rotation is called the \defn{Faraday depth} $\phi$, and is related to the electron density $n_e$ and the line-of-sight magnetic field strength $\vec B \cdot \hat{z}$ of the intervening medium:
-        \begin{equation}
-            \label{eq:faraday-depth}
-            \phi(x, y) = \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \int_{\mathrm{there}}^{\mathrm{here}} n_e(x, y, z) \vec B(x, y, z) \cdot \mathrm{d}\hat{z}\ \mathrm{rad}\ \mathrm{m}^{-2}.
-        \end{equation}
-        Here $\mathrm{d}\vec r$ is the infinitesimal path length in pc \citep{brentjens_faraday_2005} \todo{Check the units on this.}. Within the synthesised beam of a radio telescope\todo{forward reference to beams} there may be multiple lines-of-sight that go through different media and hence have different Faraday depths. An example of this is a radio galaxy that is sufficiently far away that its structure is unresolved by the telescope, and yet has different polarisation properties across its breadth. The leading constant of \autoref{eq:faraday-depth} is around $2.62 \times 10^{-13}$~T$^{-1}$, more commonly written as 0.812 pc $\upmu$G$^{-1}$ cm$^{-1}$ in CGS units with $B$ in $\upmu$G and $z$ in pc. The amount of polarised radiation at each Faraday depth can be characterised by the \defn{Faraday dispersion function} (FDF) or \defn{Faraday spectrum} of the source, usually denoted $F(\phi) \in \mathbb C$. $F$ is defined implicitly by its relationship with the polarised radiation $P$ observed at wavelength $\lambda$:
-        \begin{equation}
-            \label{eq:faraday-dispersion-function}
-            P(\lambda^2) = \int_{-\infty}^\infty F(\phi) e^{2i\lambda^2\phi}\ \mathrm{d}\phi.
-        \end{equation}
-        One useful way of thinking about this equation is that $F$ is the decomposition of $P(\lambda^2)$ into complex sinusoids of the form $e^{2i\lambda^2\phi}$.
+% \section{Observing Radio Sources}
+% \label{sec:radio-astronomy}
 
-        If observed radiation has precisely one Faraday depth $\phi$, then the polarised structure is called a \defn{Faraday screen} and the source is called \defn{Faraday simple}\todo{Include a graphic}. In this degenerate case, the relationship between the polarisation angle $\chi$ and the squared wavelength $\lambda^2$ is linear:
-        \begin{equation}
-            \chi = \chi_0 + \phi \lambda^2,
-        \end{equation}
-        and the FDF is a delta distribution:
-        \begin{equation}
-            F(\varphi) = \delta(\varphi - \phi).
-        \end{equation}
-        $\phi$ is then called the \defn{rotation measure} (RM). If the source is not Faraday simple, then it is called \defn{Faraday complex}, and the question of whether a source is Faraday simple or Faraday complex is called \defn{Faraday complexity}. Until very recently, the frequency resolution of polarised surveys was insufficient to meaningfully separate most complex arrangements of Faraday depths, and so most sources were assumed to be simple and characterised entirely in terms of their rotation measure \citep[e.g.][]{taylor_rotation_2009}. Advancing telescope technology and emphasis on polarisation science has opened new frontiers in spectropolarimetry and upcoming and ongoing surveys (e.g. RACS and POSSUM) will likely report Faraday complexity and produce Faraday depth catalogues instead of rotation measures.
+% This section needs to talk about how the physics of AGN affects observations and what kind of data we deal with. I'll need to talk about radio telescopes, Fourier transforms, and the noise properties of radio sources, as well as what kind of sources we expect to find throughout the universe. How do observations limit our understanding of AGN? How do observational effects change what we see? What are the main difficulties in radio astronomy?
 
-        If the polarised spectrum of a Faraday complex source is observed at multiple frequencies, then the multiple Faraday depths comprising it can be disentangled even though they spatially overlap in the radio image. This can provide insight into the polarised structure of the source as well as the intervening medium. This disentanglement is accomplished by inverting \autoref{eq:faraday-dispersion-function}, a process called \defn{RM synthesis} \citep{brentjens_faraday_2005}:
-        \begin{equation}
-            \label{eq:rm-synthesis}
-            F(\phi) = \int_{-\infty}^\infty P(\lambda^2) e^{-2i\lambda^2\phi}\ \mathrm{d}\lambda^2.
-        \end{equation}
-        In reality we do not observe $P(\lambda^2)$ at all wavelengths nor with infinite resolution. In RM synthesis this is accounted for by the introduction of a \defn{weighting function} \citep[or \defn{windowing function}, e.g.][]{heald09faraday} $W(\lambda^2)$. $W(\lambda^2)$ is nonzero if and only if an observation was taken with wavelength $\lambda$. Substituting $P(\lambda^2) \to P(\lambda^2) W(\lambda^2)$ into \autoref{eq:rm-synthesis} results in a sum which can be numerically evaluated:
-        \begin{equation}
-            \label{eq:weighted-rm-synthesis}
-            F(\phi) \approx \int_{-\infty}^\infty P(\lambda^2) W(\lambda^2) e^{-2i\lambda^2\phi}\ \mathrm{d}\lambda^2 = \sum_{j = 1}^J P(\lambda^2_j) W(\lambda^2_j) e^{-2i\lambda^2_j\phi}.
-        \end{equation}
-        $P(\lambda^2_j)$ is the observed polarisation at the $j$th value of wavelength, $W(\lambda^2_j)$ is the corresponding $j$th weight, and $J$ is the total number of wavelengths for which measurements were taken. The weighting function $W$ is analogous to the weighting function in radio synthesis imaging. The most common choices of $W$ are 1) uniform weighting\footnote{The analogous weighting scheme in radio synthesis imaging would be natural weighting, rather than uniform---an unfortunate overlap in terminology.} with $W(\lambda_j^2) = 1$ for all nonzero values, and 2) \todo{weighting by noise}. 
-
-        Of course, no physical source has a precise Faraday depth, as there is always intrinsic scatter. Along the line of sight, if we assume Gaussian noise in an otherwise-constant $n_e$ i.e. $n_e(z) \sim \mathcal N(\overline n_e, \sigma_{n_e}^2)$, and a constant $B$ for simplicity, then we find
-        \begin{equation}
-            \phi \sim \mathcal N\left(\frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \overline n_e, \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \sigma_{n_e}^2\right),
-        \end{equation}
-        that is, the depth has an uncertainty proportional to the magnetic field strength and the noise in $n_e$. A similar result follows for noise in $B$ only. There is no analytic solution for noise in both $B$ and $n_e$, but if we approximate the integrand as a Gaussian by calculating the mean and variance we find
-        \begin{equation}
-            \phi \sim \mathcal N\left(\frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \frac{\overline n_e \sigma_B^2 + \overline B \sigma_{n_e}^2}{\sigma_B^2 + \sigma_{n_e}^2}, \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \frac{\sigma_{n_e}^2 \sigma_B^2}{\sigma_{n_e}^2 + \sigma_B^2}\right).
-        \end{equation}
-        We observe multiple lines-of-sight that are coalesced into one within the beam. Due to this noise, even with constant $n_e$ and $B$ across a source, we can see multiple Faraday depths as each line-of-sight is a sample from the above distribution.
-
-        %     \label{eq:faraday-depth-intrinsic-dispersion-simple}
-        %     \phi(x, y) \sim \mathcal N\left(10^{-16} \times 0.81 \frac{D}{1\ \mathrm{pc}} \overline n_e \overline B_{\perp}, 10^{-16} \times 0.81 \frac{D}{1\ \mathrm{pc}} \sigma_{n_e}\right).
-        % \end{equation}
-
-        \todo{Need a bit on Faraday screens, Faraday complexity?}
-
-
-
-        % The most general form of the electric field in an electromagnetic wave, propagating in the $\hat z$ direction, is
-        % \begin{equation}
-        %     \vec E = (\hat x E_x \exp^{i\varphi_x} + \hat y E_y \exp^{i\varphi_y}) e^{i(k \hat z \cdot \vec r - \omega t)}
-        % \end{equation}
-        % where $\vec r$ is the position vector and $k$ is the \defn{wavenumber}. This is the composition of two orthogonal waves
-
-
-        % Following \citet{condon_essential_2016}, we will derive the expected power spectrum of synchrotron radiation. A \emph{non-}relativistic charged particle moving at velocity $\vec v$ in a magnetic field $\vec B$ is subject to the Lorentz force $\vec F$:
-        % \begin{equation}
-        %     \vec F = q \vec v \times \vec B.
-        % \end{equation}
-        % The Lorentz force causes the particle to spiral with a fixed angular frequency independent of its speed:
-        % \begin{equation}
-        %     \label{eq:angular-gyro-frequency}
-        %     \omega_G = \frac{qB}{m}.
-        % \end{equation}
-        % Such a particle will emit \defn{gyro radiation} at the \defn{gyro frequency} $\nu_G = \omega_G/2\pi$. Synchrotron radiation is gyro radiation Lorentz transformed to energies much greater than $mc^2$. The power emitted by gyro radiation is given by Larmor's equation:
-        % \begin{equation}
-        %     \label{eq:larmor}
-        %     P = \frac{2}{3} \frac{1}{4\pi\epsilon_0} \frac{q^2}{c^3} \dot v_\perp^2
-        % \end{equation}
-        % where $\dot v_\perp$ is the component of the particle's acceleration perpendicular to the magnetic field. Transform coordinates to the rest frame of the magnetic field:
-        % \begin{equation}
-        %     \dot v_\perp \to \gamma^2 \dot v_\perp, P \to P
-        % \end{equation}
-        % where $\gamma$ is the Lorentz factor
-        % \begin{equation}
-        %     \gamma = \frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}.
-        %     \label{sec:lorentz-factor}
-        % \end{equation}
-        % This gives the observed power of synchrotron radiation for a charged particle:
-        % \begin{equation}
-        %     \label{eq:larmor-boosted}
-        %     P = \frac{2}{3} \frac{1}{4\pi\epsilon_0} \frac{q^2\gamma^4}{c^3} \dot v_\perp^2.
-        % \end{equation}
-        % It remains to find $\dot v_\perp^2$ in terms of the magnetic field. The acceleration for a relativistic orbiting particle is
-        % \begin{equation}
-        %     \dot v_\perp = \frac{\omega_G}{\gamma} v_\perp
-        % \end{equation}
-        % and substituting the angular gyro frequency (\autoref{eq:angular-gyro-frequency}) gives
-        % \begin{equation}
-        %     \dot v_\perp = \frac{qB}{m\gamma} v_\perp = \frac{q}{m\gamma} |\vec v \times \vec B|.
-        % \end{equation}
-        % This can then be substituted into \autoref{eq:larmor-boosted} to obtain the synchrotron power radiated by a single charged particle:
-        % \begin{equation}
-        %     \label{eq:synchrotron-radiation-single}
-        %     P = \frac{2}{3} \frac{1}{4\pi\epsilon_0} \frac{q^4 \gamma^2}{m^2 c^3} (\vec v \times \vec B)^2.
-        % \end{equation}
-        % For an electron, we can let $q = q_e$ and $m = m_e$ and write the power in terms of the Thomson cross-section $\sigma_T$:
-        % \begin{equation}
-        %     \label{eq:synchrotron-radiation-single-thomson}
-        %     P = \epsilon_0 \sigma_T c \gamma^2 (\vec v \times \vec B)^2
-        % \end{equation}
-        % noting that
-        % \begin{equation}
-        %     \label{eq:thomson-cross-section}
-        %     \sigma_T = \frac{8\pi}{3} \left(\frac{1}{4\pi\epsilon_0} \frac{e^2}{m_e c^2}\right)^2.
-        % \end{equation}
-        % Assuming an isotropic distribution of electrons in a plasma, we can integrate over all angles to find the average synchrotron power emitted by a single electron:
-        % \begin{equation}
-        %     \label{eq:average-single-synchrotron-power}
-        %     \mathbb{E}[P] = \frac{2}{3} \epsilon_0 \sigma_T c \gamma^2 vB
-        % \end{equation}
-        % We can use this to find the expected power spectrum of synchrotron radiation from an ensemble of electrons. Assuming that the electrons follow a power law energy distribution (which they generally do\citeneeded), the number density of electrons at a given energy $E$ is
-        % \begin{equation}
-        %     n(E) \propto E^{-\delta}
-        % \end{equation}
-        % where $\delta$ is a constant. Further assuming that each electron radiates at the frequency $\gamma^2 \nu_G$, then 
-
-
-\section{Observing Radio Sources}
-\label{sec:radio-astronomy}
-
-This section needs to talk about how the physics of AGN affects observations and what kind of data we deal with. I'll need to talk about radio telescopes, Fourier transforms, and the noise properties of radio sources, as well as what kind of sources we expect to find throughout the universe. How do observations limit our understanding of AGN? How do observational effects change what we see? What are the main difficulties in radio astronomy?
-
-    \begin{itemize}
-        \item observational limitations due to physics: \begin{itemize}
-            \item Malmquist bias
-            \item minimum detectable brightness
-            \item minimum detectable physical extent?
-        \end{itemize}
-        \item observing radio: \begin{itemize}
-            \item single-dish radio telescopes (just quickly on this)
-            \item radio arrays
-            \item observations happen in Fourier space
-            \item `resolving out'
-            \item structured noise
-        \end{itemize}
-        \item radio telescopes and radio surveys: \begin{itemize}
-            \item historically
-            \item the NVSS and FIRST
-            \item POSSUM, EMU, RACS
-        \end{itemize}
-    \end{itemize}
+%     \begin{itemize}
+%         \item observational limitations due to physics: \begin{itemize}
+%             \item Malmquist bias
+%             \item minimum detectable brightness
+%             \item minimum detectable physical extent?
+%         \end{itemize}
+%         \item observing radio: \begin{itemize}
+%             \item single-dish radio telescopes (just quickly on this)
+%             \item radio arrays
+%             \item observations happen in Fourier space
+%             \item `resolving out'
+%             \item structured noise
+%         \end{itemize}
+%         \item radio telescopes and radio surveys: \begin{itemize}
+%             \item historically
+%             \item the NVSS and FIRST
+%             \item POSSUM, EMU, RACS
+%         \end{itemize}
+%     \end{itemize}
