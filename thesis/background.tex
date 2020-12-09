@@ -294,7 +294,46 @@
 
         It is worth contrasting these machine learning approaches with non-machine learning automated approaches, as the two are often conflated in the literature. \citet{mingo_revisiting_2019}, for example, use an automated version of detecting the brightness gradient of extended radio sources to determine whether they are FRI or FRII en masse and apply this approach to the LoTSS survey. \citet{segal_identifying_2019} apply an information theoretic approach to estimating morphological complexity of a source. The key difference between a machine learning automated approach and a non-machine learning automated approach is that the former has the capacity to change its behaviour based on available data, while the latter does not --- though note that this is not necessarily a bad thing.
 
+\section{Aggregating Radio Sources}
+    
+    Unlike galaxies observed at other wavelengths, the emission from radio galaxies can be disconnected when observed: a single radio galaxy may appear in observations as multiple discrete components. This is partly due to inhomogeneous emission over the radio galaxy structure --- e.g. FRII hotspots can be much brighter than the rest of the galaxy, so they might be visible while the rest of the galaxy is too faint to see --- and partly due to the technique through which many radio observations are made, \defn{interferometry}, which may screen out diffuse emission.
+    
+    \subsection{Missing emission in radio observations}
+    \label{sec:missing-emission}
 
+        \begin{figure}
+            \centering
+            \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=\textwidth]{images/CSIRO-Parkes-Wiradjuri-naming-Murriyang.jpg}
+                \caption{Murriyang at Parkes Observatory}
+                \label{fig:murriyang}
+            \end{subfigure}
+            \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=\textwidth]{images/atca.jpg}
+                \caption{ATCA near Narrabri}
+                \label{fig:atca}
+            \end{subfigure}
+            \caption[A single dish telescope and a radio array.]{\label{fig:telescopes} (a) A single-dish telescope and (b) an array. Images: CSIRO.}
+        \end{figure}
+
+        Radio observations may be made either with \defn{single-dish telescopes}, like Murriyang, or \defn{radio arrays}, like the Australia Telescope Compact Array (ATCA), both shown in \autoref{fig:telescopes}.
+
+        An example of this is shown in \autoref{fig:resolved-out}, where (a) and (b) are the same radio galaxy observed with the same telescope, the Very Large Array, with the only difference being that the VLA was in B configuration for (a) and the D configuration for (b).
+
+        \begin{figure}
+            \centering
+            \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=\textwidth]{images/im-contours.jpg}
+                \caption{FIRST \citep{becker95first}}
+                \label{fig:im-contours-first}
+            \end{subfigure}
+            \begin{subfigure}{0.45\textwidth}
+                \includegraphics[width=\textwidth]{images/im-contours-2.jpg}
+                \caption{NVSS \citep{condon98nvss}}
+                \label{fig:im-contours-nvss}
+            \end{subfigure}
+            \caption[An example of a `resolved out' radio galaxy.]{\label{fig:resolved-out} A fairly diffuse FRII, J0016+0420, observed with the VLA in the (a) FIRST and (b) NVSS surveys. \citep[GRG1 from ][]{dabhade_discovery_2017}}
+        \end{figure}
 
 % \section{Observing Radio Sources}
 % \label{sec:radio-astronomy}

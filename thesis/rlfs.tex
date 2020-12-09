@@ -12,3 +12,736 @@ make James' picture of binary xid before partitioning and colour it with a value
 
 
 \section{FIRST paper...}
+
+
+  We use a machine learning model trained on the Radio Galaxy Zoo citizen science project to cross-identify \ncomponents{} radio components of extended radio sources from the Faint Images of the Radio Sky at Twenty-centimeters survey (FIRST) with \nsources{} host galaxies observed in the mid-infrared from the All\emph{WISE} source catalogue. \nsourceszsp{} hosts have a spectroscopic redshift in the Sloan Digital Sky Survey (SDSS). This is the largest sample of cross-identified extended radio sources to date. The large sample size allows us to estimate the radio luminosity functions (RLF) of extended radio galaxies and to further characterise the sample with fractional radio luminosity functions. The extended source RLF can be used to estimate the mechanical energy injected into the local environment of active galactic nuclei (AGN). We estimate from the observed radio emission that inferred extended radio jets from AGN contribute between $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$ of mechanical energy to their environment throughout the low-redshift ($z < 0.6$) Universe. By further visual verification we also find \nnewgiants{} radio galaxies with projected size larger than 1~Mpc. Our results directly demonstrate the impact that automated machine learning methods could have on future wide-area radio surveys.
+
+\section{Introduction} \label{sec:intro}
+
+Radio active galactic nuclei (AGN) are some of the most violent and energetic
+objects in the Universe. Supermassive black holes at the centre of galaxies
+can produce large, luminous radio jets that may feed lobes extending up to
+megaparsec scales. As a vital part of galaxy evolution, we want to understand
+how radio AGN interact with their host galaxies, in what kinds of galaxies
+these AGN are found, and how these populations change over cosmic time.
+
+Mechanical energy from AGN is needed to explain the star-formation history of galaxies throughout the Universe \citep[e.g.][]{raouf17agn,hardcastle20feedback}. The radio luminosity function (RLF) of extended radio sources would characterise the energy output of galaxies capable of significant energy impact into their local environment. The local RLF of primarily compact sources is estimated and
+described in detail by \citet{mauch07rlf}, \citet{pracy16rlf} and
+\citet{condon19rlf}, each with complete volume-limited samples. However, the RLF of extended radio sources has not been
+characterised as a separate sample, because estimating this RLF would need a large number of extended sources with known
+redshifts. Such redshifts are usually obtained by cross-matching the radio
+sources with their host galaxies in the optical or infrared. While this
+cross-matching is relatively straightforward for compact/unresolved sources,
+and can therefore be automated \citep[e.g.][]{kimball08}, extended radio
+emission may be complex and may not be co-located with the host galaxy.
+Cross-identification of complex, extended sources is therefore usually done
+manually, limiting the sample size.
+
+Wide-area radio surveys like the Very Large Array Faint Images of the Sky at
+Twenty-centimeters survey \citep[FIRST;][]{white97first} have led to
+catalogues of hundreds of thousands of radio objects, most of which are
+associated with radio AGN \citep{sadler02rlf}. While individual galaxy
+properties vary significantly between galaxies, the large sample size of
+such surveys allows us to examine reliable bulk statistics that may
+tightly constrain models and theory of radio galaxy evolution and formation \citep{condon92radio}. With a
+sufficiently large sample \citep[of size $N$ such that $N \gg
+\sqrt{N}$;][]{condon91rlf} we can also divide the RLF into fractions based
+on the physical properties of each galaxy. These \defn{fractional RLFs} show
+how different physical processes comprise the luminosity distribution, and
+can be used to investigate how these processes relate to the properties of
+the AGN.
+
+In this paper we calculate the RLF for extended radio sources in FIRST. Throughout this paper we define an \defn{extended radio source} as a collection of extended radio components with the same host galaxy, and following
+\citet{banfield15} we define an \defn{extended radio component} as a radio
+component which fulfils \autoref{eq:rgz-criterion}:
+\begin{equation}
+    \frac{S_{\mathrm{peak}}}{S_{\mathrm{int}}} < 1 - \frac{0.1}{\log_{10}(S_{\mathrm{peak}} / 1\ \mathrm{mJy})},
+    \label{eq:rgz-criterion}
+\end{equation}
+where $S_{\mathrm{peak}}$ is the peak radio flux density and
+$S_{\mathrm{int}}$ is the integrated radio flux density. We define \defn{radio components} as Gaussians fit to
+radio emission, \defn{radio islands} as connected patches of radio emission
+above a local $4\sigma$ value, and \defn{radio sources} as sets of radio
+islands or components associated with the same galaxy. The radio flux density of a source is the sum of the flux densities of the components according to the FIRST catalogue. The \defn{(infrared)
+host galaxy} of a radio source or component is defined as the infrared galaxy
+associated with the radio emitter. A \defn{cross-identification} is an
+association of a host galaxy with one or more radio components or islands. We
+define \defn{candidate host galaxies} (or simply
+\defn{candidates}) as infrared objects that are near a radio component on
+the sky and thus may potentially be the host galaxy of that component.
+
+Upcoming
+radio surveys such as the Evolutionary Map of the Universe
+\citep[EMU;][]{norris11} are expected to increase the number
+of complex radio sources to around 7 million \citep{banfield15}. Manual, expert cross-identification for such surveys will be impractical. One way forward could be to ask non-expert volunteers for help with manual cross-identification, which is the approach taken by Radio Galaxy Zoo \citep[RGZ;][]{banfield15}. This is called \defn{citizen science} and has been employed successfully in many fields with large datasets \citep{marshall15citizen}. Even this approach is not sufficient for 7 million sources, though, with RGZ cross-identifying around 75~000 sources in four years. Machine
+learning provides a potential pathway to obtaining useful physics from such
+large samples.
+
+In this paper, we train a machine learning model based on \citet{alger18radio}, using RGZ as training data, and
+use this model to automatically cross-identify \ncomponents{} radio components catalogued by FIRST. This results in \nsourceszsp{} sources
+with spectroscopic redshifts. This is the largest available catalogue of
+extended radio source cross-identifications. We call our catalogue
+\defn{RGZ-extrapolated} or \defn{RGZ-Ex}. Due to our large sample size we are able to further divide the
+source population by properties of the host galaxies. We refer to the trained machine learning model and the associated cross-identification algorithm jointly as \defn{binary cross-identification}, or \defn{BXID}. Note that there are two stages to our automated approach: first, we train BXID using an existing catalogue of cross-identified sources; second, we generate new cross-identifications for radio components not in the training catalogue. We refer to these stages as \defn{training} and \defn{prediction} respectively. Our data sources are described in \autoref{sec:data}. Our approach is discussed in \autoref{sec:method}. Radio luminosity functions of extended sources are presented in \autoref{sec:rlf} and we discuss these functions in \autoref{sec:discussion}.
+
+Throughout this paper we assume a flat $\Lambda$-CDM cosmology of $H_0 =
+69.3$~km~s$^{-1}$~Mpc$^{-1}$, $\Omega_m = 0.287$. These are the cosmological
+parameters from the Nine-year Wilkinson Microwave Anisotropy Probe
+\citep[WMAP9;][]{hinshaw13wmap9}.
+
+\section{Data} \label{sec:data}
+
+In this section we describe how we obtain our training and prediction data. To enable the estimation of the extended RLF, we apply a number of selection criteria to the data which are described in \autoref{sec:sankey}.
+
+    \subsection{RGZ} \label{sec:rgz-data}
+
+    RGZ is a citizen science project that aims to cross-identify complex radio sources with mid-infrared host galaxies with the help of volunteers. The first RGZ data release contains around 75~000 cross-identifications of a random subset of extended sources in FIRST with their host galaxies in All\emph{WISE}. For more details on RGZ see \citet{banfield15}. This catalogue has also been used in other machine learning contexts, including supervised learning for source aggregation \citep{wu19claran} and unsupervised learning methods \citep{galvin19som,ralph19ae}. We discard the RGZ sources without a host galaxy detected in All\emph{WISE} and use the remaining 41~446 sources for training.
+
+    The RGZ catalogue only contains sources with at least 0.65 weighted volunteer agreement, equivalent to approximately 80 per cent reliability. This implicitly selects for less complex sources, since the volunteer agreement is a proxy for the difficulty of cross-identifying a source (Wong et al. in prep).
+
+    \subsection{FIRST} \label{sec:first-data}
+
+    We use radio imagery and select radio components from the FIRST survey and associated catalogue respectively \citep{white97first,helfand15first}. FIRST is a
+    1.4~GHz radio survey covering 10~575~deg$^2$ of the sky north of $\mathrm{Dec} = -10^\circ$ with an angular resolution of $5.4''$. At a detection limit of $1$~mJy, the catalogue contains 946~432 radio components.
+
+    For both training and prediction, we make use of image cutouts from FIRST centred on mid-infrared candidate hosts. We predict host galaxies for the \ncomponents{} extended FIRST components detected at $>10\sigma$ \citep[about 1.5~mJy~beam$^{-1}$, per][]{banfield15} that have complete radio imagery for all candidate hosts.
+
+    \subsection{All\emph{WISE}} \label{sec:wise-data}
+
+    We use the sky coordinates and magnitudes from the All\emph{WISE} \citep{cutri2013wiseexplanatory} catalogue during training and prediction. All\emph{WISE} is an all-sky catalogue of mid-infrared objects detected by the \emph{Wide-field Infrared Survey Explorer} \citep[\emph{WISE}][]{wright10wise} at 3.4, 4.6, 12 and \unit{22}{\micro\meter} wavelengths (called $W1$--$W4$, respectively). All\emph{WISE}
+    contains over 747~million objects detected above $5\sigma$ at 3.4 and
+    \unit{4.6}{\micro\meter}. \emph{WISE} has an angular resolution of
+    $6.1''$ and $6.4''$ at these wavelengths, respectively.
+
+    We store All\emph{WISE} objects in a
+    \texttt{MongoDB}\footnote{\url{https://www.mongodb.com/}} database with
+    a geospatial index on the right ascension and declination. This allows
+    us to perform fast spatial lookups. The geospatial index in
+    \texttt{MongoDB} assumes a perfectly spherical Earth with a fixed radius, allowing us to use it for sky coordinate
+    searches. We use the right ascension and declination of All\emph{WISE} sources to generate candidate hosts by searching for infrared sources near FIRST components.
+
+    \subsection{SDSS} \label{sec:sdss-data}
+
+    While we do not use data from the Sloan Digital Sky Survey Data Release 15 \citep[SDSS;][]{sdss} for training or prediction, we do use SDSS for spectroscopic redshifts of our host galaxies. These redshifts are required to calculate the radio luminosity of our sources. We use CDS X-Match\footnote{\url{http://cdsxmatch.u-strasbg.fr/}} to match each infrared host galaxy to the closest source imaged by SDSS to within $5''$. This results in \nsourceszsp{} spectroscopic redshifts for our \nsources{} total host galaxies. To estimate the rate of false association with SDSS sources, we add a $1'$ offset to all host positions and redo the matching process. With this method we estimate a $0.4$ per cent rate of false association.
+
+\section{Method}\label{sec:method}
+    
+We apply the binary classification cross-identification method (BXID) following \citet{alger18radio}. This method casts cross-identification
+as a classification problem where infrared `candidate host galaxies' are
+classified as either being host galaxies or not. A classifier is trained
+on examples of host galaxies and non-host galaxies drawn from a
+cross-identification catalogue, for which we use RGZ. Other related
+algorithms developed to automatically cross-identify radio objects
+include Bayesian methods \citep{fan15}, likelihood ratio \citep{weston18lrpy},
+ positional matching \citep[e.g.][]{kimball08, norris06, middelberg08}, and positional/image hybrid approaches \citep{vanvelzen12radio}, but these methods do not make use of existing
+cross-identification catalogues and most assume compact radio sources or that the projected radio emission overlaps the host galaxy.
+
+\begin{table}
+  \caption{Medians and standard deviations used to normalise input features.
+    \label{tab:medians-stdevs}}
+    \centering
+  \begin{tabular}{ccc}
+    \hline
+    Feature & Median & Standard deviation\\
+    \hline
+    Radio image & \unit{13.2}{\micro{}Jy} & \unit{3.01}{\milli{}Jy}\\
+    $W1 - W2$ & 0.289 mag & 0.378 mag\\
+    $W1 - W3$ & 4.350 mag & 1.067 mag\\
+    $W1 - W4$ & 7.853 mag & 1.144 mag\\
+    $W2 - W3$ & 4.016 mag & 0.958 mag\\
+    $W2 - W4$ & 7.541 mag & 1.046 mag\\
+    $W3 - W4$ & 3.518 mag & 0.409 mag\\
+    $W1$ & 16.659 mag & 1.154 mag\\
+    \hline
+  \end{tabular}
+\end{table}
+
+We represent candidate host galaxies by a $2' \times 2'$ radio image from FIRST centred on that galaxy, the \unit{3.4}{\micro\meter} magnitude, and the six colours (magnitude differences) derived from the four \emph{WISE} wavelengths. Unknown values of infrared flux were set to their upper limits in All\emph{WISE}. We note
+that many $W3-W4$ colours are missing, so this feature may be less useful than
+the others. We normalise the colours and magnitude by subtracting the median and
+dividing by the standard deviation. We normalise each
+pixel in each radio image by subtracting the median, dividing by the standard
+deviation, and applying a logistic function ($\sigma$;
+\autoref{eq:logistic}) to account for the high dynamic range of radio
+images.
+\begin{equation}
+  \sigma(a) = \frac{1}{1 + \exp(-a)}
+  \label{eq:logistic}
+\end{equation}
+The medians and standard deviations are reported in \autoref{tab:medians-stdevs}. These values are computed across the training set.
+
+For each FIRST component we generate a set of candidate host galaxies.
+An All\emph{WISE} object is considered a candidate host for a radio
+component if it is within $\sqrt{2} \times 1.5'$ of the centre of the two-dimensional
+Gaussian fit for that component. This search radius is the maximum
+angular distance that a host galaxy can be located in RGZ due to the
+$3'$-wide square images shown to volunteers. Candidate hosts are
+assigned binary labels: All candidates identified as host galaxies in
+RGZ are assigned a positive label and all others are assigned a
+negative label. Following \citet{alger18radio} we train a convolutional neural
+network (CNN) on the labelled candidate hosts. We
+base our model on \texttt{ResNet18} \citep{he2016resnet} pretrained on the
+ImageNet classification task, with the final layer removed and replaced
+by a logistic regression model. Non-image features (i.e. colours and the
+\unit{3.6}{\micro\meter} magnitude) are concatenated with the features
+that are output by the final \texttt{ResNet18} layer. Using \texttt{Adam}
+\citep{kingma14adam} to optimise our weights, we train this model on our
+task until binary cross-entropy loss starts to increase on a
+randomly-selected 20 per cent validation set. We use \texttt{PyTorch}
+\citep{paszke2017pytorch} to implement this model. The scores of each FIRST
+component are weighted by a one-dimensional Gaussian function of angular separation, and the
+candidate maximising this weighted score is selected as the host galaxy. We
+set the standard deviation of the Gaussian to $120''$ as this provides good
+empirical results.
+
+92 per cent of the host galaxies in RGZ are also detected as host galaxies in RGZ-Ex. The mean volunteer agreement on all RGZ sources with detected hosts was $95^{+5}_{-13}$ per cent, compared to $88^{+12}_{-17}$ per cent for sources with hosts not in RGZ-Ex. Incorrect cross-identifications can be considered a source of noise in the statistics. In future work we will design a way for BXID to output an `uncertainty' so sources with uncertain cross-identifications can be removed from calculations. We quantify the reliability of RGZ-Ex in \autoref{sec:manual-validation}.
+
+We note that BXID necessarily identifies a host galaxy for all radio emission, even when it does not
+make sense to do so. In our current work we treat this as a source of
+noise. Future extensions to BXID will allow it to output `no detected
+host'.
+
+    \subsection{Visual verification}\label{sec:manual-validation}
+
+    To quantify the reliability of RGZ-Ex, some of the authors (M.A., O.W., A.K., N.M., and A.T.) visually verified a randomly selected set of 200 radio components/host galaxy pairs in RGZ-Ex. For each pair we decided whether the radio component matched its identified host or not. This allowed us to estimate the accuracy of radio component-infrared host pairs identified by BXID. Verification of component-host pairs is noisy and sometimes even subjective, so each author looked at all 200 components. If an author was unsure about a pair, they were allowed to ignore it and the verification was treated as missing label data. We then aggregated these verifications following the aggregation approach introduced by \citet{dawid79em}. This approach jointly estimates the accuracy of each author along with the aggregated verification by maximising the joint likelihood. Note that this approach is able to handle missing label data. We propagated the uncertainty in the accuracy with a Monte Carlo approach, sampling aggregated verifications from the probabilities resulting from the \citeauthor{dawid79em} model. The estimated accuracy of BXID is $(89.5 \pm 0.8)$ per cent. It is interesting to note from our results that even astronomers disagree significantly on the radio cross-identification task, with agreement between authors ranging from 50 to 100 per cent across the verification components. We report the full verification set in \autoref{sec:verification-appendix}.
+
+\section{Radio luminosity functions}
+\label{sec:rlf}
+
+  \begin{figure}
+      \centering
+    \includegraphics{rlf-images/rlf.pdf}
+    \caption{RGZ-Ex radio luminosity function compared with the RLFs of \citet{mauch07rlf}.
+      \label{fig:rlf}}
+  \end{figure}
+
+  In this section we present our radio luminosity functions (RLFs) derived
+  from the RGZ-Ex catalogue. To calculate each RLF we 
+  followed the $1/V_{\max}$ method \citep{schmidt1968vmax}. This method accounts for the effects of Malmquist bias, which is a systematic bias against sources at greater distances. We
+  describe this approach in \autoref{sec:rlf-desc}. We limit our sample to radio sources with
+  \unit{1.4}{\giga\hertz} integrated flux density of at least \unit{2}{\milli Jy}
+  associated with host galaxies brighter than magnitude 17 at
+  \unit{3.4}{\micro\meter}, a spectroscopic redshift $0.02 \leq z \leq 0.6$,
+  and an $i$-band magnitude $<20$. We chose these
+  limits based on the distribution of redshifts and infrared magnitudes as well as the sensitivity of FIRST. We then remove sources with unusually high or low W1 magnitude for their redshift (more than 3 standard deviations from the mean) because many such sources have incorrect spectroscopic redshifts, e.g. blazars. There are \nsourcesrlf{} sources matching all criteria. We assume a spectral index of $\alpha = -0.7$ \citep[as is common in literature, e.g.][]{condon02radio} with flux density $f \propto \nu^{\alpha}$ where $\nu$ is the frequency. We calculate the $k$-corrected radio luminosity \citep{kochanek01kband} as follows:
+  \begin{equation}
+      \label{eq:luminosity}
+      L = \frac{4\pi f d^2}{1+z}{(1+z)^{-\alpha}}
+  \end{equation}
+  where $z$ is redshift and $d$ is luminosity distance (a function of $z$).
+  Uncertainties in comoving density are estimated as described in \autoref{sec:rlf-desc}. Completeness estimates are shown in \autoref{sec:completeness}. We discuss biases in our methods and results in \autoref{sec:bias}.
+
+  We compare our RLFs with \citet{mauch07rlf}, who estimated RLFs from 7~824
+  manually cross-identified radio sources in the NRAO VLA Sky Survey \citep[NVSS;][]{condon98nvss}.
+  Their RLFs were split into AGN and star-forming radio sources. While we
+  do not make this split explicitly in our catalogue, we expect both RGZ-Ex
+  and RGZ to be dominated by AGN due to the selection criterion of being extended in the selected redshift volume. We note that the redshift range used in our work, $0.02 < z < 0.6$, differs from the $0.003 < z < 0.3$ range used by \citet{mauch07rlf}.
+
+  In \autoref{fig:rlf} we show the RLF derived from RGZ-Ex along with the RLFs from \citet{mauch07rlf}. There is good
+  agreement between all three luminosity functions for luminosities greater than $10^{23}$~W~Hz$^{-1}$
+  and below this luminosity the RGZ-Ex RLF is bounded above by the
+  \citet{mauch07rlf} RLF. RGZ-Ex generally finds less comoving density than \citet{mauch07rlf}, which we attribute to our requirement for extent. We suggest that the peak in RGZ-Ex RLF at approximately $10^{22}$~W~Hz$^{-1}$ is due to our sample containing a small fraction of star-forming galaxies. Our criterion, however, does cut out most star-forming regions as these are often compact, which is why we report lower densities than the star-forming RLF of \citet{mauch07rlf}.
+
+\begin{figure}
+    \centering
+    \includegraphics{rlf-images/colour-colour.pdf}
+    \caption{\emph{WISE} colour-colour distributions. The dashed grey lines show
+      simple host galaxy class divisions from \citet{jarrett17wise}. These
+      classes are labelled in the plot. The blue dot-dashed line shows
+      the empirical optical/infrared AGN criteria from \citet{jarrett11wise}. The arrow shows the direction that galaxies would shift with fainter $W3$ magnitudes. The right plot limits the sample to only sources with $W3 \geq 3 \sigma$.
+      \label{fig:colour-colour}}
+  \end{figure}
+
+  \begin{figure}
+      \centering
+    \includegraphics{rlf-images/frlf-ir-colours.pdf}
+    \caption{RLFs split by host galaxy
+      location in the \emph{WISE} colour-colour plot (\autoref{fig:colour-colour}),
+      using our automated cross-identifications. The grey line is the
+      total RLF for all sources. Solid lines have good $W3$ detections and dashed lines include $W3$ with low signal-to-noise.
+    \label{fig:fractional-rlf}}
+  \end{figure}
+
+      The \emph{WISE} colour-colour plot, shown for RGZ-Ex in
+      \autoref{fig:colour-colour}, is often used to categorise galaxies at different evolutionary stages into
+      four mid-infrared colour regions that are typically populated by 1)
+      spheroidals or elliptical galaxies; 2) quasi-stellar objects (QSOs),
+      Seyferts or powerful AGN; 3) starbursting or luminous infrared galaxies
+      (LIRGs); and 4) the intermediate region where the other three regions
+      overlap. The horizontal axis, $W2-W3$, separates early- and late-type galaxies, with the star-forming late-type galaxies appearing redder (further to the right) \citep{wright10wise}. The vertical axis, $W1-W2$, separates inactive galaxies from AGN
+      with strongly radiating accretion discs \citep{sadler14radio}. In
+      \autoref{fig:fractional-rlf} we show the radio luminosity function split
+      by host galaxy location in the mid-infrared colour-colour plot as defined by \citet{jarrett17wise}.
+
+      Many sources have $W3$ detections with low signal-to-noise, limiting our ability to subdivide our sample. We plot both the RLFs for the sample with only $W3 \geq 3 \sigma$ as well as the RLFs for the full sample in \autoref{fig:fractional-rlf}. For the full sample we use the lower magnitude limit from All\emph{WISE} as the $W3$ magnitude (which is an upper flux limit). Using the upper flux limit as the real $W3$ flux has the effect of increasing $W2 - W3$ compared to a real detection, so objects appear further to the right of the colour-colour diagram (\autoref{fig:colour-colour}) than they ought to. This means that due to $W3$ limits, objects that should be in the spheroid set will appear in the intermediate and star-forming sets, and objects from the intermediate set will appear in the star-forming set.
+
+      At low luminosities, our extended source RLF is dominated by galaxies with infrared
+      colours consistent with star formation. The fraction
+      of the RLF composed of the star-forming set drops off rapidly for
+      $L_{1.4\ \mathrm{GHz}} > 10^{22}$~W~Hz$^{-1}$, as expected for galaxies with radio emission
+      dominated by star formation \citep[e.g.][]{mauch07rlf}. However, the RLF slope flattens out again beyond $10^{24}$~W~Hz$^{-1}$, suggesting a second source population. This population has many missing $W3$ measurements, and these are likely intermediates or spheroids incorrectly included in the star-forming set. We therefore suggest that the
+      low-luminosity RGZ-Ex sample mostly contains nearby galaxies with radio
+      emission due to star formation, which appear extended in FIRST as they
+      are close enough for FIRST to resolve their
+      disc (greater than 20~kpc at $z = 0.2$). The remaining fraction of star-forming sources found by
+      \citet{mauch07rlf}, shown in
+      \autoref{fig:rlf}, would not be resolved in FIRST, as they are small or
+      distant.
+
+      Spheroids, which are hosts in the mid-infrared region corresponding to ellipticals and stars \citep{wright10wise}, comprise the majority of radio galaxies at $10^{23}$~W~Hz$^{-1}$,
+      and have a peak density at $10^{22}$~W~Hz$^{-1}$. The common host galaxies for radio-loud AGN tend to be passively-evolving spheroids. It is not surprising that they are more common than star-forming galaxies at luminosities greater than $10^{22}$~W~Hz$^{-1}$. Above
+      $10^{25}$~W~Hz$^{-1}$ they are less common than intermediate galaxies and
+      their contribution to the luminosity function drops rapidly. This is likely due to the loss of $W3$ detections moving spheroids into the intermediate set, and we hypothesise that with deeper $W3$ observations spheroids may dominate above $10^{25}$~W~Hz$^{-1}$.
+
+      Sources with hosts in the mid-infrared AGN region of the colour-colour diagram (\autoref{fig:colour-colour}) make
+      up the smallest contribution to the radio luminosity function. They have
+      a steadily decreasing density from their lowest observed $L_{1.4\ \mathrm{GHz}}$ of $10^{22}$~W~Hz$^{-1}$ to their highest of
+      $10^{27}$~W~Hz$^{-1}$, but are present in all luminosity bins except for
+      the very lowest. This is a set with a very low fraction of spectroscopic SDSS matches for the \emph{WISE} host galaxies. 26 per cent of
+      hosts outside the \emph{WISE} AGN region have an SDSS match, compared to just 12 per
+      cent of hosts inside the \emph{WISE} AGN region. This is likely due to the incomplete sampling of QSOs in the SDSS spectroscopic survey or redshift evolution effects \citep{strauss02sdss}. The fraction of the RLF contributed by galaxies classed as mid-infrared AGN increases above $10^{25}$~W~Hz$^{-1}$, meaning that high-luminosity radio AGN are also more likely to be infrared AGN than at lower radio luminosities. Note that the AGN set is unaffected by missing $W3$ detections, as the AGN set is based only on $W1-W2$.
+
+      Galaxies residing in the intermediate mid-infrared colour region can be
+      populated by both early- and late-type galaxies, which have a mix of
+      processes occuring within them. These `intermediate sources' dominate in
+      most luminosity ranges, and above $10^{24}$~W~Hz$^{-1}$ they comprise the
+      vast majority of our sample. As intermediate-type galaxies fall between
+      star-forming galaxies and passive ellipticals on the mid-infrared colour-colour plane, they do
+      not have a clear morphological class and are composed of overlapping subsets of sources. The most luminous radio AGN are almost entirely found in
+      this set of galaxies. In fact, as radio luminosity increases the density
+      fraction shifts from spheroids toward intermediate galaxies, likely due to missing $W3$ moving objects from the spheroid set into the intermediate set.
+
+      \begin{figure}
+          \centering
+        \includegraphics{rlf-images/physical-extent.pdf}
+        \caption{Bivariate radio luminosity function showing radio luminosity against projected physical extent. Contours are on a log scale, starting at the median and increasing by 10 percent per contour.
+        \label{fig:fractional-rlf-extent}}
+      \end{figure}
+
+      In \autoref{fig:fractional-rlf-extent} we show the radio luminosity
+      function for different ranges of projected physical extent of their radio emission. We estimate the angular extent as the angular distance between the most separated components in a multi-component source. This result is complementary to other Radio Galaxy Zoo studies on the effect of the environment on the size and asymmetry of the observed extended radio emission \citep{rodman19asymmetry,garon19bending}.
+
+
+\section{Discussion}\label{sec:discussion}
+
+  \subsection{Biases and uncertainties}
+    \label{sec:bias}
+
+    Biases enter our work due to our chosen samples and methods. Our training set,
+    RGZ, is biased toward sources smaller than $1.5'$ and limited above by $\sqrt{2}
+    \times 3'$ due to the $3' \times 3'$ cutout size of the RGZ user
+    interface. RGZ volunteers preferentially select host
+    galaxies that are brighter in $W1$, so we expect RGZ to overrepresent
+    the number of sources with $W1$-bright host galaxies.
+
+    These biases may affect our
+    trained algorithm: for example, the overabundance of $W1$-bright host
+    galaxies in RGZ may cause our algorithm to be less accurate when
+    unassociated bright galaxies are in the field of view. Without knowing the true
+    distribution of host galaxies, however, it is difficult to quantify the
+    effect of such biases on our trained method.
+
+    FIRST itself is also biased. \citet{helfand15first} describe several reasons why FIRST flux may be systematically underestimated. Most of these effects are insignificant for extended objects in our sample or are corrected in the FIRST catalogue from which we draw our flux information. The exception is the `resolving out' of diffuse and low surface brightness radio emission by the Very Large Array in its B configuration. This means that we lose flux on most nearby radio galaxies (especially those with very
+    diffuse components) and may miss diffuse or dim radio galaxies entirely.
+    More diffuse radio galaxies such as Fanaroff-Riley type I \citep[FRI;][]{Fanaroff1974} galaxies tend to
+    be toward the low end of the radio-loud luminosity distribution, about
+    $10^{23}$~W~Hz$^{-1}$ \citep{best09radio}, so we expect that losing
+    diffuse sources would lower our estimates of density around this
+    luminosity. Large, extended lobes such as those associated with Fanaroff-Riley type II \citep[FRII;][]{Fanaroff1974} galaxies may also be resolved out, so by the same mechanism we expect to lose an increasing amount of flux with increasing source angular size. This effect is compounded by flux loss at 1.4~GHz associated with synchrotron losses and adiabatic expansion losses \citep{blundell99doubles}.
+
+    Our host galaxy redshifts may be biased. Incorrectly identifying the host galaxy may introduce sources with incorrect redshifts into the RLF, an effect which will be dominated by misidentifying galaxies as hosts where the true host is not detected. Since we are matching to optical spectra in SDSS to find
+    redshifts, we are biased toward brighter host galaxies that are more
+    likely to have such spectra. Without an optically-complete sample ---
+    currently impossible on such scales --- this effect is unavoidable.
+    Brighter optical sources appear at lower redshifts, so we likely
+    undersample higher-redshift (and hence higher-luminosity) galaxies.
+
+    Our requirement for radio emission to be extended will miss radio galaxies that would be resolved and extended if they were not aligned with the line of sight. We therefore must be underestimating the population of extended sources (though assuming a random distribution of orientations, the majority of galaxies will not be aligned close to the line of sight). The requirement for extended radio emission will also impose a lower limit on linear size, which will vary with redshift: at $z = 0.6$ the effect will be strongest and we will see no sources with linear size under $33.5$ kpc. This will cause us to underestimate the population of radio galaxies with linear sizes between $10$--$30$ kpc. On the other hand, we have likely avoided significant overestimation of radio luminosity due to relativistic beaming, since we filter out sources aligned along the line of sight.
+
+    We have estimated uncertainties in our RLF from Poisson noise in the histogram bins. We
+    have likely underestimated these uncertainties as it is difficult to
+    estimate uncertainty in our algorithm, though in future we anticipate that we can
+    employ an ensemble of classifiers to estimate this \citep[e.g.][]{lakshminarayanan17uncertainty}.
+
+  \subsection{Extended radio galaxies in the low-$z$ Universe}
+
+      Our total RLFs are consistent with the idea that large, extended radio sources are typically hosted by massive ellipticals \citep{best05agn}. These RLFs match existing RLFs such as that of \citet{mauch07rlf}, except at radio luminosities below $10^{22}$~W~Hz$^{-1}$. This is unsurprising since we employ a requirement for extended emission, and, besides very nearby star-forming galaxies, FRII comprise most of the population of extended radio objects. The fractional RLF split by mid-infrared colour, \autoref{fig:fractional-rlf}, shows that spheroids reach peak density at a radio luminosity associated with a drop in density of intermediates, and intermediates begin to dominate the RLF as the spheroid density drops. Together, these mid-infrared classes of galaxy form the bulk of the extended radio galaxy RLF.
+
+      We see a significant star-forming population in our extended sample, which means that we are likely resolving some discs in radio. While the 1/$V_{\max}$ method ensures that our RLFs account for similar galaxies throughout the Universe, even though we only resolve very nearby discs, some of the star-forming population is not included. The difference between our RLF and existing RLFs must be due to the latter containing low-luminosity sources that are compact even when very nearby.
+
+      Can we use our RLFs to estimate the kinetic energy contribution of AGN to the galaxy halo and beyond? The extended population of AGN will be the population that contributes most mechanical energy: the major part of the energy in the jet expands the radio lobes, drives shocks or is stored in the jet magnetic field, rather than being emitted as radiation \citep{godfrey16power, hardcastle14lobes}. Extended radio sources should therefore represent the bulk of AGN feedback: radio galaxies with extended jets will inject mechanical energy out to larger distances from the core of the host galaxies than those with smaller jets. This is supported by e.g. \citet{turner15agn}, who found that extended sources comprised the bulk of the mechanical energy contribution. By assuming a relationship between radio luminosity and radio jet mechanical energy, we can use our extended source RLFs to estimate the contribution of extended AGN to energy in the intergalactic/circumgalactic medium (IGM/CGM). But assuming such a relationship is not without problems: the radio lobe luminosity experiences significant evolution \citep[e.g.][]{bicknell97css}, the surrounding IGM/CGM may interact with the radio lobe expansion in non-trivial ways \citep[e.g.][]{hardcastle13lobes} and the relationship between the mechanical energy and radio luminosity has high scatter on individual radio sources \citep{hardcastle13lobes}. With our sample size, these effects should be diminished, and with these caveats in mind we will estimate the energy contribution of extended sources to the IGM. We assume a scaling relation of $\ln Q = \beta \ln L_\nu + Q_0$, where $Q$ is the jet power and $L_\nu$ is the monochromatic radio luminosity at frequency $\nu$. The values for $\beta$ and $Q_0$ vary significantly across the literature, based on different physical assumptions and samples. \citet{willott99radio} presented a widely-used relationship
+      \begin{equation}
+        \ln Q = \ln (f^{3/2} 3 \times 10^{38}) + \frac{6}{7} \ln \left[\frac{L_{151~\mathrm{MHz}}}{10^{28}~\mathrm{W\ Hz}^{-1}}\right],
+      \end{equation}
+      with a scaling constant $1 \leq f \leq 20$ and $Q$ in watts. Other models exist with different slopes, e.g. \citet{birzan08power} suggest that $\beta \approx 0.5 - 0.7$ and \citet{cavagnolo10relation} find $\beta \approx 0.7$. \citet{godfrey16power} provide a summary of the literature in this field and suggest that these correlations are from mutual distance dependence rather than intrinsic relationships. They find that there is no strong empirical evidence for such a correlation in either FRI or FRII. However, their theoretical models suggest $\beta \approx 0.5,0.8$ for FRI and FRII respectively, which is consistent with \citet{willott99radio}. \citet{shabala13power} on the other hand show that the scalings presented by \citet{willott99radio} are consistent with independent theoretical modelling for high-power radio galaxies. Scaling the frequency to $1.4$~GHz, and assuming a spectral index of $\alpha = -0.7$, $\beta = 6/7$, and $Q_0 = \ln (f^{3/2}) + 89.9$, we can write the \citet{willott99radio} relation as
+      \begin{equation}
+        \ln (Q) = \ln (f^{3/2}) + 89.9 + \frac{6}{7} \ln \left[\frac{L_{1400~\mathrm{MHz}}}{10^{28}~\mathrm{W\ Hz}^{-1}}\right].
+      \end{equation}
+      Assuming $f \in [1, 20]$ gives $Q_0 \in [89.9, 94.4]$. Integrating over our RLF we find $Q \in [1.3 \times 10^{30}, 1.2 \times 10^{32}]$~W~Mpc$^{-3}$. This is likely a lower limit as we are missing extended radio sources oriented along our line-of-sight and nearby diffuse extended radio sources (e.g. FRI), and \citet{shabala18plane} argues that many `compact' AGN may in fact be extended but below the sensitivity of surveys such as FIRST. Our results are consistent with other literature \citep[e.g][who estimated the energy contribution as $7 \times 10^{31}$ W~Mpc$^{-3}$]{hardcastle19rlagn}.
+
+  \subsection{Future work}
+
+    With such a large sample size, further partitioning of the RLF into subsamples is possible. Any combination of the features investigated here, plus further host galaxy and radio properties, could be used to generate fractional RLFs. Automated classifiers such as \texttt{ClaRAN} \citep{wu19claran} or feature extractors such as \texttt{PINK} \citep{polsterer15pink,galvin19som,ralph19ae} could provide a way to divide the RLF by radio morphology. These methods provide a way of dividing galaxy classes based directly on the radio image, rather than the host galaxy like we have done here, and so should not be affected by extinction or redshift in the same way as our sample. Such subsamples would lend insight into how radio power is connected to radio morphology and generation mechanisms. Cross-matching with other surveys such as NVSS or the 150~MHz TIFR GMRT Sky Survey would provide properties such as the spectral index and observations of diffuse emission missed by FIRST \citep[as used by][]{kimball08}. Such properties could also be used to create interesting and insightful fractional RLFs.
+
+    While we have not investigated the link between extended sources and their local environments, this will be the focus of future work. Environment will heavily factor into the source sizes, morphologies, and so on, following work such as \citet{rodman19asymmetry} and \citet{garon19bending}.
+
+    Ongoing radio surveys such as EMU, VLASS \citep{lacy20vlass}, and LoTSS \citep{shimwell19lotss} will greatly increase the number of extended sources. However, our sample size limitations in this paper are not from FIRST, but from SDSS: until next-generation spectroscopic surveys are available, redshifts will be the limiting factor. To significantly increase our sample size would require much greater numbers of redshifts.
+
+\section{Summary}\label{sec:summary}
+
+  Extended radio sources provide an opportunity to study the interaction between AGN and their large-scale environments. We trained the binary cross-identification method on the Radio Galaxy Zoo to generate the largest sample of reliably cross-identified, extended radio sources, and this large sample allows us to investigate their bulk distributions in new, detailed ways. We estimated radio luminosity functions split by mid-infrared colour, physical extent and redshift. Despite our extendedness criterion, we found a significant star-forming population. We estimated that extended AGN contribute between $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$ of mechanical energy to their environment. Ongoing and future surveys such as EMU will provide even greater numbers of extended radio sources, and our combination of machine learning and astronomy methodology will allow these samples to be cross-identified and investigated efficiently and reliably.
+
+
+This publication has been made possible by the participation of more than
+11~000 volunteers in the Radio Galaxy Zoo project. Their contributions are
+individually acknowledged at \url{http://rgzauthors.galaxyzoo.org}. Radio
+Galaxy Zoo makes use of data products from the \emph{Wide-field Infrared Survey
+Explorer} and the Very Large Array. The \emph{Wide-field Infrared Survey Explorer}
+is a joint project of the University of California, Los Angeles, and the Jet
+Propulsion Laboratory/California Institute of Technology, funded by the
+National Aeronautics and Space Administration. The National Radio Astronomy
+Observatory is a facility of the National Science Foundation operated under
+cooperative agreement by Associated Universities, Inc. The figures in this
+work made use of Astropy, a community-developed core Python package for
+Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. comes from National Science Foundation grant AST-1714205 to the University of Minnesota. H.A. benefited from grant CIIC 218/2019 of Universidad de Guanajuato. M.A. and A.T. were supported by the Australian Government Research Training Program. We thank J.~Nabaglo and A.~Gruen for their help with efficient data preprocessing. We thank H.~Zovaro, T.~J.~Galvin and H.~Tang for their comments on the draft of this paper.
+
+
+\appendix
+
+  \section{Sankey diagrams}
+  \label{sec:sankey}
+
+    This section presents Sankey diagrams showing the filtering of components and sources from the full FIRST sample. A Sankey diagram shows the order and number of objects removed from a sample. \autoref{fig:sankey-components} shows the filtering of components and \autoref{fig:sankey-sources} shows the filtering of sources. The component filters are `Bad FIRST' for components on the edge of FIRST with incomplete images, `Sidelobe' for components with high sidelobe probability, `Low score' for components with only low-scoring candidate hosts, `Faint' for components with less than 10 signal-to-noise according to the FIRST catalogue, and `Compact' for components that do not have extended radio emission according to \autoref{eq:rgz-criterion}. Sources are removed after each component filter if they no longer contain any components.
+
+    \begin{figure}
+        \centering
+        \includegraphics{rlf-images/sankey_components.pdf}
+        \caption{\label{fig:sankey-components} Number of components removed from FIRST by each filter.}
+    \end{figure}
+
+    \begin{figure}
+        \centering
+        \includegraphics{rlf-images/sankey_sources.pdf}
+        \caption{\label{fig:sankey-sources} Number of sources removed by each filter.}
+    \end{figure}
+
+\section{Radio luminosity function}
+\label{sec:rlf-desc}
+
+  We computed the radio luminosity function following the $1/V_{\max}$ method
+  \citep{schmidt1968vmax}. This appendix explains our implementation. We performed the
+  following steps:
+  \begin{enumerate}
+    \item Remove all radio sources that do not fit the selection criteria.
+      This applies for both radio and infrared properties, so we choose a minimum radio flux density $f_{\min}$ and a maximum infrared magnitude
+      $m_{\max}$, as well as redshift limits $z_{\mathrm{lower}}$ and $z_{\mathrm{upper}}$.
+    \item For each source, compute the maximum redshift that the source could
+      have been observed within the selection criteria. We find this redshift
+      by first numerically solving \autoref{eq:luminosity} for $z$ with $L$ as
+      the luminosity of each radio source and $f = f_{\min}$ to obtain the
+      maximum redshift $z_\text{radio}$ at which the source could be observed
+      in radio. We find the maximum redshift $z_{\text{ir}}$ that the host
+      galaxy could be observed within the selection criteria by numerically
+      solving \autoref{eq:ir-limits} for $z$, where $d(z)$ is the luminosity
+      distance at a redshift $z$, $d$ is the luminosity distance of the host
+      galaxy, and $m$ is the apparent magnitude of the host galaxy.
+      \begin{equation}
+        \label{eq:ir-limits}
+        5 \log_{10}\left(\frac{d(z)}{d}\right) + m = m_{\max}
+      \end{equation}
+      The maximum redshift that the source could have been observed within the
+      selection criteria is then $z_{\mathrm{max}} = \min(z_{\mathrm{ir}}, z_{\mathrm{radio}}, z_{\mathrm{upper}})$.
+    \item For each source, compute the comoving volume $V_{\mathrm{max}}$ at
+      redshift $z_{\mathrm{max}}$.
+    \item The count for each luminosity bin is the sum over $1 / V_{\max}$ for
+      each source in the bin. We account for the fact FIRST does not cover the
+      whole sky by multiplying by the total area of the sky divided by the area
+      of our selection.
+  \end{enumerate}
+
+  After computing the luminosity function, we estimate the uncertainty in each bin using Poisson statistics, $\sqrt{N}$ for a bin count $N$.
+
+  \section{Redshift completeness estimate}
+  \label{sec:completeness}
+
+    \autoref{fig:completeness-wise} shows the estimated completeness as a function of $W1$ and $W1-W2$. We followed the same method as \citet{pracy16rlf} for this estimation, averaging completeness over circles centred on each source. Each source is associated with a circle of radius equal to the distance to its 50th nearest neighbour in the $W1$ and $W1-W2$ plane.
+
+    \begin{figure}
+        \centering
+        \includegraphics{rlf-images/completeness_wise.pdf}
+        \caption{\label{fig:completeness-wise} Estimated completeness as a function of mid-infrared colour and magnitude.}
+    \end{figure}
+
+  \section{Giant radio galaxies}
+
+    \begin{table*}
+      \caption{\label{tab:grg} Giant radio galaxies found in RGZ-Ex. `LLS' is the projected linear size of the source as measured by the maximum angular distance between radio components. The RA/Dec are the coordinates of the host galaxy. s/p indicates spectroscopic/photometric redshift. ${}^L$Existing in literature. ${}^R$Also found by RGZ citizen scientists. ${}^\dagger$Misidentified SDSS host, manually corrected to obtain redshift.}
+      \begin{footnotesize}\begin{tabular}{c|ccccc}
+  \hline
+  All\emph{WISE} host (WISEA) & RA (J2000) & Dec (J2000) & $z$ & LLS (Mpc) &\\
+  \hline
+    J004210.18-080011.3 & 10.54 & -8.00 & $0.65 \pm 0.14$ & 1.6 & p\\ % 3051
+    J021008.48+011839.6${}^L$ & 32.54 & 1.31 & $0.86524 \pm 0.0001$ & 1.2 & s\\ % 8420
+    J075858.29+355643.6${}^R$ & 119.74 & 35.95 & $0.74748 \pm 0.00013$ & 1.0 & s\\ % 19661
+    J080831.68+473523.9${}^R$ & 122.13 & 47.59 & $0.58854 \pm 0.00016$ & 1.1 & s\\ % 21331
+    J083034.78+231124.6 & 127.64 & 23.19 & $0.94 \pm 0.13$ & 1.1 & p\\ % 25768
+    J090604.03+011114.2 & 136.52 & 1.19 & $0.7975 \pm 0.0004$ & 1.6 & s\\ % 33696
+    J093256.81+074212.2 & 143.24 & 7.70 & $1.0032 \pm 0.0003$ & 1.1 & s\\ % 39983
+    J093526.80+051729.8${}^R$ & 143.86 & 5.29 & $0.84 \pm 0.04$ & 1.2 & p\\ % 40574
+    J094238.72+114337.9 & 145.66 & 11.73 & $0.49 \pm 0.05$ & 1.2 & p\\ % 42294
+    J094835.60+535946.4${}^R$ & 147.15 & 54.00 & $0.64 \pm 0.10$ & 1.2 & p\\ % 43609
+    J095706.12+292439.2 & 149.28 & 29.41 & $0.71 \pm 0.12$ & 1.5 & p\\ % 45638
+    J102335.25+433208.0 & 155.90 & 43.54 & $0.75 \pm 0.09$ & 1.5 & p\\ % 51758
+    J102933.99+210345.8${}^R$ & 157.39 & 21.06 & $0.82407 \pm 0.00008$ & 1.1 & s\\ % 53159
+    J103043.98+355451.2${}^R$ & 157.68 & 35.91 & $0.64074 \pm 0.00008$ & 1.2 & s\\ % 53433
+    J104449.92+234525.6${}^\dagger$ & 161.20 & 23.76 & $0.57712 \pm 0.00009$ & 1.6 & s\\ % 56652
+    J110655.98+624759.8${}^R$ & 166.73 & 62.80 & $0.84379 \pm 0.00004$ & 1.1 & s\\ % 61882
+    J112900.68+635543.2 & 172.25 & 63.93 & $0.71 \pm 0.06$ & 1.1 & p\\ % 67101
+    J112948.20+243922.6 & 172.45 & 24.66 & $0.79 \pm 0.07$ & 1.1 & p\\ % 67288
+    J114553.67-003304.7 & 176.47 & -0.55 & $2.0522 \pm 0.0006$ & 1.3 & s\\ % 71048
+    J121111.26+534840.4 & 182.80 & 53.81 & $0.74 \pm 0.14$ & 1.1 & p\\ % 77051
+    J121152.04+304232.4${}^R$ & 182.97 & 30.71 & $0.47102 \pm 0.00012$ & 1.3 & s\\ % 77229
+    J121944.73+174121.3 & 184.94 & 17.69 & $1.5129 \pm 0.0009$ & 1.0 & s\\ % 79128
+    J123735.89+544814.4${}^R$ & 189.40 & 54.80 & $1.0271 \pm 0.0006$ & 1.2 & s\\ % 83169
+    J123819.16+113444.8 & 189.58 & 11.58 & $0.80 \pm 0.08$ & 1.2 & p\\ % 83310
+    J123846.84-032857.5${}^\dagger$ & 189.70 & -3.48 & $0.67 \pm 0.07$ & 1.5 & p\\ % 83402
+    J131625.00+272042.8 & 199.10 & 27.35 & $0.69092 \pm 0.00004$ & 1.0 & s\\ % 92344
+    J133307.00+045048.6${}^R$ & 203.28 & 4.85 & $1.40534 \pm 0.00016$ & 1.1 & s\\ % 96197
+    J141933.36+104706.4${}^R$ & 214.89 & 10.79 & $0.33973 \pm 0.00003$ & 1.0 & s\\ % 107030
+    J142008.45+185422.7${}^R$ & 215.04 & 18.91 & $0.63 \pm 0.04$ & 1.4 & p\\ % 107197
+    J145057.28+530007.7${}^L$ & 222.74 & 53.00 & $0.91662 \pm 0.00009$ & 1.3 & s\\ % 114664
+    J150012.18+604941.3 & 225.05 & 60.83 & $1.6626 \pm 0.0007$ & 1.2 & s\\ % 116901
+    J153547.13+432245.0${}^R$ & 233.95 & 43.38 & $0.63891 \pm 0.00007$ & 1.3 & s\\ % 125394
+    J154631.18+194819.9 & 236.63 & 19.81 & $0.5917 \pm 0.0002$ & 1.4 & s\\ % 127907
+    J160852.10+561110.2${}^R$ & 242.22 & 56.19 & $1.3196 \pm 0.0003$ & 1.3 & s\\ % 132855
+    J162200.48+364044.0 & 245.50 & 36.68 & $1.9994 \pm 0.0002$ & 1.1 & s\\ % 135486
+    J163004.35+103321.9${}^R$ & 247.52 & 10.56 & $0.85 \pm 0.09$ & 1.2 & p\\ % 136997
+    J163125.75+200224.1${}^R$ & 247.86 & 20.04 & $0.62662 \pm 0.00013$ & 1.0 & s\\ % 137251
+    J165055.46+394446.6 & 252.73 & 39.75 & $0.58829 \pm 0.00013$ & 1.1 & s\\ % 140491
+    J232410.33+045309.6 & 351.04 & 4.89 & $0.76 \pm 0.06$ & 1.4 & p\\ % 156015
+    J234440.02-003231.6 & 356.17 & -0.54 & $0.5014 \pm 0.0001$ & 1.0 & s\\ % 157352
+      \hline
+      \end{tabular}\end{footnotesize}
+    \end{table*}
+
+    To identify radio sources we assume that if any two components have the same host galaxy then they are part of the same source. This is a reasonable assumption if all host galaxies are correctly identified, which is not the case. This assumption therefore introduces spurious sources due to galaxies incorrectly identified as host galaxies: not all sources used in this paper are real sources, and in particular sources of large angular size are likely to be incorrect. Nevertheless RGZ-Ex provides a useful catalogue of \emph{candidate} radio sources, and visual follow-up can confirm whether sources of interest are real.
+
+    H.A. and M.A. examined all 296 candidate sources in the RGZ-Ex catalogue with an estimated physical extent larger than 1~Mpc. Of these, 40 were real giant radio galaxies, which we show in \autoref{tab:grg}. We define `giant radio galaxy' as a radio galaxy with emission extended to physical sizes $\geq 1.0$~Mpc. Other thresholds, such as $0.7$~Mpc, also exist in literature. The physical extents of the remaining 256 candidate sources were overestimated
+mostly due to sidelobes/artefacts (103), incorrect source grouping (82), or incorrect SDSS matches (21). The citizen scientists who identified giants are: WizardHowl, DolorousEdd, antikodon, csunjoto, sisifolibre, JeanTate, JKD, PADV, and firejuggler. H.A., together with his summer students, had previously identified 29 of these giants.
+
+    Note that this is a particularly challenging set: sources that are misidentified will often have unusually large estimated extents due to the inclusion of spurious components. The error rate in this set therefore does not reflect the rest of the catalogue.
+
+\section{Visual verification results}
+\label{sec:verification-appendix}
+  
+  In \autoref{sec:manual-validation} we described our visual verification of the BXID method. We list the radio components in the verification set in \autoref{tab:verification-set}. Each row of the table contains the FIRST component, its All\emph{WISE} host galaxy according to BXID, and whether the association is correct according to our visual verification. If an author was particularly unsure about an object, they were able to skip this object, and so are not accounted for in the verification for that object. Verification was weighted by the \citet{dawid79em} maximum likelihood model.
+
+  \begin{table}
+    \caption{\label{tab:verification-set} Validation objects. `Agree' is whether or not the authors agreed with BXID associating the given FIRST object with the given All\emph{WISE} object.}
+      \begin{tabular}{ccc}
+        FIRST & All\emph{WISE} & Agree\\\hline
+        J000234.9-001421 & J000242.35-001320.5 & n\\
+        J002841.1+141654 & J002840.37+141652.7 & y\\
+        J003731.4+000156 & J003731.26+000146.7 & y\\
+        J005407.5-011158 & J005407.61-011158.9 & y\\
+        J011210.3+002203 & J011210.41+002201.9 & y\\
+        J012342.4+015849 & J012342.24+015850.4 & y\\
+        J013015.1+110653 & J013015.16+110653.4 & y\\
+        J013107.7+070343 & J013102.02+070332.0 & y\\
+        J014247.9-000039 & J014247.81-000040.3 & y\\
+        J014250.0-000032 & J014247.81-000040.3 & n\\
+        J020222.3+030138 & J020223.20+030150.4 & y\\
+        J020333.8+000853 & J020336.94+000759.3 & y\\
+        J021840.1-032311 & J021840.13-032306.0 & y\\
+        J023022.0+010834 & J023022.11+010840.0 & y\\
+        J024245.3-022535 & J024245.35-022534.6 & y\\
+        J025901.0+005350 & J025901.50+005346.1 & y\\
+        J033204.1-004757 & J033204.15-004757.1 & y\\
+        J073033.2+390413 & J073033.21+390412.9 & y\\
+        J073954.1+481810 & J073954.87+481759.5 & y\\
+        J074504.9+331247 & J074504.81+331256.2 & y\\
+        J074640.4+421709 & J074640.45+421709.1 & y\\
+        J074707.9+171719 & J074708.35+171726.5 & y\\
+        J075043.6+274838 & J075043.35+274844.8 & n\\
+        J075050.3+331937 & J075051.25+331905.0 & y\\
+        J075422.2+311253 & J075422.35+311252.5 & y\\
+        J075637.0+212006 & J075636.65+212001.4 & y\\
+        J082326.1+141438 & J082326.34+141435.9 & y\\
+        J082422.5+351121 & J082422.65+351114.6 & y\\
+        J082925.9+462618 & J082926.02+462618.5 & y\\
+        J083512.4+175441 & J083512.45+175441.1 & y\\
+        J084133.5+402035 & J084133.40+402042.8 & y\\
+        J084238.4+405305 & J084238.38+405306.6 & n\\
+        J084417.3+315845 & J084417.92+315845.9 & y\\
+        J084728.5+360700 & J084728.24+360714.6 & y\\
+        J084905.5+111448 & J084905.51+111447.8 & y\\
+        J085236.8+262006 & J085236.11+262013.4 & y\\
+        J085415.6+524930 & J085415.62+524936.7 & y\\
+        J090623.2+300746 & J090622.87+300743.9 & y\\
+        J091745.1+275049 & J091745.89+275103.8 & y\\
+        J091752.0+431614 & J091752.14+431612.7 & y\\
+        J092014.4+302907 & J092013.95+302859.3 & y\\
+        J092140.5+540118 & J092140.24+540121.1 & y\\
+        J092213.0+542157 & J092213.03+542157.2 & y\\
+        J092406.9+562703 & J092406.47+562656.2 & y\\
+        J092713.1+105841 & J092713.14+105839.8 & y\\
+        J093108.6+613447 & J093108.63+613447.2 & y\\
+        J093239.6+052308 & J093237.71+052240.7 & n\\
+        J093627.8+103610 & J093627.87+103609.7 & y\\
+        J093645.2+561435 & J093645.89+561434.2 & y\\
+        J094006.8+482651 & J094006.92+482649.2 & y\\
+        J094009.5+600403 & J094011.55+600357.6 & n\\
+        J094023.7+135123 & J094023.73+135125.2 & y\\
+        J094324.5+435341 & J094324.61+435342.0 & y\\
+        J094650.8+382015 & J094650.44+382010.9 & y\\
+        J095011.8+455319 & J095011.82+455320.0 & y\\
+        J095113.5+180211 & J095113.82+180204.2 & n\\
+        J095242.4+222638 & J095242.45+222638.0 & y\\
+        J095538.7+013546 & J095539.20+013546.1 & y\\
+        J095609.9+363441 & J095609.30+363445.4 & y\\
+        J095811.8+225056 & J095811.90+225055.5 & y\\
+        J100019.2+263516 & J100018.84+263527.5 & y\\
+        J101315.9+064520 & J101316.51+064519.0 & y\\
+        J101455.2-004716 & J101455.30-004718.3 & y\\
+        J102153.5+260429 & J102153.52+260429.6 & y\\
+        J102354.7+390653 & J102354.88+390654.0 & y\\
+        J102620.4+303600 & J102620.46+303550.4 & y\\
+        J102710.4+460254 & J102714.81+460256.4 & n\\
+        J102955.9+424906 & J102955.96+424906.7 & y\\
+        J103503.9+102404 & J103503.92+102403.6 & y\\
+        J103839.9+331200 & J103839.94+331201.1 & y\\
+        J104030.5+211624 & J104031.09+211620.6 & n\\
+        J104533.8+430025 & J104535.22+430020.8 & y\\
+        J104907.5+322903 & J104907.91+322906.6 & y\\
+        J105146.9+552257 & J105147.40+552308.4 & y\\
+        J105257.5+105418 & J105257.53+105421.5 & y\\
+        J105521.6+372641 & J105521.24+372652.4 & y\\
+        J105758.8+321605 & J105758.84+321605.3 & y\\
+        J110104.9+151618 & J110104.90+151618.2 & y\\
+        J110353.2+352320 & J110353.37+352319.9 & y\\
+        J110414.4+481345 & J110423.08+481311.0 & n\\
+        J111057.7+220756 & J111057.18+220758.3 & y\\
+        J111208.5+275207 & J111201.79+275053.8 & n\\
+        J111225.2+233159 & J111225.30+233157.9 & y\\
+        J111726.3+375336 & J111726.35+375337.0 & y\\
+        J111746.1+261151 & J111746.18+261150.9 & y\\
+        J111854.3+424708 & J111854.45+424652.8 & y\\
+        J112124.4+640417 & J112125.02+640408.6 & y\\
+        J112135.3+352330 & J112135.44+352324.9 & y\\
+        J112550.9+200631 & J112558.75+200554.3 & y\\
+        J112859.7+260923 & J112859.86+260911.3 & y\\
+        J113201.1+442639 & J113201.23+442639.4 & y\\
+        J113302.5+355408 & J113301.80+355415.3 & y\\
+        J113712.7+263301 & J113711.86+263335.1 & y\\
+        J113756.3+471314 & J113756.31+471314.1 & y\\
+        J113906.6+230602 & J113906.68+230602.1 & y\\
+        J114325.0+600721 & J114323.90+600737.1 & y\\
+        J114759.7+370305 & J114759.22+370311.2 & y\\
+        J114916.7+083022 & J114916.33+083040.5 & n\\
+        J115010.9+063340 & J115010.93+063340.5 & y\\
+        J115308.6+374851 & J115316.96+374850.0 & y\\
+        J115448.7+472222 & J115448.67+472223.7 & y\\
+        J115603.7+584704 & J115603.48+584706.1 & y\\
+        J115605.9+343230 & J115605.64+343229.4 & y\\
+        J115653.0+572338 & J115645.38+572151.7 & y\\
+        J120138.0+230922 & J120137.97+230922.2 & y\\
+        J120752.8+533808 & J120752.85+533807.3 & y\\
+        J120943.3-021934 & J120942.89-021943.0 & y\\
+        J121045.6+190225 & J121045.68+190227.0 & y\\
+        J121207.6+115412 & J121207.72+115413.8 & y\\
+        J121211.3+485951 & J121211.86+485952.0 & y\\
+        J121406.7+002634 & J121406.73+002635.0 & y\\
+        J122518.0+350258 & J122517.85+350301.9 & y\\
+        J122525.1+451530 & J122524.71+451508.5 & y\\
+        J122640.9+430508 & J122640.82+430509.2 & y\\
+        J123429.8+260107 & J123434.79+260134.3 & n\\
+        J123633.1+100928 & J123633.12+100928.7 & y\\
+        J124839.3+411522 & J124839.42+411522.3 & n\\
+        J125129.2+551012 & J125128.76+551009.3 & y\\
+        J130005.8+524801 & J130006.14+524803.0 & y\\
+        J130132.1+511351 & J130132.32+511352.5 & y\\
+        J131104.4+464936 & J131104.45+464934.0 & y\\
+        J131452.2+252811 & J131446.81+252820.8 & n\\
+        J132033.8+332639 & J132033.59+332639.0 & n\\
+        J132257.5+191134 & J132257.53+191133.9 & y\\
+        J132529.3+230734 & J132529.35+230733.8 & y\\
+        J132546.8+052453 & J132546.86+052454.1 & y\\
+        J132637.7+112110 & J132637.92+112108.8 & y\\
+        J132831.8+104339 & J132831.88+104338.8 & y\\
+        J132932.3+131839 & J132932.32+131839.6 & y\\
+        J133022.8+311904 & J133022.83+311902.8 & y\\
+        J133453.3+405653 & J133454.13+405650.6 & y\\
+        J133741.1+124302 & J133741.13+124303.1 & y\\
+        J133823.6+103337 & J133823.67+103341.9 & y\\
+        J134651.2+415154 & J134651.06+415156.1 & y\\
+        J134704.3+110622 & J134704.35+110622.7 & y\\
+        J134752.7+555046 & J134752.71+555048.6 & y\\
+        J134831.7+164325 & J134831.57+164328.2 & y\\
+        J134949.8+385539 & J134949.93+385542.8 & y\\
+        J135106.5+074534 & J135106.50+074534.2 & y\\
+        J135107.7+615502 & J135107.75+615502.1 & y\\
+        J135658.5+134028 & J135659.15+134017.0 & y\\
+        J135833.9+180021 & J135834.03+180020.4 & y\\
+        J140630.7+554017 & J140629.32+554009.9 & y\\
+        J140804.2+503019 & J140804.10+503021.1 & y\\
+        J141226.7+454125 & J141226.54+454125.5 & y\\
+        J141245.0+495213 & J141243.84+495206.4 & y\\
+        J141317.4+325306 & J141317.50+325306.8 & y\\
+        J141723.8+543639 & J141724.33+543629.5 & y\\
+        J141938.8+312146 & J141940.16+312138.8 & y\\
+        J142515.3+175526 & J142513.89+175525.7 & y\\
+        J142829.5+070836 & J142829.60+070836.3 & y\\
+        J143411.0+170036 & J143411.18+170035.7 & y\\
+        J143624.0-001057 & J143623.89-001100.8 & y\\
+        J143742.6+104412 & J143742.69+104412.8 & y\\
+        J143840.8+475355 & J143841.08+475356.1 & y\\
+        J143909.1+430847 & J143909.08+430847.8 & y\\
+        J144135.8+102246 & J144135.91+102245.1 & y\\
+        J144333.6+275229 & J144333.02+275250.2 & y\\
+        J145012.3+471739 & J145012.33+471738.7 & y\\
+        J145103.7+452459 & J145102.66+452520.5 & n\\
+        J145401.6+141009 & J145401.70+141009.6 & y\\
+        J150158.7+191413 & J150158.87+191405.3 & y\\
+        J150743.9+352720 & J150743.62+352724.1 & y\\
+        J151141.6-003209 & J151142.01-003213.0 & y\\
+        J151315.5+403107 & J151315.56+403107.7 & y\\
+        J151518.7+230256 & J151518.67+230257.3 & y\\
+        J151703.6+105947 & J151703.68+105947.6 & y\\
+        J151736.8+610856 & J151736.83+610857.7 & y\\
+        J152121.6+281635 & J152120.68+281626.2 & y\\
+        J152714.8+310425 & J152714.88+310424.7 & y\\
+        J153428.9+272134 & J153429.68+272120.8 & y\\
+        J154245.3+100919 & J154245.71+100917.8 & y\\
+        J154901.6+103159 & J154901.40+103152.6 & y\\
+        J154925.2+395316 & J154926.17+395303.7 & y\\
+        J155206.3-005348 & J155206.58-005339.3 & y\\
+        J155457.3+344637 & J155458.45+344644.7 & y\\
+        J155743.5+272752 & J155743.52+272752.8 & y\\
+        J160130.0+083848 & J160130.07+083850.7 & y\\
+        J160534.8+441220 & J160535.55+441221.5 & y\\
+        J160859.2+400135 & J160901.32+400230.7 & n\\
+        J161545.4+231617 & J161545.14+231617.2 & y\\
+        J161930.4+085533 & J161930.51+085532.6 & y\\
+        J162228.0+264743 & J162228.70+264736.7 & y\\
+        J162750.4+473624 & J162750.55+473623.5 & y\\
+        J162904.2+470852 & J162904.34+470853.0 & y\\
+        J163038.7+214740 & J163037.43+214748.9 & n\\
+        J163323.6+424051 & J163323.61+424051.9 & y\\
+        J163327.5+242426 & J163327.87+242427.4 & y\\
+        J163533.8+454557 & J163534.00+454554.3 & y\\
+        J164211.2+512029 & J164211.27+512029.3 & y\\
+        J165549.1+375923 & J165549.01+375923.6 & y\\
+        J165620.0+363402 & J165619.89+363403.9 & y\\
+        J165700.5+474820 & J165659.58+474809.0 & y\\
+        J171406.2+292712 & J171404.16+292704.0 & n\\
+        J172126.4+374446 & J172126.46+374446.6 & y\\
+        J222627.7-005010 & J222627.77-005010.8 & y\\
+        J223636.4-013827 & J223636.48-013827.2 & y\\
+        J225619.0+143257 & J225621.96+143351.4 & y\\
+        J232410.1+001315 & J232410.15+001314.5 & y\\
+        J234727.9-000919 & J234727.65-000912.9 & y\\\hline
+  \end{tabular}
+\end{table}
+
+
+\unappendix
