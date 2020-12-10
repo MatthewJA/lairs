@@ -177,7 +177,7 @@
         \begin{figure}
             \centering
             \begin{subfigure}{0.45\textwidth}
-                \includegraphics[width=\textwidth]{images/3C_272.1.jpg}
+                \includegraphics[width=\textwidth]{images/{3C_272.1}.jpg}
                 \caption{M84/3C 272.1}
                 \label{fig:m84}
             \end{subfigure}
@@ -203,7 +203,7 @@
         \begin{figure}
             \centering
             \begin{subfigure}{0.3\textwidth}
-                \includegraphics[width=\textwidth]{images/3C_83.1B.jpg}
+                \includegraphics[width=\textwidth]{images/{3C_83.1B}.jpg}
                 \caption{3C 83.1B}
                 \label{fig:3C83-1B}
             \end{subfigure}
@@ -305,7 +305,7 @@
             \centering
             \begin{subfigure}{0.45\textwidth}
                 \includegraphics[width=\textwidth]{images/CSIRO-Parkes-Wiradjuri-naming-Murriyang.jpg}
-                \caption{Murriyang at Parkes Observatory}
+                \caption{The 64m telescope (Murriyang) at Parkes Observatory}
                 \label{fig:murriyang}
             \end{subfigure}
             \begin{subfigure}{0.45\textwidth}
@@ -316,7 +316,11 @@
             \caption[A single dish telescope and a radio array.]{\label{fig:telescopes} (a) A single-dish telescope and (b) an array. Images: CSIRO.}
         \end{figure}
 
-        Radio observations may be made either with \defn{single-dish telescopes}, like Murriyang, or \defn{radio arrays}, like the Australia Telescope Compact Array (ATCA), both shown in \autoref{fig:telescopes}.
+        Radio observations may be made either with \defn{single-dish telescopes}, like the famous Parkes Radio Telescope (Murriyang), or \defn{radio arrays}, like the Australia Telescope Compact Array (ATCA), both shown in \autoref{fig:telescopes}. Both have their advantages. Single-dish telescopes are able to measure absolute brightnesses (while arrays can only measure relative brightnesses, and must therefore be calibrated to a source of known brightness). Interferometric arrays can achieve incredibly high resolution, as the resolution is inversely proportional to the distance between the most distant array elements (while the resolution of single dish telescopes is inversely proportional to the diameter of the dish).
+
+        Radio telescopes can be thought of as sampling the \defn{$u$-$v$ plane}, the Fourier transform of the sky. The $u$-$v$ plane is perpendicular to the line-of-sight. Each pair of antennae in an array samples two points on this plane, each corresponding to the vector between the antennae projected onto the $u$-$v$ plane. Longer baselines therefore correspond to higher (spatial) frequencies, which is why long baselines provide high resolution. 
+
+        Single-dish telescopes sample a disc centred on the origin of this plane, while arrays sample 
 
         An example of this is shown in \autoref{fig:resolved-out}, where (a) and (b) are the same radio galaxy observed with the same telescope, the Very Large Array, with the only difference being that the VLA was in B configuration for (a) and the D configuration for (b).
 
