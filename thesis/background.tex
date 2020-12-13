@@ -177,7 +177,7 @@
         \begin{figure}
             \centering
             \begin{subfigure}{0.45\textwidth}
-                \includegraphics[width=\textwidth]{images/{3C_272.1}.jpg}
+                \includegraphics[width=\textwidth]{images/3C_272.1.jpg}
                 \caption{M84/3C 272.1}
                 \label{fig:m84}
             \end{subfigure}
@@ -203,7 +203,7 @@
         \begin{figure}
             \centering
             \begin{subfigure}{0.3\textwidth}
-                \includegraphics[width=\textwidth]{images/{3C_83.1B}.jpg}
+                \includegraphics[width=\textwidth]{images/3C_83.1B.jpg}
                 \caption{3C 83.1B}
                 \label{fig:3C83-1B}
             \end{subfigure}
@@ -295,8 +295,9 @@
         It is worth contrasting these machine learning approaches with non-machine learning automated approaches, as the two are often conflated in the literature. \citet{mingo_revisiting_2019}, for example, use an automated version of detecting the brightness gradient of extended radio sources to determine whether they are FRI or FRII en masse and apply this approach to the LoTSS survey. \citet{segal_identifying_2019} apply an information theoretic approach to estimating morphological complexity of a source. The key difference between a machine learning automated approach and a non-machine learning automated approach is that the former has the capacity to change its behaviour based on available data, while the latter does not --- though note that this is not necessarily a bad thing.
 
 \section{Aggregating Radio Sources}
+\label{sec:aggregation}
     
-    Unlike galaxies observed at other wavelengths, the emission from radio galaxies can be disconnected when observed: a single radio galaxy may appear in observations as multiple discrete components. This is partly due to inhomogeneous emission over the radio galaxy structure --- e.g. FRII hotspots can be much brighter than the rest of the galaxy, so they might be visible while the rest of the galaxy is too faint to see --- and partly due to the technique through which many radio observations are made, \defn{interferometry}, which may screen out diffuse emission.
+    Unlike galaxies observed at other wavelengths, the emission from radio galaxies can be disconnected when observed: a single radio galaxy may appear in observations as multiple discrete components. This is partly due to inhomogeneous emission over the radio galaxy structure --- e.g. FRII hotspots can be much brighter than the rest of the galaxy, so they might be visible while the rest of the galaxy is too faint to see --- and partly due to the technique through which many radio observations are made, \defn{interferometry}, which may screen out diffuse emission. Since radio galaxies can appear disconnected, aggregating observed radio objects into physical sources is integral to understanding radio galaxies.
     
     \subsection{Missing emission in radio observations}
     \label{sec:missing-emission}
@@ -318,11 +319,11 @@
 
         Radio observations may be made either with \defn{single-dish telescopes}, like the famous Parkes Radio Telescope (Murriyang), or \defn{radio arrays}, like the Australia Telescope Compact Array (ATCA), both shown in \autoref{fig:telescopes}. Both have their advantages. Single-dish telescopes are able to measure absolute brightnesses (while arrays can only measure relative brightnesses, and must therefore be calibrated to a source of known brightness). Interferometric arrays can achieve incredibly high resolution, as the resolution is inversely proportional to the distance between the most distant array elements (while the resolution of single dish telescopes is inversely proportional to the diameter of the dish).
 
-        Radio telescopes can be thought of as sampling the \defn{$u$-$v$ plane}, the Fourier transform of the sky. The $u$-$v$ plane is perpendicular to the line-of-sight. Each pair of antennae in an array samples two points on this plane, each corresponding to the vector between the antennae projected onto the $u$-$v$ plane. Longer baselines therefore correspond to higher (spatial) frequencies, which is why long baselines provide high resolution. 
-
-        Single-dish telescopes sample a disc centred on the origin of this plane, while arrays sample 
-
-        An example of this is shown in \autoref{fig:resolved-out}, where (a) and (b) are the same radio galaxy observed with the same telescope, the Very Large Array, with the only difference being that the VLA was in B configuration for (a) and the D configuration for (b).
+        Radio telescopes can be thought of as sampling the \defn{$u$-$v$ plane}, the Fourier transform of the sky. The $u$-$v$ plane is perpendicular to the line-of-sight. Each pair of antennae in an array samples two points on this plane, each corresponding to the vector between the antennae projected onto the $u$-$v$ plane, called a \defn{baseline}. Longer baselines therefore correspond to higher (spatial) frequencies, which is why long baselines provide high resolution. Diffuse emission is characterised mainly by low (spatial) frequency components, while compact emission is characterised by a broad range of frequency components, so diffuse emission both a) takes up less space on the $u$-$v$ plane than compact sources and b) occupies spaces much closer to the origin on the $u$-$v$ plane. Some intuition on this can be obtained by examining the Fourier transform of a 2D Gaussian:
+        \begin{equation}
+            \mathcal F_{x, y}\left[\frac{1}{2\pi\sigma^2} e^{-(x^2 + y^2) / 2\sigma^2}\right] = e^{-2\sigma^2 \pi^2(u^2 + v^2)}.
+        \end{equation}
+        From this equation we can see that the Fourier transform of a fairly \emph{compact} Gaussian would be quite broad, taking up many frequencies in the $u$-$v$ plane, while a very \emph{diffuse} Gaussian would have a very narrow Fourier transform. The upshot of this is that long baselines sacrifice sensitivity to diffuse emission for high resolution. Single-dish radio telescopes are unable to make the same tradeoff, as they are only able to sample a disc centred on the origin\footnote{This is, incidentally, why single-dish telescopes can measure the absolute brightness while arrays cannot: there is no way to measure the origin in the $u$-$v$ plane as there is no way for two array antennae to be infinitely close together (forming a zero-length baseline), and the origin contains the absolute brightness information much like how the centre of a Fourier transform contains the mean.}. This loss of diffuse emission is often called \defn{resolving out}. An example of this is shown in \autoref{fig:resolved-out}, where (a) and (b) are the same radio galaxy observed with the same telescope, the Very Large Array, with the only difference being that the VLA was in B configuration for (a) and the D configuration for (b). The B configuration moves the antennae of the VLA far apart, while the D configuration keeps them close together.
 
         \begin{figure}
             \centering
@@ -338,6 +339,11 @@
             \end{subfigure}
             \caption[An example of a `resolved out' radio galaxy.]{\label{fig:resolved-out} A fairly diffuse FRII, J0016+0420, observed with the VLA in the (a) FIRST and (b) NVSS surveys. \citep[GRG1 from ][]{dabhade_discovery_2017}}
         \end{figure}
+
+    \subsection{The need to aggregate}
+    \label{sec:aggregate-why}
+
+    \subsection{Methods of aggregation}
 
 % \section{Observing Radio Sources}
 % \label{sec:radio-astronomy}
