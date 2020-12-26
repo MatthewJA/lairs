@@ -15,14 +15,23 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 \section{Introduction to cross-identification}
 \label{sec:atlas-xid-intro-cross-id}
 
-    \begin{figure*}
+    \begin{figure}
         \centering
-        \subfloat[Two compact components, each a compact source.]{\includegraphics[width=0.30\linewidth]{atlas-images/cdfs_100_compact.png}}\quad
-        \subfloat[One resolved component and resolved source.]{\includegraphics[width=0.30\linewidth]{atlas-images/elais_57_resolved.png}}\quad
-        \subfloat[Three resolved components comprising one resolved source.]{\includegraphics[width=0.30\linewidth]{atlas-images/cdfs_185_resolved.png}}
+        \begin{subfigure}{0.3\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/cdfs_100_compact.png}
+            \caption{Two compact components, each a compact source.}
+        \end{subfigure}
+        \begin{subfigure}{0.3\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/elais_57_resolved.png}
+            \caption{One resolved component and resolved source.}
+        \end{subfigure}
+        \begin{subfigure}{0.3\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/cdfs_185_resolved.png}
+            \caption{Three resolved components comprising one resolved source.}
+        \end{subfigure}
         \caption[Examples showing key definitions of radio emission regions used throughout this chapter.]{\label{fig:definitions} Examples showing key definitions of radio emission regions used throughout this chapter.
                  Compact and resolved components are defined by \autoref{eq:atlas-compact}.}
-    \end{figure*}
+    \end{figure}
 
     Next generation radio telescopes such as the Australian SKA Pathfinder \citep[ASKAP;][]{johnston07} and Apertif \citep{verheijen08} will conduct increasingly wide, deep, and high-resolution radio surveys, producing large amounts of data. The Evolutionary Map of the Universe \citep[EMU;][]{norris11} survey using ASKAP is expected to detect over 70 million radio sources, compared to the 2.5 million radio sources currently known \citep{banfield15}. An important part of processing these data is cross-identifying observed radio emission regions with observations of their host galaxy in surveys at other wavelengths.
 
@@ -1520,17 +1529,31 @@ J002951.19-440556.6 & 7.4633 & -44.0991 & C0342 &  & J002951.26-440556.4 & 7.463
 
     This section contains figures of cross-identifications of each ATLAS radio component in CDFS and ELAIS-S1.
 
-    \begin{figure*}
-      \centering
-      \subfloat[]{\includegraphics{atlas-images/examples_all/example_sorted_0_306.pdf}}
 
-      \subfloat[]{\includegraphics{atlas-images/examples_all/example_sorted_2_0.pdf}}%
-      \subfloat[]{\includegraphics{atlas-images/examples_all/example_sorted_3_454.pdf}}
-
-      \subfloat[]{\includegraphics{atlas-images/examples_all/example_sorted_4_264.pdf}}%
-      \subfloat[]{\includegraphics{atlas-images/examples_all/example_sorted_5_207.pdf}}
-      \caption{\label{fig:examples} Examples of resolved sources with high disagreement between cross-identifiers. The contours show ATLAS radio data and start at $4\sigma$, increasing geometrically by a factor of 2. The background image is the \unit{3.6}{\micro\meter} SWIRE image. Binary classifier model/training set combinations are denoted $C(S)$ where $C$ is the binary classifier model and $S$ is the training set. `LR' is logistic regression, `CNN' is convolutional neural networks, and `RF' is random forests. `Norris' refers to the expert labels and `RGZ' refers to the Radio Galaxy Zoo labels. The cross-identification made by nearest-neighbours is shown by `NN'. The complete set of figures for 469 examples is available in the supplementary information.}
-    \end{figure*}
+    \begin{figure}
+        \centering
+        \begin{subfigure}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/examples_all/example_sorted_0_306.pdf}
+            \caption{Two compact components, each a compact source.}
+        \end{subfigure}
+        \begin{subfigure}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/examples_all/example_sorted_2_0.pdf}
+            \caption{One resolved component and resolved source.}
+        \end{subfigure}
+        \begin{subfigure}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/examples_all/example_sorted_3_454.pdf}
+            \caption{Three resolved components comprising one resolved source.}
+        \end{subfigure}
+        \begin{subfigure}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/examples_all/example_sorted_4_264.pdf}
+            \caption{Three resolved components comprising one resolved source.}
+        \end{subfigure}
+        \begin{subfigure}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{atlas-images/examples_all/example_sorted_5_207.pdf}
+            \caption{Three resolved components comprising one resolved source.}
+        \end{subfigure}
+        \caption{\label{fig:examples} Examples of resolved sources with high disagreement between cross-identifiers. The contours show ATLAS radio data and start at $4\sigma$, increasing geometrically by a factor of 2. The background image is the \unit{3.6}{\micro\meter} SWIRE image. Binary classifier model/training set combinations are denoted $C(S)$ where $C$ is the binary classifier model and $S$ is the training set. `LR' is logistic regression, `CNN' is convolutional neural networks, and `RF' is random forests. `Norris' refers to the expert labels and `RGZ' refers to the Radio Galaxy Zoo labels. The cross-identification made by nearest-neighbours is shown by `NN'. The complete set of figures for 469 examples is available in the supplementary information.}
+    \end{figure}
 
 %
 \unappendix

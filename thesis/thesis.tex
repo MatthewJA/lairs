@@ -2,6 +2,7 @@
 %!tex spellcheck=en_AU
 %!tex output_directory=_latex_aux
 %!tex copy_output_on_build=true
+%!tex engine=xelatex
 
 \documentclass[11pt, a4paper]{book}
 \usepackage{svn-multi}
@@ -25,11 +26,21 @@
 \usepackage{afterpage}
 \usepackage{graphicx}
 \usepackage{thesis}
+\usepackage{longtable}
 
 % bib options
 % \usepackage[square]{natbib}
 \usepackage[english]{babel}
 \usepackage[style=authoryear,natbib=true,uniquename=false,uniquelist=false,backend=biber]{biblatex}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldset=abstract, null]
+    }
+  }
+}
+
 \addbibresource{thesis.bib}
 \addbibresource{atlas.bib}
 \addbibresource{sugar-glider.bib}
@@ -117,6 +128,7 @@
 \tableofcontents
 \listoffigures
 \listoftables
+\input{listofconstants}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Here begins the main text
