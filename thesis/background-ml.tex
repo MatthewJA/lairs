@@ -2,112 +2,78 @@
 \chapter{Machine Learning and Astroinformatics}
 \label{cha:background-ml}
 
-    I'll need to explain the purpose of this chapter and give a brief outline. There'll be three sections, and I'll briefly summarise them here.
-
-    \begin{itemize}
-        \item machine learning in astronomy and radio astronomy (literature review)
-        \item summarising the basics of machine learning (later sections of course complicate these): \begin{itemize}
-            \item predictors
-            \item features
-            \item labels
-            \item optimisation
-            \item data
-            \item expertise
-        \end{itemize}
-        \item specific predictors
-        \item features: \begin{itemize}
-            \item feature selection and design, and the benefit of domain knowledge
-            \item feature extraction
-            \item neural networks
-        \end{itemize}
-        \item labels: \begin{itemize}
-            \item training labels and testing labels
-            \item where do labels come from? domain experts, crowdsourcing, citizen science, simulations...
-            \item label noise and unreliable annotators
-            \item multiple unreliable annotators
-        \end{itemize}
-        \item citizen science: \begin{itemize}
-            \item citizen science in astronomy
-            \item designing good citizen science
-            \item benefits and challenges of citizen science
-            \item challenges in ML on crowdsourcing/citizen science
-            \item rant about how citizen science is different to crowdsourcing from an ML perspective
-        \end{itemize}
-    \end{itemize}
-
-% Here we need to talk about the fundamentals of machine learning. We'll start with problem formulations and what machine learning is, then discuss terminology and classification. We need to cover the difficulties of labels and the lack of groundtruth in astronomy, the problem and handling of uncertainties, and feature selection. We also need to talk about the importance (or unimportance?) of interpretability and how this ties into astronomy, and the unique idea of using machine learning as a pathway to understand something important about physics.
-
-    Machine learning was once described to me by an anonymous supervisor as ``the statistics kept at the back of the textbook''. But even accepting its grounding in statistics, is this really an accurate description of the field? I think of machine learning as a data-driven way of formalising predictive problems mathematically, converting between different kinds of statistical problems, and an accompanying set of methods and practices for handling data and uncertainty. The eventual goal is to design some method or algorithm that automatically discovers useful information in (potentially very large) data sets. There are three core components of machine learning: the data, the model, and learning \citep{deisenroth_mathematics_2020}. Before discussing these, we will look at the kinds of problems that machine learning solves.
+Machine learning was once described to me by an anonymous supervisor as ``the statistics kept at the back of the textbook''. But even accepting its grounding in statistics, is this really an accurate description of the field? I think of machine learning as a data-driven way of formalising predictive problems and converting between different kinds of statistical problems, as well as an accompanying set of methods and practices for handling data and uncertainty. The eventual goal is to design some method or algorithm that automatically discovers useful patterns in (potentially very large) data sets. There are three core components of machine learning: the data, the model, and learning \citep{deisenroth_mathematics_2020}. Before discussing these, we will look at the kinds of problems that machine learning solves.
     
 \section{Prediction}
 
-    Machine learning aims to solve \defn{prediction tasks}: problems where we have some data and we seek some kind of output based on that data. Central to prediction tasks are predictors.
+    Machine learning aims to solve \defn{prediction tasks}: problems where we have some data and we seek some kind of output based on that data. Central to prediction tasks are predictors, the objects we train based on data.
 
     \subsection{Predictors}
     \label{sec:predictors}
-        A \defn{predictor} is some function that produces an output from some given input. A predictor can be represented as a function or as a probabilistic model, depending on the machine learning approach being undertaken. As a function, a predictor maps from some input domain $\mathcal X$ into some output domain $\mathcal Y$, and is usually written as
+        A \defn{predictor} is an object that makes predictions based on an input. A predictor can be a function or a probabilistic model, depending on the machine learning approach being undertaken.
+
+        As a function, a predictor maps from some input domain $\mathcal X$ into some output domain $\mathcal Y$, and is usually written as
         \begin{equation}
             f : \mathcal X \to \mathcal Y.
         \end{equation}
         $\mathcal X$ and $\mathcal Y$ are commonly (but certainly not always) a real vector space $\mathbb R^n$. Because the goal of machine learning involves \emph{finding} a suitable function $f$ for the task at hand, the set of functions is usually constrained. For example, if $\mathcal X = \mathbb{R}^n$, we might require that $f$ is a linear function $\mathbb R^n \to \mathbb R$, easily parametrised by $n + 1$ constants. This constraint is called a \defn{model}.
 
-        As a probabilistic model, a predictor is a joint probability distribution between observations and hidden parameters \citep{deisenroth_mathematics_2020}. Using a probabilistic predictor allows us to formally describe and work with uncertainty both in the input space and output space. Such a predictor is usually parametrised by a finite set of parameters, which already includes most common probability distributions.
+        Some predictors can be described as a probabilistic model. In this case a predictor is a joint probability distribution between observations and hidden parameters \citep{deisenroth_mathematics_2020}. Using a probabilistic predictor allows us to formally describe and work with uncertainty both in the input space and output space. Such a predictor is usually parametrised by a finite set of parameters, which already includes most common probability distributions.
 
         We will generally assume that our data are generated from some unobserved, true function called the \defn{groundtruth}. This might be a physical process, or a complicated sampling function from some unknown vector space. The assumptions we make on this generative function can greatly change the way we approach machine learning problems.
 
-        In some sense, the goal of machine learning is to identify a good predictor from within the space of all possible predictors. Of course, this begs the question: what is a `good' predictor? We will return to this when we discuss learning, but for now, a good predictor is one that well-approximates the groundtruth.
+        In some sense, the goal of machine learning is to identify a good predictor from within the space of all possible predictors. Of course, this begs the question: what is a `good' predictor? We will return to this when we discuss learning, but for now, a good predictor is one that approximates the groundtruth well.
 
     \subsection{Classification}
     \label{sec:classification}
 
-        \defn{Classification} is the machine learning task of predicting discrete, unstructured values \citep{deisenroth_mathematics_2020}. These values are called \defn{classes}. Classification is arguably the most important prediction task, as many other problems can be formalised as classification. Astronomy has its fair share of classification tasks, from classical astronomy tasks like galaxy morphology classification \citep[appearing in machine learning literature as e.g.][]{dieleman15cnn} to transient detection \citeneeded.
+        \defn{Classification} is the machine learning task of predicting discrete, unstructured values \citep{deisenroth_mathematics_2020}. These values are called \defn{classes}. Classification is arguably the most important prediction task, as many other problems can be formalised as classification. Astronomy has its fair share of classification tasks, from classical astronomy tasks like galaxy morphology classification \citep[appearing in machine learning literature as e.g.][]{dieleman15cnn} to transient detection \citep[e.g.][]{scalzo_skymapper_2017}; see \autoref{sec:classification-of-agn} for more examples.
 
-        A classification problem seeks a predictor where $\mathcal Y$ is a finite, discrete set of classes. Classification tasks are usually delineated by the number of classes: much like astronomy's fascination with metals, classification tasks either have two classes, or more than two classes. The former are called \defn{binary classification} tasks and the latter are \defn{multiclass classification} tasks. The reason for this split is that binary classes are dramatically easier to reason about and analyse, and many special cases exist for binary where they do not for multiclass.
+        A classification problem seeks a predictor where $\mathcal Y$ is a finite, discrete set of classes. Classification tasks are usually delineated by the number of classes: much like astronomy's fascination with metals, classification tasks either have two classes or more than two classes. The former are called \defn{binary classification} tasks and the latter are \defn{multiclass classification} tasks. The reason for this split is that binary classes are dramatically easier to reason about and analyse, and many special cases exist for binary where they do not for multiclass.
 
-        The two most common representations of $\mathcal Y$ for a binary task are $\mathcal Y = \{0, 1\}$ and $\mathcal Y = \{-1, 1\}$. In both cases $1$ is called the \defn{positive class}; $0$ and $-1$ are both called the \defn{negative class}. Throughout this thesis we will maintain the former convention with $0$ and $1$ as the negative and positive classes.
+        $\mathcal Y$ for a binary task is usually represented as $\mathcal Y = \{0, 1\}$. $1$ is called the \defn{positive class}; $0$ is called the \defn{negative class}.
 
-        Many different tasks can be formalised as classification. An easy way to see why this is the case can be found by taking any prediction problem $\mathcal X \to \mathcal Y$ and reinterpreting it as the binary classification problem $\mathcal X \times \mathcal Y \to {0, 1}$, i.e. instead of taking an input and predicting an output, take an input and a potential output and determine if they should be related. Of course this is not always the most efficient way to solve a prediction problem (and in the general case described here can be so inefficient as to be unsolvable) but the many known properties of classification make it an appealing framework to cast problems into. In \autoref{cha:cross-id}, I will cast the radio astronomy problem of cross-matching galaxies seen in different wavelengths into a binary classification problem.
+        An easy way to see why many tasks can be formalised as classification can be found by taking any prediction problem $\mathcal X \to \mathcal Y$ and reinterpreting it as the binary classification problem $\mathcal X \times \mathcal Y \to \{0, 1\}$, i.e. instead of taking an input and predicting an output, take an input and a potential output and determine if they should be related. Of course this is not always the most efficient way to solve a prediction problem but the many known properties of classification make it an appealing framework to cast problems into. In \autoref{cha:cross-id}, I will cast the radio astronomy problem of cross-matching galaxies seen in different wavelengths into a binary classification problem, and in \autoref{cha:faraday} I will classify radio observations as Faraday complex or Faraday simple.
+
+        \todo{What does it mean for a classifier to return a value from 0 to 1? What is a probabilistic classifier? Scores vs class probabilities vs predicted classes.}
 
     \subsection{Regression}
     \label{sec:regression}
-
-        The other main kind of supervised prediction task is \defn{regression}, which is the machine learning task of predicting ordered (and usually continuous) values. In a regression problem, we seek a predictor where $\mathcal Y$ is a set of ordered values, usually a subset of $\mathbb R^k$ for some positive natural $k$. \todo{}
+ 
+        The other main kind of supervised prediction task is \defn{regression}, which is the machine learning task of predicting ordered (and usually continuous) values. In a regression problem, we seek a predictor where $\mathcal Y$ is a set of ordered values, usually a subset of $\mathbb R^k$ for some positive natural $k$. Regression is ubiquitous in astronomy, from simple linear relationships like the famous Tully-Fisher relation \citep{tully_new_1977} to estimation of redshifts from photometric observations \citep[called \defn{photometric redshifts}; first introduced by]{baum_photoelectric_1962}. We will not directly address any regression problems in this thesis, but we will make use of their results.
 
 \section{Data and representation}
 \label{sec:data-and-representation}
 
-    Machine learning is centred on data and the extraction of information from that data. Data can include anything from numeric information, documents, or images, to spectra or galaxies. A collection of data is called a \defn{dataset} and an element of this dataset is (interchangably) called an \defn{example} or \defn{instance}. Generally, data are not easy to work with in their original form and must be converted into a numerical representation before use. As it is relatively easy to work with both numerically and analytically, we usually convert our data into real vectors in $\mathbb R^n$. Each axis of this vector space is called a \defn{feature} and the space as a whole is called the \defn{feature space}. Features are non-trivial to choose, and finding good features often requires the expertise of a human who is well-versed in the original dataset (a \defn{domain expert}). The process of finding features is called \defn{feature selection}, or \defn{feature design}.
+    Machine learning is centred on data and the extraction of useful information from that data. Data can include anything from numeric information, documents, or images, to spectra or galaxies. A collection of data is called a \defn{dataset} and an element of this dataset is (interchangably) called an \defn{example} or \defn{instance}. Generally, data are not easy to work with in their original form and must be converted into a numerical representation before use. We usually convert our data into real vectors in $\mathbb R^n$ as it is relatively easy to work with both numerically and analytically. Each axis of this vector space is called a \defn{feature} and the space as a whole is called the \defn{feature space}. Features are non-trivial to choose, and finding good features often requires the expertise of a human who is well-versed in the original dataset (a \defn{domain expert}). The process of finding features is called \defn{feature selection}, \defn{feature design}, or \defn{feature engineering}.
 
-    What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, or easy to extract. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on good methods for automatically developing features (generally called \defn{feature extraction}), and much early \emph{applied} machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training. A good feature space will have a structure that reflects the components of the intrinsic structure of the input data which are useful for the prediction task at hand. Good features may also be useful in other related tasks, such as dataset exploration, dataset visualisation, or other prediction tasks. \autoref{cha:faraday} largely focuses on finding good features for identifying Faraday complexity in polarised sources.
+    What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, easy to extract, behave nicely, and work well with our model. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on good methods for automatically developing features (generally called \defn{feature extraction}), and much early applied machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training (see \autoref{sec:cnns}). A good feature space will have a structure that reflects the components of the intrinsic structure of the input data which are useful for the prediction task at hand. Good features may also be useful in other related tasks, such as dataset exploration, dataset visualisation, or other prediction tasks. \autoref{cha:faraday} largely focuses on finding good features for identifying Faraday complexity in polarised sources.
 
     Another very important piece of the machine learning puzzle are \defn{labels}. Training a predictor with supervised learning requires some known pairs of inputs and outputs, and the known outputs are called labels. Like features, labels also need to be encoded in some way, and this depends on the specific task. Much like features, we want to embed the labels into a space which is easy to work with and has a meaningful structure. For problems where we know the outputs we wish to obtain, this can be a lot simpler than feature selection. For example, a binary classification problem will have only two possible outputs. Common representations for this would be $\{0, 1\}$ as described in \autoref{sec:classification}, but we could also represent the labels as $\{[1, 0]^T, [0, 1]^T\}$, called a \defn{one-hot encoding}. The advantage of the former is its simplicity and ease of integration into binary classification equations, but the advantage of the latter is that it is easily extended into multiclass classification without imposing order on the classes. Despite being simpler to encode, labels can carry a lot more difficulty than features due to their comparative rarity: in essence, features are cheap and labels are expensive. We will discuss labels in more detail in \autoref{sec:labels}.
 
-\section{Training}
+\section{Loss functions}
 \label{sec:training}
     
-    \defn{Training} a model is the process of using data to find a good predictor that fits the model's constraints. This is generally achieved by minimising a \defn{loss} (also called \defn{error} or \defn{cost}) function over the model. In this section I will introduce loss functions and a common method of optimising parametrised models.
+    \defn{Training} a model is the process of using data to find a good predictor that fits the model's constraints. This is generally achieved by minimising a \defn{loss} (also called \defn{error} or \defn{cost}) function over the model.
 
-    \todo{maximum likelihood?}
+    Put simply, a loss function is a function of a predictor and a dataset which is chosen to be a proxy for how good the predictor is at predicting that dataset. We try to choose loss functions that are high-valued for a predictor that poorly describes the dataset, and are low-valued for a predictor that well-describes the dataset. Sometimes (and in both cases listed in this section) the loss is minimised at zero, when the predictor perfectly captures the dataset (though whether this is possible, or whether this is even a desired result, is another question).
 
-    \subsection{Loss functions}
-    \label{sec:loss}
+    What should the loss function be for a given problem? The answer is not always obvious. Take for example a binary classification problem. The ``obvious'' loss would be the complement of the accuracy: the rate at which the predictor incorrectly guesses the label. This is easy to compute and we would like our predictor to have a high accuracy. But this is not a good choice: it is tremendously hard to work with as it takes on discrete values, because the accuracy is the number of correct predictions divided by the total number of examples. It is hard to motivate with probabilistic arguments. Finally, it is unclear how the accuracy should work in the case of a probabilistic model.
 
-        Put simply, a loss function is a function of a predictor and a dataset which describes how good the predictor is at predicting that dataset. Loss functions are high-valued for a predictor that poorly describes the dataset, and are low-valued for a predictor that well-describes the dataset. Usually the loss is minimised at zero, when the predictor perfectly captures the dataset (though whether this is a desired result is another question).
+    Instead, the loss function is usually derived by making assumptions on the structure of the data and task. The main assumption we usually make is that data are drawn \defn{independently and identically distributed} (IID), that is, each example is drawn from the same distribution and is not dependent on any other examples. We also assume a structure of the noise in the observed labels: training data are almost never completely accurate, and so there will be intrinsic noise in the distribution of labels about their unobserved ``true'' value. To demonstrate these assumptions, we will now derive loss functions for regression and binary classification.
 
-        What should the loss function be for a given problem? The answer is not always obvious. Take for example a binary classification problem. The ``obvious'' loss would be the complement of the accuracy: the rate at which the predictor incorrectly guesses the label. This is easy to compute and we would like our predictor to have a high accuracy. But this is not a good choice: it is tremendously hard to work with as it takes on discrete values, because the accuracy is the number of correct predictions divided by the total number of examples. It is hard to motivate with probabilistic arguments. Finally, it is unclear how the accuracy should work in the case of a probabilistic model.
-
-        Instead, the loss function is usually derived by making assumptions on the structure of the data and task. The main assumption we usually make is that data are drawn \defn{independently and identically distributed} (IID), that is, each example is drawn from the same distribution and is not dependent on any other examples. We also assume a structure of the noise in the observed labels: training data are almost never completely accurate, and so there will be intrinsic noise in the distribution of labels about their unobserved ``true'' value. To demonstrate these assumptions, we will now derive loss functions for regression and binary classification.
-
-        \subsubsection{Loss function for regression}
+        \subsection{Loss function for regression}
         \label{sec:loss-regression}
-
-            \todo{this is clunky and I think misrepresents the noise}
 
             To derive a loss function for regression, let us assume that our labels are a random variable $y$ modelled by a predictor $y = f(x)$. Further, let us assume that a predicted $y$ is normally distributed about its true value, i.e.
             \begin{equation}
-                y \sim \mathcal N(y \mid \mu, \sigma^2)
+                y \sim \mathcal N(\mu, \sigma^2)
             \end{equation}
-            for the true mean $\mu$ and standard deviation $\sigma$. Under this assumption the probability that $y$ is equal to a target $t$ given an example $x$ is
+            for the true mean $\mu$ and standard deviation $\sigma$ where $\mathcal N$ is the normal distribution:
+            \begin{equation}
+                \mathcal N(a \mid \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(a - \mu)^2}{2\sigma^2}}.
+            \end{equation}
+            Under this assumption the probability that $y$ is equal to a target $t$ given an example $x$ is
             \begin{equation}
                 p(y = t \mid x) = \mathcal N(t \mid f(x), \sigma^2).
             \end{equation}
@@ -120,7 +86,7 @@
             \begin{equation}
                 p(Y = T \mid X) = \prod_{i = 1}^n \mathcal N(t_i \mid f(x_i), \sigma^2).
             \end{equation}
-            We would like to maximise this probability over $f$, which is called a \defn{maximum likelihood} approach to finding a predictor. It is, however, not very easy to work with in this current form. Maximising the probability above is equivalent to minimising its negative logarithm, so we write:
+            $p(Y \mid X)$ is called the \defn{likelihood}. We would like to maximise this likelihood over $f$, which is called a \defn{maximum likelihood} approach to finding a predictor. It is, however, not very easy to work with in this current form. Maximising the likelihood is equivalent to minimising its negative logarithm, so we write:
             \begin{equation}
                 \mathcal L(f; T, X) = -\sum_{i = 1}^n \log \mathcal N(t_i \mid f(x_i), \sigma^2)
             \end{equation}
@@ -137,17 +103,31 @@
                 \frac{\mathrm{d}\mathcal L}{\mathrm{d}\theta}(f; T, X) = \sum_{i = 1}^n (t_i - f(x_i)) \frac{\mathrm{d}f}{\mathrm{d}\theta}(x_i).
             \end{equation}
 
-        \subsubsection{Loss function for binary classification}
+        \subsection{Loss function for binary classification}
         \label{sec:loss-classification}
 
-            \todo{Here I would derive binary cross-entropy loss and arrive at the following result}
+            Now we will calculate a loss function for binary classification. As for regression, we first assume a form for the noise. Assume that our labels are a random variable $y \in \{0, 1\}$ and that the prediction $y$ is drawn from a Bernoulli distribution based on a predictor $f(x)$:
+            \begin{equation}
+                p(y = t \mid x) = \mathcal B(t; f(x)).
+            \end{equation}
 
+            The Bernoulli distribution is parametrised by one parameter, usually called $p \in (0, 1)$, and in this case set to $f(x)$. It is:
             \begin{equation}
-                \mathcal L(f; T, X) = \sum_{i = 1}^n (1 - t_i) \log (1 - f(x_i)) + t_i \log f(x_i).
+                \mathcal B(a; p) = p^a(1 - p)^{1 - a}.
             \end{equation}
+            It can be thought of as a biased coin toss with a probability $p$ of tossing heads. To gain some intuition into how this expression works, imagine setting $a$ to 0 and then to 1. Continuing to derive the loss function, we once again determine the likelihood making the IID assumption:
             \begin{equation}
-                \frac{\mathrm{d}\mathcal L}{\mathrm{d}\theta}(f; T, X) = \sum_{i = 1}^n -\frac{1 - t_i}{1 - f(x_i)} \log (1 - f(x_i)) + t_i \log f(x_i).
+                p(Y = T \mid X) = \prod_{i = 1}^n p(y_i = t_i \mid x_i) = \prod_{i = 1}^n f(x_i)^{t_i}(1 - f(x_i))^{1 - {t_i}}.
             \end{equation}
+            Then we find the negative log-likelihood and hence what is known as the \defn{binary cross-entropy loss} for binary classification:
+            \begin{align}
+                \mathcal L(f; T, X) &= -\sum_{i = 1}^n \log \left(f(x_i)^{t_i}(1 - f(x_i))^{1 - {t_i}}\right)\\
+                    &= -\sum_{i = 1}^n t_i \log f(x_i) + (1 - t_i) \log (1 - f(x_i)).
+            \end{align}
+
+            % \begin{equation}
+            %     \frac{\mathrm{d}\mathcal L}{\mathrm{d}\theta}(f; T, X) = \sum_{i = 1}^n -\frac{1 - t_i}{1 - f(x_i)} \log (1 - f(x_i)) + t_i \log f(x_i).
+            % \end{equation}
 
     \subsection{Gradient descent}
     \label{sec:gradient-descent}
@@ -157,9 +137,7 @@
             \label{sec:gradient-descent}
             \vec w^{(k + 1)} = \vec w^{(k)} - \lambda \nabla_{\vec w} \mathcal L(\vec w^{(t)}; T, X)
         \end{equation}
-        where $\lambda > 0$ is a small scalar called the \defn{learning rate}. With an appropriately small choice of $\lambda$ $\vec w$ will converge to a local minimum of $\mathcal L$. Many variations on this concept exist which attempt to avoid local minima.
-
-        \todo{continue talking about this a bit}
+        where $\lambda > 0$ is a small scalar called the \defn{learning rate}. With an appropriately small choice of $\lambda$ $\vec w$ will converge to a local minimum of $\mathcal L$. Many variations on this concept exist which attempt to avoid local minima, such as introducing a `momentum' term that accumulates as multiple iterations move $\vec w$ in the same direction. If the loss function is convex, then any minimum is the global minimum (there are no local minima).
 
 \section{Models}
 \label{sec:models}
@@ -169,27 +147,69 @@
     \subsection{Logistic regression}
     \label{sec:logistic-regression}
 
-        Logistic regression is a linear, binary, probabilistic classifier. Linear classifiers can only separate classes using a hyperplane in the feature space, with objects on one side of the plane being assigned to one class and objects on the other side being assigned to the other. A binary classifier works on binary classification tasks. Non-binary generalisations exist, which we will briefly touch on later. Probabilistic classifiers, as discussed in \autoref{sec:predictors}, have outputs interpretable as class probabilities.
+        \defn{Logistic regression} is a linear, binary, probabilistic classifier. Linear classifiers can only separate classes using a hyperplane in the feature space, with objects on one side of the plane being assigned to one class and objects on the other side being assigned to the other. A binary classifier works on binary classification tasks. Probabilistic classifiers, as discussed in \autoref{sec:classification}, have outputs interpretable as class probabilities.
 
         Logistic regression in a $d$-dimensional feature space is parametrised by a \defn{weights vector} $w \in \mathbb R^d$. Given a set of features $x \in \mathbb R^d$, logistic regression is:
         \begin{equation}
             \label{eq:logistic-regression}
             f(x; w) = \sigma(w^T x)
         \end{equation}
-        where $\sigma$ is the \defn{logistic function} or \defn{sigmoid}:
+        where $\sigma$ is the \defn{logistic function} or \defn{sigmoid}, which is a monotonic and bijective function:
         \begin{equation}
             \label{eq:logistic-function}
             \sigma(a) = \frac{1}{1 + e^{-a}}.
         \end{equation}
         The output of logistic regression applied to an example $x$ is the probability that $x$ is in the positive class. $\sigma$, and thus logistic regression, has a domain of $(-\infty, \infty)$ and a range of $(0, 1)$. This enforces the output to be like a probability. $w^T x$ defines a $d$-dimensional hyperplane, called the \defn{separating hyperplane} or \defn{decision surface}.
 
-        Logistic regression is differentiable, which allows us to optimise its parameters $w$ using gradient descent.
+        Logistic regression is differentiable, which allows us to optimise its parameters $w$ using gradient descent. Interpreting the classifier is possible through examining the weights vector, with a larger absolute value of a weight corresponding to a `more important' feature.
+
+        A limitation of logistic regression is its sensitivity to scale. Features need to be of approximately the same order of magnitude and should have a standard deviation of approximately 1. An implicit assumption is that each features has a mean of 0 across the dataset. This can be enforced by normalising and scaling: subtract the mean of the dataset and divide by the new standard deviation.
+
+        \todo{reflect on scores/class probabilities/predicted classes}
 
     \subsection{Decision tree ensembles}
     \label{sec:decision-trees}
 
+        A \defn{decision tree} is a non-linear classifier. It repeatedly splits a dataset based on binary comparisons until every subset contains only one class (or mostly one class, with the amount of purity left as a hyperparameter\todo{define hyperparameter}). Each split only uses one feature for the comparison, making decision trees relatively easy to visualise and interpret. However, because of this, each split is axis-parallel, which can be a limitation for some datasets. They are not sensitive to scale and do not require a zero mean, making them easy to apply without preprocessing a dataset.
+
+        Key limitations of a decision tree are:
+        \begin{itemize}
+            \item They can only output a prediction, not a confidence of this prediction or a score of how likely an instance is to be found within each class.
+            \item Small changes to the dataset or training method can result in large changes to the tree.
+            \item They have high variance\todo{define variance}.
+            \item With many low-information features, decision trees have quite poor performance \citep{breiman01random-forest}.
+        \end{itemize}
+
+        A \defn{decision tree ensemble} aims to reduce some of these limitations by training multiple, slightly different, independently-trained decision trees. Depending on the implementation each constituent decision tree may only have access to some of the features or some of the data. To predict, each tree produces a prediction and `votes' for this prediction; the votes can be combined to produce the overall prediction (e.g. with majority voting). A simple example of such an ensemble is decision tree bagging \citep{breiman_bagging_1996}, which trains each tree with a random subset of the training data and takes a plurality vote. Decision tree ensembles decrease variance, increase the usability of low-information features, and increase stability of the trained model \citep{breiman01random-forest}.
+
+        The most well-known description of decision tree ensembles is the \defn{random forest} \citep{breiman01random-forest}, which has found common use in astronomy partly to its readily available \texttt{Python} implementation in \texttt{scikit-learn} \citep{scikit-learn}. Splits are decided from a subset of features and training samples are randomly drawn with replacement from the total training set. One downside of random forests is the large number of hyperparameters that need to be set, and these vary a lot depending on the problem being addressed.
+
     \subsection{Convolutional neural networks}
     \label{sec:cnns}
 
+        A \defn{neural network} is a directed graph of transformations, each node representing a transformation that linearly combines its inputs and applies a non-linear function called the \defn{activation function} to the result. The inputs to the graph are the features. A particularly prominent kind of neural network is the \defn{fully-connected neural network}, where nodes are arranged into layers, with each node in a layer taking as input every output from the previous layer. Each layer can then be represented by a matrix multiplication of the outputs of the previous layer by a weight matrix, composed with the activation function. Fully-connected $K$-layer neural networks have the form:
+        \begin{align}
+            f(x; W_K, \dots, W_1) &= h_K(x; W_K, \dots, W_1)\\
+            h_i(x; W_i, \dots, W_1) &= a(W_i h_{i - 1}(x; W_{i - 1}, \dots, W_1))\label{eq:hidden-layer}\\
+            h_1(x; W_1) &= a(W_1 x)
+        \end{align}
+        where $a$ is the activation function. $h_i$ are called \defn{hidden layers}. In fact, neural networks are usually described by their layer structure rather than graph structure, with the addition of `concatenation layers' to combine outputs from previous layers. Neural networks may be used for regression or for classification; these are structured the same but for classification the last activation function is replaced by sigmoid (for binary classification) or its multiclass counterpart softmax.
+
+        \defn{Convolutional neural networks} \citep[CNN;][]{lecun98} are a variant of neural networks that are particularly well-suited to inputs that have local structure, such as images or spectra. Layers in the network may be \defn{dense layers} of the same form as \autoref{eq:hidden-layer}, or \defn{convolutional layers}, where the weights are convolved with the input rather than multiplied. These convolutional weights are called \defn{filters} and they are small compared to the dimensionality of the input. CNNs are translation-invariant \citep{waibel_phoneme_1989} and derive features from local relationships thanks to the trainable filters.
+
 \section{Labels}
 \label{sec:labels}
+    
+    As described in \autoref{sec:data-and-representation}, labels are the known outputs of supervised prediction tasks. They are used for two main, distinct purposes: training and validation. Labels for training are used to evaluate loss and determine how to update the model. Labels for validation are used to evaluate and characterise the model's behaviour.
+
+    \subsection{Where do labels come from?}
+    \label{sec:sources-of-labels}
+
+        I mentioned previously that labels were `expensive'. This is to be interpreted as expensive in either or both time and money: labelling can be a slow, manual process, and labelling can be costly. Labelling is usually completed by hand, manually examining instances and determining what class they belong to (for classification) or what target they ought to be associated with (for regression).
+
+        \todo{}
+
+    %         \item training labels and testing labels
+    %         \item where do labels come from? domain experts, crowdsourcing, citizen science, simulations...
+    %         \item label noise and unreliable annotators
+    %         \item multiple unreliable annotators

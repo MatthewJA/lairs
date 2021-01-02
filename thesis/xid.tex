@@ -536,76 +536,6 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     classify a new data point, the random forest takes the weighted average of
     all classifications produced by each decision tree.
 
-    \subsection{Classification models}\label{sec:atlas-xid-models}
-
-      We use three different models for binary classification: logistic
-      regression, convolutional neural networks, and random forests.
-
-      \subsubsection{Logistic Regression}
-      \label{sec:atlas-xid-logistic-regression}
-        Logistic regression is linear in the feature space and outputs the
-        probability that the input has a positive label. The model is
-        \citep{bishop06ml}:
-
-        \begin{equation}
-            f(\vec x) = \sigma(\vec w^T \vec x + b) \,\,\,\,,
-        \end{equation}
-        where $\vec w \in \mathbb{R}^D$ is a vector of parameters, $b \in \mathbb{R}$ is a bias term, $\vec x \in \mathbb{R}^D$ is the feature vector representation of a candidate host, and $\sigma : \mathbb{R} \to \mathbb{R}$ is the logistic sigmoid function: \begin{equation}
-            \sigma(a) = (1 + \mathrm{exp}(-a))^{-1}\,\,\,\,.
-        \end{equation}%
-        The logistic regression model is fully differentiable, and the parameters
-        $\vec w$ can therefore be learned using gradient-based optimisation
-        methods. {We used the \texttt{scikit-learn} \citep{pedregosa11sklearn}
-        implementation of logistic regression with balanced classes}.
-
-      \subsubsection{Convolutional neural networks}
-      \label{sec:atlas-xid-convolutional-neural-networks}
-
-        Convolutional neural networks (CNN) are a biologically-inspired prediction
-        model for prediction with image inputs. The input image is convolved with
-        a number of filters to produce output images called feature maps. These
-        feature maps can then be convolved again with other filters on subsequent
-        layers, producing a network of convolutions. The whole network is
-        differentiable with respect to the values of the filters and the filters
-        can be learned using gradient-based optimisation methods. The final layer
-        of the network is logistic regression, with the convolved outputs as input
-        features. For more detail, see \citet[subsection II.A][]{lecun98}. We use
-        \textsc{Keras} \citep{chollet15keras} to implement our CNN, accounting for
-        class imbalance by reweighting the classes.
-
-        \begin{figure}
-          \includegraphics[width=\linewidth]{atlas-images/cnn_model_graph}
-          \caption{Architecture of our CNN. {Parenthesised numbers indicate
-          the size of output layers as a tuple (width, height, depth).} The
-          concatenate layer flattens the output of the previous layer and adds the
-          10 features derived from the candidate host in SWIRE, i.e. the flux
-          ratios, stellarity indices, and distance. The dropout layer randomly
-          sets $25\%$ of its inputs to zero during training to prevent
-          overfitting. Diagram based on \url{ https://github.com/dnouri/nolearn}.}
-          \label{fig:cnn}
-        \end{figure}
-
-        CNNs have recently produced good results on large image-based datasets in
-        astronomy \citep[e.g.]{lukic18compact, dieleman15cnn}. We employ
-        only a simple CNN model in this chapter as a proof of concept that CNNs may
-        be used for class probability prediction on radio images. The model
-        architecture we use is shown in \autoref{fig:cnn}.
-
-      \subsubsection{Random Forests}
-      \label{sec:atlas-xid-random-forests}
-
-        Random forests are an ensemble of decision
-        trees~\citep{breiman01random-forest}. They consider multiple subsamples of
-        the training set, where each subsample is sampled with replacement from
-        the training set. For each subsample a decision tree classifier is
-        constructed by repeatedly making axis-parallel splits based on individual
-        features. In a random forest the split decision is taken based on a random
-        subset of features. To classify a new data point, the random forest takes
-        the weighted average of all classifications produced by each decision
-        tree. {We used the \texttt{scikit-learn} \citep{pedregosa11sklearn}
-        implementation of random forests with 10 trees, the information entropy
-        split criterion, a minimum leaf size of 45 and balanced classes}.
-
   \subsection{Labels}\label{sec:atlas-xid-labels}
 
     \begin{figure}
@@ -919,7 +849,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   \begin{figure*}
   \centering
   \includegraphics[]{atlas-images/elais-grid-new.pdf}
-  \caption[Performance of different classification models on the binary classification task, tested on ELAIS-S1]{Performance of different classification models trained on CDFS and tested on
+  \caption[Performance of different classification models on the binary classification task, tested on ELAIS-S1.]{Performance of different classification models trained on CDFS and tested on
   resolved and compact sources in ELAIS-S1. Points represent classification models
   trained on different quadrants of CDFS, with markers, lines and axes as in
   \autoref{fig:ba}. The balanced acccuracy of expert-trained random forest
@@ -1238,7 +1168,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     \begin{figure}
       \includegraphics[width=\linewidth]{atlas-images/cnn_model_graph}
-      \caption{Architecture of our CNN. {Parenthesised numbers indicate
+      \caption[Architecture of our CNN.]{Architecture of our CNN. {Parenthesised numbers indicate
       the size of output layers as a tuple (width, height, depth).} The
       concatenate layer flattens the output of the previous layer and adds the
       10 features derived from the candidate host in SWIRE, i.e. the flux
@@ -1280,7 +1210,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   ELAIS-S1 respectively, averaged over each set of training quadrants.
 
   \begin{table*}
-    \caption{Balanced accuracies for different binary classification models trained and tested on SWIRE objects in CDFS.
+    \caption[Balanced accuracies for different binary classification models on CDFS.]{Balanced accuracies for different binary classification models trained and tested on SWIRE objects in CDFS.
     The `Labeller' column states what set of training labels
     were used to train the classifier, and the `Classifier' column states what
     classification model was used. `CNN' is a convolutional neural network,
@@ -1306,7 +1236,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   \end{table*}
 
   \begin{table*}
-    \caption{Balanced accuracies for different binary classification models trained on SWIRE objects
+    \caption[Balanced accuracies for different binary classification models on ELAIS-S1.]{Balanced accuracies for different binary classification models trained on SWIRE objects
     in CDFS and tested on SWIRE objects in ELAIS-S1. Columns and abbreviations are as in \autoref{tab:cdfs-ba}. Accuracies are evaluated against the expert
     label set derived from \citet{middelberg08}. The standard deviations of balanced accuracies of models trained on the four subsets of
     CDFS (\autoref{fig:quadrants}) are also shown.}
@@ -1327,7 +1257,8 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   \end{table*}
 
   \begin{table*}
-    \caption{Cross-identification accuracies for different classification
+    \caption[Cross-identification accuracies for different classification
+    models on CDFS.]{Cross-identification accuracies for different classification
     models on CDFS. The `Labeller' column states what set of training labels
     were used to train the method, and the `Classifier' column states what
     classification model was used. `CNN' is a convolutional neural network,
@@ -1361,7 +1292,8 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   \end{table*}
 
   \begin{table*}
-    \caption{Cross-identification accuracies for different classification
+    \caption[Cross-identification accuracies for different classification
+    models on ELAIS-S1.]{Cross-identification accuracies for different classification
     models on ELAIS-S1. Columns and abbreviations are as in
     \autoref{tab:cdfs-acc}. Accuracies are evaluated against the expert label
     set derived from \citet{middelberg08} cross-identifications. The standard
@@ -1408,7 +1340,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   \end{itemize}
 
   \begin{table*}
-    \caption{Scores output by our trained classifiers for SWIRE~CDFS candidate host galaxies. Columns are defined in \autoref{app:scores}. Full table electronic.}
+    \caption[Scores output by our trained classifiers for SWIRE~CDFS candidate host galaxies.]{Scores output by our trained classifiers for SWIRE~CDFS candidate host galaxies. Columns are defined in \autoref{app:scores}. Full table electronic.}
     \label{tab:cdfs-scores}
     \begin{tabular}{ccccccccccccccccccccccc}
       \hline
@@ -1429,7 +1361,7 @@ J032603.75-284014.1 & 51.5156 & -28.6706 & no & no & 0.0547 & 0.3408 & 0.5388 & 
   \end{table*}
 
   \begin{table*}
-    \caption{Scores output by our trained classifiers for SWIRE~ELAIS-S1 candidate host galaxies. Columns are defined in \autoref{app:scores}. Full table electronic.}
+    \caption[Scores output by our trained classifiers for SWIRE~ELAIS-S1 candidate host galaxies.]{Scores output by our trained classifiers for SWIRE~ELAIS-S1 candidate host galaxies. Columns are defined in \autoref{app:scores}. Full table electronic.}
     \label{tab:elais-scores}
     \begin{tabular}{ccccccccccccccccccccccc}
       \hline
@@ -1484,7 +1416,7 @@ J002928.80-440306.8 & 7.3700 & -44.0519 & no & no & 0.0003 & 0.8405 & 0.5668 & 0
   \end{itemize}
 
   \begin{table*}
-    \caption{Cross-identifications for ATLAS~CDFS components. Columns are defined in \autoref{app:xids}. Full table electronic.}
+    \caption[Cross-identifications for ATLAS~CDFS components.]{Cross-identifications for ATLAS~CDFS components. Columns are defined in \autoref{app:xids}. Full table electronic.}
     \label{tab:cdfs-xids}
     \begin{tabular}{ccccccccccccccccccccccccccccccccccccccccccccccccc}
       \hline
@@ -1505,7 +1437,7 @@ J032634.59-282022.8C & 51.6441 & -28.3397 & CI0757 & ARG0003rj2 & J032634.58-282
   \end{table*}
 
   \begin{table*}
-    \caption{Cross-identifications for ATLAS~ELAIS-S1 components. Columns are defined in \autoref{app:xids}. Full table electronic.}
+    \caption[Cross-identifications for ATLAS~ELAIS-S1 components.]{Cross-identifications for ATLAS~ELAIS-S1 components. Columns are defined in \autoref{app:xids}. Full table electronic.}
     \label{tab:elais-xids}
     \begin{tabular}{ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc}
       \hline
@@ -1552,7 +1484,7 @@ J002951.19-440556.6 & 7.4633 & -44.0991 & C0342 &  & J002951.26-440556.4 & 7.463
             \includegraphics[width=\textwidth]{atlas-images/examples_all/example_sorted_5_207.pdf}
             \caption{Three resolved components comprising one resolved source.}
         \end{subfigure}
-        \caption{\label{fig:examples} Examples of resolved sources with high disagreement between cross-identifiers. The contours show ATLAS radio data and start at $4\sigma$, increasing geometrically by a factor of 2. The background image is the \unit{3.6}{\micro\meter} SWIRE image. Binary classifier model/training set combinations are denoted $C(S)$ where $C$ is the binary classifier model and $S$ is the training set. `LR' is logistic regression, `CNN' is convolutional neural networks, and `RF' is random forests. `Norris' refers to the expert labels and `RGZ' refers to the Radio Galaxy Zoo labels. The cross-identification made by nearest-neighbours is shown by `NN'. The complete set of figures for 469 examples is available in the supplementary information.}
+        \caption[Examples of resolved sources with high disagreement between cross-identifiers.]{\label{fig:examples} Examples of resolved sources with high disagreement between cross-identifiers. The contours show ATLAS radio data and start at $4\sigma$, increasing geometrically by a factor of 2. The background image is the \unit{3.6}{\micro\meter} SWIRE image. Binary classifier model/training set combinations are denoted $C(S)$ where $C$ is the binary classifier model and $S$ is the training set. `LR' is logistic regression, `CNN' is convolutional neural networks, and `RF' is random forests. `Norris' refers to the expert labels and `RGZ' refers to the Radio Galaxy Zoo labels. The cross-identification made by nearest-neighbours is shown by `NN'. The complete set of figures for 469 examples is available in the supplementary information.}
     \end{figure}
 
 %

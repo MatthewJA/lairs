@@ -2,16 +2,39 @@
 \chapter{Introduction}
 \label{cha:intro}
 
+% \begin{quote}
+%     There exist problems in astronomy that you cannot solve by downloading XGB and hitting them with a hammer. This is why we need to do astroinformatics research.
 
-\section{Motivation}
-\label{sec:motivation}
+%     --- Cheng Soon Ong
+% \end{quote}
 
-There exist problems in astronomy that you cannot solve by downloading XGB and hitting them with a hammer. This is why we need to do astroinformatics research.
+Many great results come from study at the intersection of two fields, and the combination of astronomy and informatics is no exception. The resulting interdisciplinary field is called \defn{astroinformatics}, and concerns the application of statistical and machine learning techniques to problems in astronomy and astrophysics.
+% I am a strong believer in the benefits of interdisciplinary study to both fields: by studying astroinformatics, we can gain new applications for existing machine learning methodology, as well as gain a greater understanding of the problems faced in astronomy.
+Machine learning, a collection of methods for formalising and solving data-driven problems at scale, is a natural fit for radio astronomy: radio astronomy faces a `data deluge' thanks to new and upgraded telescopes and associated wide-area surveys to be undertaken with them. The goal in the near future is to be able to both process data---and conduct science on that data---on the fly as the volume of data grows too large to store. This is a requirement for the Square Kilometre Array (SKA), a grand international undertaking to build a distributed radio array across Western Australia and South Africa with a collecting area of one square kilometre. There exists no comparable telescope today. The SKA will be able to perform new tests of general relativity, help pin down the large-scale structure of the universe, investigate the mysteries of the epoch of reionisation, probe the history of galaxy evolution to new extents, and perhaps make unexpected new discoveries \citep{diamond_ska_2017}.
 
+The SKA will have technical challenges thus far only touched upon by radio astronomy. Raw data will stream from the telescope antennae at 2 petabytes per second, and up to 300 petabytes per year of science data is expected to be generated \citep{diamond_ska_2017}. This is a phenomenal amount of data, much of which won't be stored, and the community expectation is that machine learning will provide avenues to conduct science with such a large dataset. Precursor projects to the SKA have begun to investigate these pathways \citep[e.g.][]{kapinska_emu_2020,mostert_unveiling_2020}.
+
+Even without the SKA, the data deluge has already begun. Three precursor telescopes have been constructed: the Australian Square Kilometre Array Pathfinder (ASKAP) and Murchison Widefield Array (MWA) in Western Australia, and MeerKAT in South Africa. While these will eventually form part of the SKA, they are already online and generating science data at astonishing rates. ASKAP will soon conduct six surveys of the entire southern radio sky: the Evolutionary Map of the Universe \citep[EMU;][]{norris11,kapinska_emu_2020}, the Widefield ASKAP L-Band Legacy All-Sky Blind Survey \citep[WALLABY]{koribalski_wallaby_2020}, the First Large Absorption Survey in HI (FLASH), an ASKAP Survey for Variables and Slow Transients \citep[VAST;][]{murphy_vast_2013}, the Galactic ASKAP Spectral Line Survey (GASKAP), and the Polarisation Sky Survey of the Universe's Magnetism (POSSUM). Atop these future surveys, the recent Rapid ASKAP Continuum Survey \citep[RACS;][]{mcconnell_rapid_2020} has redefined our knowledge of the southern radio sky with shallow observations at 15 arcsecond resolution --- compare to the previous largest radio survey, the NRAO VLA Sky Survey \citep[NVSS;][]{condon98nvss}, with 45 arcsecond resolution over the northern sky.
+
+Machine learning methods for radio astronomy will be developed for and tested upon surveys like RACS and EMU. The path between an astronomical problem and a machine learning problem, however, is not a straightforward one. The goal when casting an astronomy question as something mathematical or computational is to convert the question into one with a known method of solution, such as classification or regression. Along the way, astronomical concepts and assumptions need to be turned into something a computer can deal with. Despite the wide availability of machine learning software and tools, there is no automatic or easy way to make this transformation. This necessitates research in astroinformatics.
+
+This thesis concerns applications of machine learning to radio astronomy for the identification of extended extragalactic radio sources in wide-area surveys. I will present new methods of cross-identifying radio objects with their corresponding infrared and optical observations, demonstrate the applicability of these methods to existing wide-area radio surveys, and develop a new way to identify complexity in polarised radio sources.
 
 \section{Thesis Outline}
 \label{sec:outline}
 
+We begin by introducing key concepts from radio astronomy in \autoref{cha:background}, including radio active galactic nuclei (AGN), as well as motivations for and difficulties in cross-identifying observed radio emission from AGN. \autoref{cha:background-ml} introduces machine learning and describes the machine learning background required for the remainder of the thesis. These chapters together comprise the introduction.
+
+\autoref{cha:cross-id} is my paper \emph{Radio Galaxy Zoo: Machine learning for radio source host galaxy cross-identification}. This chapter describes a new, machine learning method for cross-identifying extended radio emission with host galaxies in the infrared. We apply this approach to cross-identifying all extended radio sources in the Faint Images of the Radio Sky at Twenty-centimeters radio survey \citep[FIRST;][]{becker95first} with their infrared counterparts in All\emph{WISE} \citep{cutri2013wiseexplanatory} and use the resulting catalogue of cross-identifications to create a fractional radio luminosity function in \autoref{cha:rlfs}, which itself is my paper \emph{Radio Galaxy Zoo: Radio luminosity functions of extended sources}. \autoref{cha:faraday} is my paper \emph{Interpretable Faraday Complexity Classification}, which introduces an interpretable method for classifying radio emission as Faraday complex or simple, which could be used to identify whether it is an extended source that is below the resolution limit.
 
 \section{Contributions}
 \label{sec:contributions}
+
+My main contributions to radio astroinformatics in this thesis are:
+\begin{itemize}
+    \item I introduce a new method for cross-identifying radio emission which can learn from existing catalogues, which is the first application of machine learning to cross-identification;
+    \item I demonstrate an application of this new method to the creation of fractional radio luminosity functions, which require considerably more cross-identifications than non-fractional radio luminosity functions, and in the process creating the largest available catalogue of extended, cross-identified radio sources;
+    \item I produce a fractional radio luminosity function with divisions based on mid-infrared colours associated with the host galaxies of the radio emission, helping to understand how radio galaxies evolve throughout the universe;
+    \item I highlight the requirement of considerably more redshifts in understanding future wide-area radio surveys; and
+    \item I introduce a new method to identify Faraday complexity using an interpretable classifier, as well as features for Faraday dispersion functions which can be used for other machine learning tasks.
+\end{itemize}

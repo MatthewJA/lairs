@@ -401,27 +401,36 @@
 
         Any method for cross-identification of components can also be used to aggregate components. Cross-identify all components with their host galaxies, then components that share a host are almost always part of the same radio source. It is this approach we will later take to aggregating sources in \autoref{cha:rlfs}. There is no obvious inverse algorithm (to go from aggregate sources to cross-identifications) although some algorithms attempt to solve both problems simultaneously \citep{fan_optimal_2020,fan15}.
 
-% \section{Observing Radio Sources}
-% \label{sec:radio-astronomy}
 
-% This section needs to talk about how the physics of AGN affects observations and what kind of data we deal with. I'll need to talk about radio telescopes, Fourier transforms, and the noise properties of radio sources, as well as what kind of sources we expect to find throughout the universe. How do observations limit our understanding of AGN? How do observational effects change what we see? What are the main difficulties in radio astronomy?
+    % \begin{itemize}
+    %     \item machine learning in astronomy and radio astronomy (literature review)
+    %     \item summarising the basics of machine learning (later sections of course complicate these): \begin{itemize}
+    %         \item predictors
+    %         \item features
+    %         \item labels
+    %         \item optimisation
+    %         \item data
+    %         \item expertise
+    %     \end{itemize}
+    %     \item specific predictors
+    %     \item features: \begin{itemize}
+    %         \item feature selection and design, and the benefit of domain knowledge
+    %         \item feature extraction
+    %         \item neural networks
+    %     \end{itemize}
+    %     \item labels: \begin{itemize}
+    %         \item training labels and testing labels
+    %         \item where do labels come from? domain experts, crowdsourcing, citizen science, simulations...
+    %         \item label noise and unreliable annotators
+    %         \item multiple unreliable annotators
+    %     \end{itemize}
+    %     \item citizen science: \begin{itemize}
+    %         \item citizen science in astronomy
+    %         \item designing good citizen science
+    %         \item benefits and challenges of citizen science
+    %         \item challenges in ML on crowdsourcing/citizen science
+    %         \item rant about how citizen science is different to crowdsourcing from an ML perspective
+    %     \end{itemize}
+    % \end{itemize}
 
-%     \begin{itemize}
-%         \item observational limitations due to physics: \begin{itemize}
-%             \item Malmquist bias
-%             \item minimum detectable brightness
-%             \item minimum detectable physical extent?
-%         \end{itemize}
-%         \item observing radio: \begin{itemize}
-%             \item single-dish radio telescopes (just quickly on this)
-%             \item radio arrays
-%             \item observations happen in Fourier space
-%             \item `resolving out'
-%             \item structured noise
-%         \end{itemize}
-%         \item radio telescopes and radio surveys: \begin{itemize}
-%             \item historically
-%             \item the NVSS and FIRST
-%             \item POSSUM, EMU, RACS
-%         \end{itemize}
-%     \end{itemize}
+% Here we need to talk about the fundamentals of machine learning. We'll start with problem formulations and what machine learning is, then discuss terminology and classification. We need to cover the difficulties of labels and the lack of groundtruth in astronomy, the problem and handling of uncertainties, and feature selection. We also need to talk about the importance (or unimportance?) of interpretability and how this ties into astronomy, and the unique idea of using machine learning as a pathway to understand something important about physics.
