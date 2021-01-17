@@ -205,9 +205,18 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
     \subsection{Where do labels come from?}
     \label{sec:sources-of-labels}
 
-        I mentioned previously that labels were `expensive'. This is to be interpreted as expensive in either or both time and money: labelling can be a slow, manual process, and labelling can be costly. Labelling is usually completed by hand, manually examining instances and determining what class they belong to (for classification) or what target they ought to be associated with (for regression).
+        I mentioned previously that labels were `expensive'. This is to be interpreted as expensive in either or both time and money: labelling can be a slow, manual process, and labelling can be costly. Labelling is usually completed by hand, manually examining instances and determining what class they belong to (for classification) or what target they ought to be associated with (for regression). In astronomy this usually amounts to expert astronomers examining imagery at multiple wavelengths and making an educated guess as to what the true label should be, but labelling may also involve follow-up observations (perhaps at higher resolution or at a different wavelength).
 
-        \todo{}
+        An increasingly popular option for labelling large amounts of data is \defn{citizen science}: asking volunteers who are interested in contributing to science to label our data. Citizen science projects can be a fantastic opportunity for both science and outreach. For example, the ABC's `Stargazing Live' television programme engaged viewers and with their help found four exoplanets in just 48 hours \citep{miller_stargazing_2017} and labelled 120~000 SkyMapper images\footnote{Citizen scientists actually produced around 5 million labels --- these were aggregated to 120~000 to reduce noise.} in just three days \citep{tucker_stargazing_2017}. The downside of citizen science is that non-expert labellers may be less accurate than experts, and indeed some may even be malicious and provide intentionally incorrect labels \citep{zhang_learning_2016}.
+
+        Astronomers often face a large collection of unlabelled data and must choose which to label. Choosing what to label is a broad topic of research separately in machine learning \citep[often called active learning e.g.][]{gilyazev_active_2018}, in astronomy (`follow-up observations'), and in citizen science project design \citep[e.g. citizen science project Snapshot Serengeti found that showing volunteers \emph{uninteresting} images helped retain engagement;][]{sieland_snapshot_2015}.
+
+    \subsection{Label noise}
+    \label{sec:label-noise}
+
+        \defn{Label noise} is the presence of incorrect labels in the training or validation data set. In classical machine learning there is no such thing: labels are assumed to come from some always-correct `oracle'. In reality, though, labels can be wrong. There is intrinsic noise in data, and even expert astronomers can disagree on labels due to ambiguities \citep[e.g. around 10 per cent of Radio Galaxy Zoo is extremely divisive amongst expert labellers;][]{banfield15}. All is not lost for machine learning: many optimisation targets are robust to label noise \citep{menon15cpe}. One way to think about this is that the loss function for machine learning `smooths over' or `averages out' the noise.
+
+        It is important to note that label noise affects training and validation differently. While it is perfectly possible to train a good model with noisy labels, performance measures are not as robust to label noise. Noise in the validation set can change the reported performance in unpredictable ways and wherever possible should be avoided.
 
     %         \item training labels and testing labels
     %         \item where do labels come from? domain experts, crowdsourcing, citizen science, simulations...

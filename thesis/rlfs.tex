@@ -2,19 +2,19 @@
 \chapter{Radio Luminosity Functions}
 \label{cha:rlfs}
 
-\section{Radio Luminosity Functions}
-\label{sec:rlfs}
+% make James' picture of binary xid before partitioning and colour it with a value-ramped viridis.
 
-make James' picture of binary xid before partitioning and colour it with a value-ramped viridis.
-
-\section{Making Catalogues with Binary Cross-identification}
-\label{sec:revisiting-cross-id}
+% \section{Making Catalogues with Binary Cross-identification}
+% \label{sec:revisiting-cross-id}
 
 
-\section{FIRST paper...}
+% \section{FIRST paper...}
 
+This chapter is based on my paper \emph{Radio Galaxy Zoo: Radio Luminosity Functions of Extended Sources}, by M. J. Alger, O. I. Wong, C. S. Ong, N. M. McClure-Griffiths, H. Andernach, L. Rudnick, S. S. Shabala, A. F. Garon, J. K. Banfield, A. D. Kapi\'nska, R. P. Norris, and A. J. M. Thomson; to be submitted. Some minor changes have been made to match the rest of this thesis.\\
 
-  We use a machine learning model trained on the Radio Galaxy Zoo citizen science project to cross-identify \ncomponents{} radio components of extended radio sources from the Faint Images of the Radio Sky at Twenty-centimeters survey (FIRST) with \nsources{} host galaxies observed in the mid-infrared from the All\emph{WISE} source catalogue. \nsourceszsp{} hosts have a spectroscopic redshift in the Sloan Digital Sky Survey (SDSS). This is the largest sample of cross-identified extended radio sources to date. The large sample size allows us to estimate the radio luminosity functions (RLF) of extended radio galaxies and to further characterise the sample with fractional radio luminosity functions. The extended source RLF can be used to estimate the mechanical energy injected into the local environment of active galactic nuclei (AGN). We estimate from the observed radio emission that inferred extended radio jets from AGN contribute between $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$ of mechanical energy to their environment throughout the low-redshift ($z < 0.6$) Universe. By further visual verification we also find \nnewgiants{} radio galaxies with projected size larger than 1~Mpc. Our results directly demonstrate the impact that automated machine learning methods could have on future wide-area radio surveys.
+In \autoref{cha:cross-id}, we concluded that our machine learning cross-identification approach was sound in principle, but the small size and lack of morphological complexity in ATLAS prevented training a good classifier. To demonstrate this, we turned our attention to the Faint Images of the Radio Sky at Twenty-centimetres (FIRST) survey, which contained many more sources and many more morphologically complex sources due to its higher resolution and sample size. If cross-identification of this dataset was successful, we could use the resulting cross-identification catalogue to investigate statistical properties of radio galaxies at larger scales than previously possible. The object of interest would be the radio luminosity function (RLF), a statistical description of how common radio galaxies of various luminosities are throughout the universe. The RLF would be specific to only extended radio galaxies, and it is this class of galaxies that we would expect to maximally impact its local environment through direct, mechanical energy input.
+
+In this chapter, we use a machine learning model trained on the Radio Galaxy Zoo citizen science project to cross-identify \ncomponents{} radio components of extended radio sources from FIRST with \nsources{} host galaxies observed in the mid-infrared from the All\emph{WISE} source catalogue. \nsourceszsp{} hosts have a spectroscopic redshift in the Sloan Digital Sky Survey (SDSS). This is the largest available sample of cross-identified extended radio sources to date at the time of writing. The large sample size allows us to estimate the RLF of extended radio galaxies and to further characterise the sample with fractional radio luminosity functions. The extended source RLF can be used to estimate the mechanical energy injected into the local environment of active galactic nuclei (AGN). We estimate from the observed radio emission that inferred extended radio jets from AGN contribute between $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$ of mechanical energy to their environment throughout the low-redshift ($z < 0.6$) Universe. By further visual verification we also find \nnewgiants{} radio galaxies with projected size larger than 1~Mpc. Our results directly demonstrate the impact that automated machine learning methods could have on future wide-area radio surveys.
 
 \section{Introduction} \label{sec:intro}
 
@@ -51,7 +51,7 @@ how different physical processes comprise the luminosity distribution, and
 can be used to investigate how these processes relate to the properties of
 the AGN.
 
-In this paper we calculate the RLF for extended radio sources in FIRST. Throughout this paper we define an \defn{extended radio source} as a collection of extended radio components with the same host galaxy, and following
+In this chapter we calculate the RLF for extended radio sources in FIRST. Throughout this chapter we define an \defn{extended radio source} as a collection of extended radio components with the same host galaxy, and following
 \citet{banfield15} we define an \defn{extended radio component} as a radio
 component which fulfils \autoref{eq:rgz-criterion}:
 \begin{equation}
@@ -77,14 +77,14 @@ of complex radio sources to around 7 million \citep{banfield15}. Manual, expert 
 learning provides a potential pathway to obtaining useful physics from such
 large samples.
 
-In this paper, we train a machine learning model based on \citet{alger18radio}, using RGZ as training data, and
+In this chapter, we train a machine learning model based on \citet{alger18radio}, using RGZ as training data, and
 use this model to automatically cross-identify \ncomponents{} radio components catalogued by FIRST. This results in \nsourceszsp{} sources
 with spectroscopic redshifts. This is the largest available catalogue of
 extended radio source cross-identifications. We call our catalogue
 \defn{RGZ-extrapolated} or \defn{RGZ-Ex}. Due to our large sample size we are able to further divide the
 source population by properties of the host galaxies. We refer to the trained machine learning model and the associated cross-identification algorithm jointly as \defn{binary cross-identification}, or \defn{BXID}. Note that there are two stages to our automated approach: first, we train BXID using an existing catalogue of cross-identified sources; second, we generate new cross-identifications for radio components not in the training catalogue. We refer to these stages as \defn{training} and \defn{prediction} respectively. Our data sources are described in \autoref{sec:data}. Our approach is discussed in \autoref{sec:method}. Radio luminosity functions of extended sources are presented in \autoref{sec:rlf} and we discuss these functions in \autoref{sec:discussion}.
 
-Throughout this paper we assume a flat $\Lambda$-CDM cosmology of $H_0 =
+Throughout this chapter we assume a flat $\Lambda$-CDM cosmology of $H_0 =
 69.3$~km~s$^{-1}$~Mpc$^{-1}$, $\Omega_m = 0.287$. These are the cosmological
 parameters from the Nine-year Wilkinson Microwave Anisotropy Probe
 \citep[WMAP9;][]{hinshaw13wmap9}.
@@ -385,7 +385,7 @@ host'.
 
     While we have not investigated the link between extended sources and their local environments, this will be the focus of future work. Environment will heavily factor into the source sizes, morphologies, and so on, following work such as \citet{rodman19asymmetry} and \citet{garon19bending}.
 
-    Ongoing radio surveys such as EMU, VLASS \citep{lacy20vlass}, and LoTSS \citep{shimwell19lotss} will greatly increase the number of extended sources. However, our sample size limitations in this paper are not from FIRST, but from SDSS: until next-generation spectroscopic surveys are available, redshifts will be the limiting factor. To significantly increase our sample size would require much greater numbers of redshifts.
+    Ongoing radio surveys such as EMU, VLASS \citep{lacy20vlass}, and LoTSS \citep{shimwell19lotss} will greatly increase the number of extended sources. However, our sample size limitations in this chapter are not from FIRST, but from SDSS: until next-generation spectroscopic surveys are available, redshifts will be the limiting factor. To significantly increase our sample size would require much greater numbers of redshifts.
 
 \section{Summary}\label{sec:summary}
 
@@ -403,7 +403,7 @@ National Aeronautics and Space Administration. The National Radio Astronomy
 Observatory is a facility of the National Science Foundation operated under
 cooperative agreement by Associated Universities, Inc. The figures in this
 work made use of Astropy, a community-developed core Python package for
-Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. comes from National Science Foundation grant AST-1714205 to the University of Minnesota. H.A. benefited from grant CIIC 218/2019 of Universidad de Guanajuato. M.A. and A.T. were supported by the Australian Government Research Training Program. We thank J.~Nabaglo and A.~Gruen for their help with efficient data preprocessing. We thank H.~Zovaro, T.~J.~Galvin and H.~Tang for their comments on the draft of this paper.
+Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. comes from National Science Foundation grant AST-1714205 to the University of Minnesota. H.A. benefited from grant CIIC 218/2019 of Universidad de Guanajuato. M.A. and A.T. were supported by the Australian Government Research Training Program. We thank J.~Nabaglo and A.~Gruen for their help with efficient data preprocessing. We thank H.~Zovaro, T.~J.~Galvin and H.~Tang for their comments on the draft of this chapter.
 
 
 \appendix
@@ -524,7 +524,7 @@ Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. c
       \end{tabular}\end{footnotesize}
     \end{table*}
 
-    To identify radio sources we assume that if any two components have the same host galaxy then they are part of the same source. This is a reasonable assumption if all host galaxies are correctly identified, which is not the case. This assumption therefore introduces spurious sources due to galaxies incorrectly identified as host galaxies: not all sources used in this paper are real sources, and in particular sources of large angular size are likely to be incorrect. Nevertheless RGZ-Ex provides a useful catalogue of \emph{candidate} radio sources, and visual follow-up can confirm whether sources of interest are real.
+    To identify radio sources we assume that if any two components have the same host galaxy then they are part of the same source. This is a reasonable assumption if all host galaxies are correctly identified, which is not the case. This assumption therefore introduces spurious sources due to galaxies incorrectly identified as host galaxies: not all sources used in this chapter are real sources, and in particular sources of large angular size are likely to be incorrect. Nevertheless RGZ-Ex provides a useful catalogue of \emph{candidate} radio sources, and visual follow-up can confirm whether sources of interest are real.
 
     H.A. and M.A. examined all 296 candidate sources in the RGZ-Ex catalogue with an estimated physical extent larger than 1~Mpc. Of these, 40 were real giant radio galaxies, which we show in \autoref{tab:grg}. We define `giant radio galaxy' as a radio galaxy with emission extended to physical sizes $\geq 1.0$~Mpc. Other thresholds, such as $0.7$~Mpc, also exist in literature. The physical extents of the remaining 256 candidate sources were overestimated
 mostly due to sidelobes/artefacts (103), incorrect source grouping (82), or incorrect SDSS matches (21). The citizen scientists who identified giants are: WizardHowl, DolorousEdd, antikodon, csunjoto, sisifolibre, JeanTate, JKD, PADV, and firejuggler. H.A., together with his summer students, had previously identified 29 of these giants.
