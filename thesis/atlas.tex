@@ -154,7 +154,7 @@ submitted, accepted
   surace05swire}, and cross-identifications of these surveys from the citizen
   science project Radio Galaxy Zoo \citep{banfield15}. Radio Galaxy Zoo also
   includes cross-identifications of sources in Faint Images of the Radio Sky at
-  Twenty-Centimeters \citep[FIRST;][]{white97first} and the All\emph{WISE}
+  Twenty Centimeters \citep[FIRST;][]{white97first} and the All\emph{WISE}
   survey \citep{cutri2013wiseexplanatory}, though we focus only on Radio
   Galaxy Zoo data from ATLAS and SWIRE.
 
@@ -389,7 +389,7 @@ submitted, accepted
     much the candidate looks like a host galaxy, independent of which radio
     component we are currently cross-identifying. If there are other nearby host
     galaxies, then multiple candidate hosts may have high scores (e.g.
-    \autoref{fig:broken-isolation}). This difficulty is necessary --- a classifier
+    \autoref{fig:broken-isolation}). This difficulty is necessary---a classifier
     with dependence on radio object would be impossible to train. We
     need multiple positive examples (i.e. host galaxies) to train a binary classifier, but
     for any specific radio component there is only one host galaxy. As a
@@ -493,7 +493,7 @@ submitted, accepted
     ATLAS. This is shown as squares in \autoref{fig:windows} and
     \autoref{fig:broken-window-size}. These kinds of size problems are
     difficult even for non-automated methods as radio sources can be extremely
-    wide --- for example, Radio Galaxy Zoo found a radio giant that spanned
+    wide---for example, Radio Galaxy Zoo found a radio giant that spanned
     over three different images presented to volunteers and the full source
     was only cross-identified by the efforts of citizen scientists
     \citep{banfield15}. An example of a radio image where part of the radio
@@ -634,7 +634,7 @@ submitted, accepted
     We first generate positive labels from a cross-identification catalogue.
     We decide that if an infrared object is listed in the catalogue, then it
     is assigned a positive label as a host galaxy. We then assign every other galaxy a negative label. This has some problems
-    --- an example is that if the cross-identification catalogue did not include a radio
+   ---an example is that if the cross-identification catalogue did not include a radio
     object (e.g.~it was below the signal-to-noise ratio) then the host galaxy
     of that radio object would receive a negative label. This occurs with
     \citet{norris06} cross-identifications, as these are associated with the
@@ -705,7 +705,7 @@ submitted, accepted
     to the expert labels. We then computed the `balanced accuracy' of these predicted labels.} Balanced
     accuracy is the average of the accuracy on the positive class and the
     accuracy on the negative class, and is not sensitive to class imbalance.
-    The candidate classification task has highly imbalanced classes --- in our
+    The candidate classification task has highly imbalanced classes---in our
     total set of SWIRE objects within 1~arcmin of an ATLAS object, only 4 per
     cent have positive labels. {Our threshold was chosen to maximise the balanced
     accuracy on predicted labels of the training set.} Only examples within 1~arcmin of ATLAS objects
@@ -797,7 +797,7 @@ submitted, accepted
     many `false positives' that do not affect cross-identification. An example
     of this is shown in \autoref{fig:positives}, where the classifier has
     identified 8 `host galaxies'. However, there are only three true host
-    galaxies in this image --- one per radio component --- and so in the
+    galaxies in this image---one per radio component---and so in the
     cross-identification task, only three of these galaxies will be identified
     as hosts.}
 
@@ -834,7 +834,7 @@ submitted, accepted
     of random forests. The balanced accuracies of random forests trained on
     expert labels have a considerably higher spread than those trained on
     Radio Galaxy Zoo labels, likely because of the small size of the expert
-    training set --- there are less than half the number of objects in the
+    training set---there are less than half the number of objects in the
     expert-labelled training set than the number of objects in the Radio
     Galaxy Zoo-labelled training set (\autoref{tab:radio-count}).
 
@@ -848,7 +848,7 @@ submitted, accepted
     when the data is noisy.
 
     Our method performs comparably to a nearest-neighbours approach. For
-    compact objects, this is to be expected --- indeed, nearest-neighbours
+    compact objects, this is to be expected---indeed, nearest-neighbours
     attains nearly 100 per cent accuracy on the compact test set. Our results
     do not improve on nearest-neighbours for resolved objects. However, our
     method does allow for improvement on nearest-neighbours with a
@@ -1005,7 +1005,7 @@ submitted, accepted
   pilot survey for EMU, so methods developed for ATLAS should also work for
   EMU. New methods developed should work well with extended radio sources, but
   this goal is almost unsupported by ATLAS as it has very few examples of such
-  sources. This makes both training and testing difficult --- there are too
+  sources. This makes both training and testing difficult---there are too
   few extended sources to train on and performance on such a small test set
   may be unreliable. Larger data sets with many extended sources like FIRST
   exist, but these are considerably less deep than and at a different
@@ -1051,7 +1051,7 @@ submitted, accepted
   radio image represents just one, whole radio source. Finally, our assumption
   that the host galaxy is detefcted in infrared is technically not needed, as
   the sliding-window approach we have employed will still work even if there
-  are no detected host galaxies --- instead of classifying candidate hosts,
+  are no detected host galaxies---instead of classifying candidate hosts,
   simply classify each pixel in the radio image. The downside of removing
   candidate hosts is that we are no longer able to reliably incorporate host
   galaxy information such as colour and redshift, though this could be
@@ -1308,8 +1308,8 @@ submitted, accepted
       Labeller & Classifier & Mean `Compact' accuracy & Mean `Resolved' accuracy & Mean `All' accuracy\\
        &  & (per cent) & (per cent) & (per cent)\\
       \hline
-      --- & NN & $97.2 \pm 1.7$ & $75.7 \pm 7.9$ & $93.4 \pm 0.8$\\
-      --- & Random & $97.9 \pm 2.2$ & $22.3 \pm 9.2$ & $83.2 \pm 4.7$\\
+     ---& NN & $97.2 \pm 1.7$ & $75.7 \pm 7.9$ & $93.4 \pm 0.8$\\
+     ---& Random & $97.9 \pm 2.2$ & $22.3 \pm 9.2$ & $83.2 \pm 4.7$\\
       Norris & Labels & $100.0 \pm 0.0$ & $100.0 \pm 0.0$ & $100.0 \pm 0.0$\\
              & Perfect & $97.9 \pm 2.2$ & $99.0 \pm 1.8$ & $98.1 \pm 1.7$\\
              & LR & $97.3 \pm 0.5$ & $76.0 \pm 3.2$ & $93.7 \pm 1.8$\\
@@ -1336,8 +1336,8 @@ submitted, accepted
       Labeller & Classifier & Mean `Compact' accuracy & Mean `Resolved' accuracy & Mean `All' accuracy\\
        &  & (per cent) & (per cent) & (per cent)\\
       \hline
-      --- & NN & $95.5 \pm 0.0$ & $92.8 \pm 0.0$ & $95.5 \pm 0.0$\\
-      --- & Random & $61.9 \pm 1.1$ & $26.6 \pm 2.1$ & $61.9 \pm 1.1$\\
+     ---& NN & $95.5 \pm 0.0$ & $92.8 \pm 0.0$ & $95.5 \pm 0.0$\\
+     ---& Random & $61.9 \pm 1.1$ & $26.6 \pm 2.1$ & $61.9 \pm 1.1$\\
       Middelberg & Perfect & $99.6 \pm 0.0$ & $99.8 \pm 0.0$ & $99.6 \pm 0.0$\\
       Norris & LR & $89.0 \pm 1.1$ & $89.7 \pm 1.8$ & $94.4 \pm 0.9$\\
              & CNN & $89.7 \pm 0.3$ & $89.4 \pm 1.4$ & $94.3 \pm 0.7$\\
@@ -1362,12 +1362,12 @@ submitted, accepted
 
   The columns of the score tables are defined as follows:
   \begin{itemize}
-    \item \emph{SWIRE} --- SWIRE designation for candidate host galaxy.
-    \item \emph{RA} --- Right ascension (J2000).
-    \item \emph{Dec} --- Declination (J2000).
-    \item \emph{Expert host} --- Whether the candidate host galaxy is a host galaxy according to \citet{norris06} or \citet{middelberg08} cross-identifications of CDFS and ELAIS-S1 respectively.
-    \item \emph{RGZ host} --- Whether the candidate host galaxy is a host galaxy according to Radio Galaxy Zoo cross-identifications (Wong et al. in prep). This is always "no" for ELAIS-S1 objects.
-    \item \emph{$C$($L$ / $D$)} --- Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:experimental-setup}.
+    \item \emph{SWIRE}---SWIRE designation for candidate host galaxy.
+    \item \emph{RA}---Right ascension (J2000).
+    \item \emph{Dec}---Declination (J2000).
+    \item \emph{Expert host}---Whether the candidate host galaxy is a host galaxy according to \citet{norris06} or \citet{middelberg08} cross-identifications of CDFS and ELAIS-S1 respectively.
+    \item \emph{RGZ host}---Whether the candidate host galaxy is a host galaxy according to Radio Galaxy Zoo cross-identifications (Wong et al. in prep). This is always "no" for ELAIS-S1 objects.
+    \item \emph{$C$($L$ / $D$)}---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:experimental-setup}.
   \end{itemize}
 
   \begin{table*}
@@ -1428,22 +1428,22 @@ J002928.80-440306.8 & 7.3700 & -44.0519 & no & no & 0.0003 & 0.8405 & 0.5668 & 0
 
   The columns of the cross-identification tables are defined as follows:
   \begin{itemize}
-    \item \emph{ATLAS} --- ATLAS designation for radio component.
-    \item \emph{RA} --- Right ascension of radio component (J2000).
-    \item \emph{Dec} --- Declination of radio component (J2000).
-    \item \emph{CID} --- Radio Galaxy Zoo component ID.
-    \item \emph{Zooniverse ID} --- Radio Galaxy Zoo Zooniverse ID.
-    \item \emph{Norris/Middelberg} --- Designation of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
-    \item \emph{Norris/Middelberg RA} --- Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
-    \item \emph{Norris/Middelberg Dec} --- Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
-    \item \emph{RGZ} --- Designation of SWIRE cross-identification from Radio Galaxy Zoo (Wong et al. in prep).
-    \item \emph{RGZ RA} --- Right ascension of SWIRE cross-identification from Radio Galaxy Zoo (Wong et al. in prep).
-    \item \emph{RGZ Dec} --- Right ascension of SWIRE cross-identification from Radio Galaxy Zoo (Wong et al. in prep).
-    \item \emph{RGZ radio consensus} --- Percentage agreement of Radio Galaxy Zoo volunteers on the radio component configuration.
-    \item \emph{RGZ IR consensus} --- Percentage agreement of Radio Galaxy Zoo volunteers on the host galaxy of this radio component.
-    \item \emph{$C$($L$ / $D$)} --- Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:experimental-setup}.
-    \item \emph{$C$($L$ / $D$) RA} --- Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
-    \item \emph{$C$($L$ / $D$) Dec} --- Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
+    \item \emph{ATLAS}---ATLAS designation for radio component.
+    \item \emph{RA}---Right ascension of radio component (J2000).
+    \item \emph{Dec}---Declination of radio component (J2000).
+    \item \emph{CID}---Radio Galaxy Zoo component ID.
+    \item \emph{Zooniverse ID}---Radio Galaxy Zoo Zooniverse ID.
+    \item \emph{Norris/Middelberg}---Designation of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
+    \item \emph{Norris/Middelberg RA}---Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
+    \item \emph{Norris/Middelberg Dec}---Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
+    \item \emph{RGZ}---Designation of SWIRE cross-identification from Radio Galaxy Zoo (Wong et al. in prep).
+    \item \emph{RGZ RA}---Right ascension of SWIRE cross-identification from Radio Galaxy Zoo (Wong et al. in prep).
+    \item \emph{RGZ Dec}---Right ascension of SWIRE cross-identification from Radio Galaxy Zoo (Wong et al. in prep).
+    \item \emph{RGZ radio consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the radio component configuration.
+    \item \emph{RGZ IR consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the host galaxy of this radio component.
+    \item \emph{$C$($L$ / $D$)}---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:experimental-setup}.
+    \item \emph{$C$($L$ / $D$) RA}---Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
+    \item \emph{$C$($L$ / $D$) Dec}---Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
   \end{itemize}
 
   \begin{table*}
