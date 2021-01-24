@@ -34,37 +34,38 @@ This thesis concerns applications of machine learning to radio astronomy for the
 
     Other problems in radio astronomy relate to the new level of data that we are about to obtain from large telescopes like the SKA. Methods for dealing with radio data at scale are still very much in their infancy, and need to be developed before instruments like ASKAP and MeerKAT can be used to their full potential. Much of this data processing will have to be `online', meaning that data will need to be processed as they are generated (and likely these data will not be stored at all). This is in contrast to how most science results are currently found, with new discoveries coming from legacy surveys many years after they were conducted. Some discoveries are spontaneous, and losing the ability to make serendipitous discoveries would be a major blow to astronomy \citep{norris17unexpected}: how can we deal with so much data but still retain the ability to discover the unknown?
 
-\begin{itemize}
-    \item what are the major questions in astronomy? \begin{itemize}
-            \item How galaxies evolve into what we see today and throughout the Universe
-            \item The role of AGN in the evolution of their host galaxy
-            \item The role of AGN in their local environment
-            \item Discovering the unexpected at new depths
-        \end{itemize}
-    \item what does big data enable in astronomy? Foreshadow things like your RLF results \begin{itemize}
-            \item Better statistics
-            \item More unusual objects
-            \item Requirement for probing the distant reaches of the Universe
-        \end{itemize}
-    \item what are challenges of big data in astronomy? E.g. labelling is expensive, foreshadow citizen science not enough \begin{itemize}
-        \item Labelling is expensive and citizen science is great but insufficient
-        \item data volumes/speed are very fast and we will need to look into online learning
-    \end{itemize}
-    \item why machine learning? As distinct from a computer program that applies rules. \begin{itemize}
+\section{Big data in astronomy}
+\label{sec:big-data}
+
+    The scale of radio data underpins many of the methodology problems facing radio astronomy. There are two main scientific benefits that come from large-scale data: better statistics, and more unusual objects.
+
+    Many results in astronomy are statistical, from measuring the expansion of the Universe to understanding the distribution of galaxy properties. With more observations we can not just narrow the uncertainty of these results, but also diversify them. When the number of objects under study is large, we can subdivide the population into subpopulations based on their physical properties and determine a statistic on each subpopulation. This can help understand the physical basis behind the statistic, or 
+    remove unwanted subpopulations from analysis. Even with less data it is still possible to subdivide or filter populations, but this will dramatically raise the uncertainty in the results due to the low sample size of each bin. An example of such a statistic is the radio luminosity function (RLF), which describes the density of radio sources throughout the Universe. It can be divided into a fractional RLF to examine the distribution of subpopulations, or to remove the effect of star-forming galaxies. I use large datasets to improve the uncertainty of RLFs and subdivide RLFs by the infrared properties of the population in \autoref{cha:rlfs}.
+
+    With large datasets, highly unusual or rare objects are more likely to be included. Much of astronomy has been pushed forward by serendipitous discoveries, and (provided we have some way of combing through the dataset) large datasets should provide a wealth of such discoveries to be found. These may be found either through identifying objects where statistical methods seem to fail, or perhaps through direct searches \citep{norris17unexpected}.
+
+    But with the benefits of big data come new challenges. At these new scales, the ability to store all of our science data is no longer a given. Many methods that previously had the luxury to run over a whole dataset at their own pace will now need to process data on-the-fly. Even with storage, the scale is tremendous: FIRST, for example, contains around 900~000 sources, of which very few were manually labelled. Over 10~000 volunteers labelled interesting objects in FIRST over four years of the Radio Galaxy Zoo project, with 75~000 aggregated labels passing quality assurance testing. While a phenomenal and, in radio, unparalleled labelling effort, it pales in comparison to the estimated 70~000~000 sources that EMU will find \citep{banfield15}.
+
+\section{Machine learning in astronomy}
+\label{sec:ml-in-astro}
+
+    why machine learning? As distinct from a computer program that applies rules. \begin{itemize}
         \item we don't know what rules to apply
         \item we are pretty good at doing these things by hand
         \item we have lots of data
     \end{itemize}
-    \item why is astronomy a good application of machine learning? E.g. As distinct from computer vision for self driving cars. \begin{itemize}
+    why is astronomy a good application of machine learning? E.g. As distinct from computer vision for self driving cars. \begin{itemize}
         \item different noise properties to natural images e.g. radio has correlated noise
         \item 
     \end{itemize}
-    \item Why these two particular problems, and how they relate to the major questions in astronomy. \begin{itemize}
+
+\section{How this thesis fits in}
+\label{sec:how-this-fits}
+    Why these two particular problems, and how they relate to the major questions in astronomy. \begin{itemize}
         \item big issues facing radio astronomy and without solving them we won't be able to make full use of the SKA
         \item cross-identification is critical to determining galaxy properties (nothing so boring as a radio source)
         \item lots of magnetic field questions require knowing whether we are looking at reliable bulk sources or not
     \end{itemize}
-\end{itemize}
 
 
 \section{Thesis Outline}
