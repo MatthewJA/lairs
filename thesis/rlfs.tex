@@ -5,7 +5,7 @@
 % make James' picture of binary xid before partitioning and colour it with a value-ramped viridis.
 
 % \section{Making Catalogues with Binary Cross-identification}
-% \label{sec:revisiting-cross-id}
+% \label{sec:rlfs-revisiting-cross-id}
 
 
 % \section{FIRST paper...}
@@ -16,7 +16,7 @@ In \autoref{cha:cross-id}, we concluded that our machine learning cross-identifi
 
 In this chapter, we use a machine learning model trained on the Radio Galaxy Zoo citizen science project to cross-identify \ncomponents{} radio components of extended radio sources from FIRST with \nsources{} host galaxies observed in the mid-infrared from the All\emph{WISE} source catalogue. \nsourceszsp{} hosts have a spectroscopic redshift in the Sloan Digital Sky Survey (SDSS). This is the largest available sample of cross-identified extended radio sources to date at the time of writing. The large sample size allows us to estimate the RLF of extended radio galaxies and to further characterise the sample with fractional radio luminosity functions. The extended source RLF can be used to estimate the mechanical energy injected into the local environment of active galactic nuclei (AGN). We estimate from the observed radio emission that inferred extended radio jets from AGN contribute between $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$ of mechanical energy to their environment throughout the low-redshift ($z < 0.6$) Universe. By further visual verification we also find \nnewgiants{} radio galaxies with projected size larger than 1~Mpc. Our results directly demonstrate the impact that automated machine learning methods could have on future wide-area radio surveys.
 
-\section{Introduction} \label{sec:intro}
+\section{Introduction} \label{sec:rlfs-intro}
 
 Radio active galactic nuclei (AGN) are some of the most violent and energetic
 objects in the Universe. Supermassive black holes at the centre of galaxies
@@ -82,31 +82,31 @@ use this model to automatically cross-identify \ncomponents{} radio components c
 with spectroscopic redshifts. This is the largest available catalogue of
 extended radio source cross-identifications. We call our catalogue
 \defn{RGZ-extrapolated} or \defn{RGZ-Ex}. Due to our large sample size we are able to further divide the
-source population by properties of the host galaxies. We refer to the trained machine learning model and the associated cross-identification algorithm jointly as \defn{binary cross-identification}, or \defn{BXID}. Note that there are two stages to our automated approach: first, we train BXID using an existing catalogue of cross-identified sources; second, we generate new cross-identifications for radio components not in the training catalogue. We refer to these stages as \defn{training} and \defn{prediction} respectively. Our data sources are described in \autoref{sec:data}. Our approach is discussed in \autoref{sec:method}. Radio luminosity functions of extended sources are presented in \autoref{sec:rlf} and we discuss these functions in \autoref{sec:discussion}.
+source population by properties of the host galaxies. We refer to the trained machine learning model and the associated cross-identification algorithm jointly as \defn{binary cross-identification}, or \defn{BXID}. Note that there are two stages to our automated approach: first, we train BXID using an existing catalogue of cross-identified sources; second, we generate new cross-identifications for radio components not in the training catalogue. We refer to these stages as \defn{training} and \defn{prediction} respectively. Our data sources are described in \autoref{sec:rlfs-data}. Our approach is discussed in \autoref{sec:rlfs-method}. Radio luminosity functions of extended sources are presented in \autoref{sec:rlfs-rlf} and we discuss these functions in \autoref{sec:rlfs-discussion}.
 
 Throughout this chapter we assume a flat $\Lambda$-CDM cosmology of $H_0 =
 69.3$~km~s$^{-1}$~Mpc$^{-1}$, $\Omega_m = 0.287$. These are the cosmological
 parameters from the Nine-year Wilkinson Microwave Anisotropy Probe
 \citep[WMAP9;][]{hinshaw13wmap9}.
 
-\section{Data} \label{sec:data}
+\section{Data} \label{sec:rlfs-data}
 
-In this section we describe how we obtain our training and prediction data. To enable the estimation of the extended RLF, we apply a number of selection criteria to the data which are described in \autoref{sec:sankey}.
+In this section we describe how we obtain our training and prediction data. To enable the estimation of the extended RLF, we apply a number of selection criteria to the data which are described in \autoref{sec:rlfs-sankey}.
 
-    \subsection{RGZ} \label{sec:rgz-data}
+    \subsection{RGZ} \label{sec:rlfs-rgz-data}
 
     RGZ is a citizen science project that aims to cross-identify complex radio sources with mid-infrared host galaxies with the help of volunteers. The first RGZ data release contains around 75~000 cross-identifications of a random subset of extended sources in FIRST with their host galaxies in All\emph{WISE}. For more details on RGZ see \citet{banfield15}. This catalogue has also been used in other machine learning contexts, including supervised learning for source aggregation \citep{wu19claran} and unsupervised learning methods \citep{galvin19som,ralph19ae}. We discard the RGZ sources without a host galaxy detected in All\emph{WISE} and use the remaining 41~446 sources for training.
 
     The RGZ catalogue only contains sources with at least 0.65 weighted volunteer agreement, equivalent to approximately 80 per cent reliability. This implicitly selects for less complex sources, since the volunteer agreement is a proxy for the difficulty of cross-identifying a source (Wong et al. in prep).
 
-    \subsection{FIRST} \label{sec:first-data}
+    \subsection{FIRST} \label{sec:rlfs-first-data}
 
     We use radio imagery and select radio components from the FIRST survey and associated catalogue respectively \citep{white97first,helfand15first}. FIRST is a
     1.4~GHz radio survey covering 10~575~deg$^2$ of the sky north of $\mathrm{Dec} = -10^\circ$ with an angular resolution of $5.4''$. At a detection limit of $1$~mJy, the catalogue contains 946~432 radio components.
 
     For both training and prediction, we make use of image cutouts from FIRST centred on mid-infrared candidate hosts. We predict host galaxies for the \ncomponents{} extended FIRST components detected at $>10\sigma$ \citep[about 1.5~mJy~beam$^{-1}$, per][]{banfield15} that have complete radio imagery for all candidate hosts.
 
-    \subsection{All\emph{WISE}} \label{sec:wise-data}
+    \subsection{All\emph{WISE}} \label{sec:rlfs-wise-data}
 
     We use the sky coordinates and magnitudes from the All\emph{WISE} \citep{cutri2013wiseexplanatory} catalogue during training and prediction. All\emph{WISE} is an all-sky catalogue of mid-infrared objects detected by the \emph{Wide-field Infrared Survey Explorer} \citep[\emph{WISE}][]{wright10wise} at 3.4, 4.6, 12 and \unit{22}{\micro\meter} wavelengths (called $W1$--$W4$, respectively). All\emph{WISE}
     contains over 747~million objects detected above $5\sigma$ at 3.4 and
@@ -120,11 +120,11 @@ In this section we describe how we obtain our training and prediction data. To e
     \texttt{MongoDB} assumes a perfectly spherical Earth with a fixed radius, allowing us to use it for sky coordinate
     searches. We use the right ascension and declination of All\emph{WISE} sources to generate candidate hosts by searching for infrared sources near FIRST components.
 
-    \subsection{SDSS} \label{sec:sdss-data}
+    \subsection{SDSS} \label{sec:rlfs-sdss-data}
 
     While we do not use data from the Sloan Digital Sky Survey Data Release 15 \citep[SDSS;][]{sdss} for training or prediction, we do use SDSS for spectroscopic redshifts of our host galaxies. These redshifts are required to calculate the radio luminosity of our sources. We use CDS X-Match\footnote{\url{http://cdsxmatch.u-strasbg.fr/}} to match each infrared host galaxy to the closest source imaged by SDSS to within $5''$. This results in \nsourceszsp{} spectroscopic redshifts for our \nsources{} total host galaxies. To estimate the rate of false association with SDSS sources, we add a $1'$ offset to all host positions and redo the matching process. With this method we estimate a $0.4$ per cent rate of false association.
 
-\section{Method}\label{sec:method}
+\section{Method}\label{sec:rlfs-method}
     
 We apply the binary classification cross-identification method (BXID) following \citet{alger18radio}. This method casts cross-identification
 as a classification problem where infrared `candidate host galaxies' are
@@ -194,19 +194,19 @@ candidate maximising this weighted score is selected as the host galaxy. We
 set the standard deviation of the Gaussian to $120''$ as this provides good
 empirical results.
 
-92 per cent of the host galaxies in RGZ are also detected as host galaxies in RGZ-Ex. The mean volunteer agreement on all RGZ sources with detected hosts was $95^{+5}_{-13}$ per cent, compared to $88^{+12}_{-17}$ per cent for sources with hosts not in RGZ-Ex. Incorrect cross-identifications can be considered a source of noise in the statistics. In future work we will design a way for BXID to output an `uncertainty' so sources with uncertain cross-identifications can be removed from calculations. We quantify the reliability of RGZ-Ex in \autoref{sec:manual-validation}.
+92 per cent of the host galaxies in RGZ are also detected as host galaxies in RGZ-Ex. The mean volunteer agreement on all RGZ sources with detected hosts was $95^{+5}_{-13}$ per cent, compared to $88^{+12}_{-17}$ per cent for sources with hosts not in RGZ-Ex. Incorrect cross-identifications can be considered a source of noise in the statistics. In future work we will design a way for BXID to output an `uncertainty' so sources with uncertain cross-identifications can be removed from calculations. We quantify the reliability of RGZ-Ex in \autoref{sec:rlfs-manual-validation}.
 
 We note that BXID necessarily identifies a host galaxy for all radio emission, even when it does not
 make sense to do so. In our current work we treat this as a source of
 noise. Future extensions to BXID will allow it to output `no detected
 host'.
 
-    \subsection{Visual verification}\label{sec:manual-validation}
+    \subsection{Visual verification}\label{sec:rlfs-manual-validation}
 
-    To quantify the reliability of RGZ-Ex, some of the authors (M.A., O.W., A.K., N.M., and A.T.) visually verified a randomly selected set of 200 radio components/host galaxy pairs in RGZ-Ex. For each pair we decided whether the radio component matched its identified host or not. This allowed us to estimate the accuracy of radio component-infrared host pairs identified by BXID. Verification of component-host pairs is noisy and sometimes even subjective, so each author looked at all 200 components. If an author was unsure about a pair, they were allowed to ignore it and the verification was treated as missing label data. We then aggregated these verifications following the aggregation approach introduced by \citet{dawid79em}. This approach jointly estimates the accuracy of each author along with the aggregated verification by maximising the joint likelihood. Note that this approach is able to handle missing label data. We propagated the uncertainty in the accuracy with a Monte Carlo approach, sampling aggregated verifications from the probabilities resulting from the \citeauthor{dawid79em} model. The estimated accuracy of BXID is $(89.5 \pm 0.8)$ per cent. It is interesting to note from our results that even astronomers disagree significantly on the radio cross-identification task, with agreement between authors ranging from 50 to 100 per cent across the verification components. We report the full verification set in \autoref{sec:verification-appendix}.
+    To quantify the reliability of RGZ-Ex, some of the authors (M.A., O.W., A.K., N.M., and A.T.) visually verified a randomly selected set of 200 radio components/host galaxy pairs in RGZ-Ex. For each pair we decided whether the radio component matched its identified host or not. This allowed us to estimate the accuracy of radio component-infrared host pairs identified by BXID. Verification of component-host pairs is noisy and sometimes even subjective, so each author looked at all 200 components. If an author was unsure about a pair, they were allowed to ignore it and the verification was treated as missing label data. We then aggregated these verifications following the aggregation approach introduced by \citet{dawid79em}. This approach jointly estimates the accuracy of each author along with the aggregated verification by maximising the joint likelihood. Note that this approach is able to handle missing label data. We propagated the uncertainty in the accuracy with a Monte Carlo approach, sampling aggregated verifications from the probabilities resulting from the \citeauthor{dawid79em} model. The estimated accuracy of BXID is $(89.5 \pm 0.8)$ per cent. It is interesting to note from our results that even astronomers disagree significantly on the radio cross-identification task, with agreement between authors ranging from 50 to 100 per cent across the verification components. We report the full verification set in \autoref{sec:rlfs-verification-appendix}.
 
 \section{Radio luminosity functions}
-\label{sec:rlf}
+\label{sec:rlfs-rlf}
 
   \begin{figure}
       \centering
@@ -218,7 +218,7 @@ host'.
   In this section we present our radio luminosity functions (RLFs) derived
   from the RGZ-Ex catalogue. To calculate each RLF we 
   followed the $1/V_{\max}$ method \citep{schmidt1968vmax}. This method accounts for the effects of Malmquist bias, which is a systematic bias against sources at greater distances. We
-  describe this approach in \autoref{sec:rlf-desc}. We limit our sample to radio sources with
+  describe this approach in \autoref{sec:rlfs-rlf-desc}. We limit our sample to radio sources with
   \unit{1.4}{\giga\hertz} integrated flux density of at least \unit{2}{\milli Jy}
   associated with host galaxies brighter than magnitude 17 at
   \unit{3.4}{\micro\meter}, a spectroscopic redshift $0.02 \leq z \leq 0.6$,
@@ -229,7 +229,7 @@ host'.
       L = \frac{4\pi f d^2}{1+z}{(1+z)^{-\alpha}}
   \end{equation}
   where $z$ is redshift and $d$ is luminosity distance (a function of $z$).
-  Uncertainties in comoving density are estimated as described in \autoref{sec:rlf-desc}. Completeness estimates are shown in \autoref{sec:completeness}. We discuss biases in our methods and results in \autoref{sec:bias}.
+  Uncertainties in comoving density are estimated as described in \autoref{sec:rlfs-rlf-desc}. Completeness estimates are shown in \autoref{sec:rlfs-completeness}. We discuss biases in our methods and results in \autoref{sec:rlfs-bias}.
 
   We compare our RLFs with \citet{mauch07rlf}, who estimated RLFs from 7~824
   manually cross-identified radio sources in the NRAO VLA Sky Survey \citep[NVSS;][]{condon98nvss}.
@@ -322,10 +322,10 @@ host'.
       function for different ranges of projected physical extent of their radio emission. We estimate the angular extent as the angular distance between the most separated components in a multi-component source. This result is complementary to other Radio Galaxy Zoo studies on the effect of the environment on the size and asymmetry of the observed extended radio emission \citep{rodman19asymmetry,garon19bending}.
 
 
-\section{Discussion}\label{sec:discussion}
+\section{Discussion}\label{sec:rlfs-discussion}
 
   \subsection{Biases and uncertainties}
-    \label{sec:bias}
+    \label{sec:rlfs-bias}
 
     Biases enter our work due to our chosen samples and methods. Our training set,
     RGZ, is biased toward sources smaller than $1.5'$ and limited above by $\sqrt{2}
@@ -387,7 +387,7 @@ host'.
 
     Ongoing radio surveys such as EMU, VLASS \citep{lacy20vlass}, and LoTSS \citep{shimwell19lotss} will greatly increase the number of extended sources. However, our sample size limitations in this chapter are not from FIRST, but from SDSS: until next-generation spectroscopic surveys are available, redshifts will be the limiting factor. To significantly increase our sample size would require much greater numbers of redshifts.
 
-\section{Summary}\label{sec:summary}
+\section{Summary}\label{sec:rlfs-summary}
 
   Extended radio sources provide an opportunity to study the interaction between AGN and their large-scale environments. We trained the binary cross-identification method on the Radio Galaxy Zoo to generate the largest sample of reliably cross-identified, extended radio sources, and this large sample allows us to investigate their bulk distributions in new, detailed ways. We estimated radio luminosity functions split by mid-infrared colour, physical extent and redshift. Despite our extendedness criterion, we found a significant star-forming population. We estimated that extended AGN contribute between $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$ of mechanical energy to their environment. Ongoing and future surveys such as EMU will provide even greater numbers of extended radio sources, and our combination of machine learning and astronomy methodology will allow these samples to be cross-identified and investigated efficiently and reliably.
 
@@ -409,7 +409,7 @@ Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. c
 \appendix
 
   \section{Sankey diagrams}
-  \label{sec:sankey}
+  \label{sec:rlfs-sankey}
 
     This section presents Sankey diagrams showing the filtering of components and sources from the full FIRST sample. A Sankey diagram shows the order and number of objects removed from a sample. \autoref{fig:sankey-components} shows the filtering of components and \autoref{fig:sankey-sources} shows the filtering of sources. The component filters are `Bad FIRST' for components on the edge of FIRST with incomplete images, `Sidelobe' for components with high sidelobe probability, `Low score' for components with only low-scoring candidate hosts, `Faint' for components with less than 10 signal-to-noise according to the FIRST catalogue, and `Compact' for components that do not have extended radio emission according to \autoref{eq:rgz-criterion}. Sources are removed after each component filter if they no longer contain any components.
 
@@ -426,7 +426,7 @@ Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. c
     \end{figure}
 
 \section{Radio luminosity function}
-\label{sec:rlf-desc}
+\label{sec:rlfs-rlf-desc}
 
   We computed the radio luminosity function following the $1/V_{\max}$ method
   \citep{schmidt1968vmax}. This appendix explains our implementation. We performed the
@@ -462,7 +462,7 @@ Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. c
   After computing the luminosity function, we estimate the uncertainty in each bin using Poisson statistics, $\sqrt{N}$ for a bin count $N$.
 
   \section{Redshift completeness estimate}
-  \label{sec:completeness}
+  \label{sec:rlfs-completeness}
 
     \autoref{fig:completeness-wise} shows the estimated completeness as a function of $W1$ and $W1-W2$. We followed the same method as \citet{pracy16rlf} for this estimation, averaging completeness over circles centred on each source. Each source is associated with a circle of radius equal to the distance to its 50th nearest neighbour in the $W1$ and $W1-W2$ plane.
 
@@ -473,6 +473,7 @@ Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. c
     \end{figure}
 
   \section{Giant radio galaxies}
+  \label{sec:rlfs-giants}
 
     \begin{table*}
       \caption{\label{tab:grg} Giant radio galaxies found in RGZ-Ex. `LLS' is the projected linear size of the source as measured by the maximum angular distance between radio components. The RA/Dec are the coordinates of the host galaxy. s/p indicates spectroscopic/photometric redshift. ${}^L$Existing in literature. ${}^R$Also found by RGZ citizen scientists. ${}^\dagger$Misidentified SDSS host, manually corrected to obtain redshift.}
@@ -532,9 +533,9 @@ mostly due to sidelobes/artefacts (103), incorrect source grouping (82), or inco
     Note that this is a particularly challenging set: sources that are misidentified will often have unusually large estimated extents due to the inclusion of spurious components. The error rate in this set therefore does not reflect the rest of the catalogue.
 
 \section{Visual verification results}
-\label{sec:verification-appendix}
+\label{sec:rlfs-verification-appendix}
   
-  In \autoref{sec:manual-validation} we described our visual verification of the BXID method. We list the radio components in the verification set in \autoref{tab:verification-set}. Each row of the table contains the FIRST component, its All\emph{WISE} host galaxy according to BXID, and whether the association is correct according to our visual verification. If an author was particularly unsure about an object, they were able to skip this object, and so are not accounted for in the verification for that object. Verification was weighted by the \citet{dawid79em} maximum likelihood model.
+  In \autoref{sec:rlfs-manual-validation} we described our visual verification of the BXID method. We list the radio components in the verification set in \autoref{tab:verification-set}. Each row of the table contains the FIRST component, its All\emph{WISE} host galaxy according to BXID, and whether the association is correct according to our visual verification. If an author was particularly unsure about an object, they were able to skip this object, and so are not accounted for in the verification for that object. Verification was weighted by the \citet{dawid79em} maximum likelihood model.
 
   \begin{table}
     \caption{\label{tab:verification-set} Validation objects. `Agree' is whether or not the authors agreed with BXID associating the given FIRST object with the given All\emph{WISE} object.}

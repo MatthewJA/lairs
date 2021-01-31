@@ -97,6 +97,12 @@
         \end{equation}
         One useful way of thinking about this equation is that $F$ is the decomposition of $P(\lambda^2)$ into complex sinusoids of the form $e^{2i\lambda^2\phi}$.
 
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{images/Faraday-effect.pdf}
+            \caption[A Faraday screen.]{\label{fig:faraday-effect} The Faraday effect for a single Faraday screen with magnetic field $\vec B$ inducing a Faraday rotation of $\phi$. Adapted from a figure by Bob Mellish.}
+        \end{figure}
+
         If observed radiation has precisely one Faraday depth $\phi$, then the polarised structure is called a \defn{Faraday screen} and the source is called \defn{Faraday simple}\todo{Include a graphic}. In this degenerate case, the relationship between the polarisation angle $\chi$ and the squared wavelength $\lambda^2$ is linear:
         \begin{equation}
             \chi = \chi_0 + \phi \lambda^2,
@@ -191,9 +197,9 @@
 
         As powerful sources of radio emission, radio AGN and their associated extended structure can be seen throughout the Universe. Sufficiently close or large radio galaxies can be resolved by telescopes and their structure examined, while more distant or smaller radio galaxies may be unresolved and point-like. A well-resolved radio galaxy can be a striking thing: from the central AGN extend two opposing, tightly-collimated jets, which widen into huge lobes of radio-bright plasma. These lobes may have further structure, particularly bright regions called \defn{hot-spots}, and the jets and lobes may be bent and distorted as they travel away from their host galaxy. For any given radio galaxy, some of these features may or may not be present. In particular, radio galaxies are often divided into two classes based on the kinds of extended structure that are visible, called Fanaroff-Riley type I (FRI) and Fanaroff-Riley type II (FRII) radio galaxies. FRI have wavy, diffuse lobes, appearing brighter toward the host galaxy and dimming further out (e.g. \autoref{fig:m84}). FRII, on the other hand, have long, tightly-collimated jets and sharp-edged lobes with bright hot-spots \citep{urry_unified_1995} at the very end of the lobes, and are brighter further away from the host galaxy (e.g. \autoref{fig:3C223}). FRII are also generally higher-luminosity \citep{fanaroff_morphology_1974} than FRI, and therefore make up the majority of observed extended radio sources throughout the Universe. However, this is by no means the clear-cut divide it was once thought to be \citep{mingo_revisiting_2019} with the difference now being attributed largely to environmental effects rather than jet power. The current understanding is that FRII jets remain at relativistic energies up until the edge of the lobe, where they terminate in a shock that appears as a hot-spot, while FRI jets decelerate within the galaxy itself \citep{hardcastle_radio_2020}. This sharp difference in extended structure begins with environmental interactions at the very centre of the galaxy.
 
-        A radio galaxy can be tremendously extended, with increasingly many radio galaxies being found with a length of over one megaparsec. Such large galaxies are called \defn{giant radio galaxies}, but even non-giants are still quite big, regularly extending well outside the stellar component of the host galaxy. We will discuss the extended structure in \autoref{sec:extended-structure-of-agn}.
+        A radio galaxy can be tremendously extended, with increasingly many radio galaxies being found with a length of over one megaparsec. Such large galaxies are called \defn{giant radio galaxies}, but even non-giants are still quite big, regularly extending well outside the stellar component of the host galaxy. We will discuss the extended structure in \autoref{sec:extended-structure-of-agn}. \autoref{sec:rlfs-giants} lists some giants discovered during the work of this thesis.
 
-        An AGN interacts with its host galaxy, and so the host galaxy of an AGN can also provide interesting insights into the structure and behaviour of the AGN. Early research indicated that the split between FRI and FRII radio galaxies was dependent on the mid-infrared and optical brightness (and therefore density) of the host galaxy \citep{ledlow_20_1996,bicknell_relativistic_1995} though more recent work suggests this may not be a strong effect if it exists at all \citep{hardcastle_radio_2020}.
+        An AGN interacts with its host galaxy, and so the host galaxy of an AGN can also provide interesting insights into the structure and behaviour of the AGN. Early research indicated that the split between FRI and FRII radio galaxies was dependent on the mid-infrared and optical brightness (and therefore density) of the host galaxy \citep{ledlow_20_1996,bicknell_relativistic_1995} though more recent work suggests this may not be a strong effect if it exists at all \citep{hardcastle_radio_2020}. \autoref{cha:rlfs} investigates the distribution of radio luminosities conditioned on the mid-infrared colour of the host galaxy.
 
     \subsection{Extended structure}
     \label{sec:extended-structure-of-agn}
@@ -259,7 +265,7 @@
             \caption{\label{fig:mauch-rlf} RLF for star-forming galaxies and AGN, from \citet{mauch07rlf}.}
         \end{figure}
 
-        The distribution of AGN luminosities throughout the Universe can be characterised by the \defn{radio luminosity function} (RLF). This describes the density of AGN within luminosity bins at a given frequency. The RLF at 1.4~GHz from \citet{mauch07rlf} is shown in \autoref{fig:mauch-rlf}. 1.4~GHz is arguably the most common large-scale survey frequency as it detects the 21~cm hydrogen line, but this RLF can be scaled to different frequencies by assuming a constant spectral index ($\alpha = -0.7$ for a typical AGN).
+        The distribution of AGN luminosities throughout the Universe can be characterised by the \defn{radio luminosity function} (RLF). This describes the density of AGN within luminosity bins at a given frequency. The RLF at 1.4~GHz from \citet{mauch07rlf} is shown in \autoref{fig:mauch-rlf}. 1.4~GHz is arguably the most common large-scale survey frequency as it detects the 21~cm hydrogen line, but this RLF can be scaled to different frequencies by assuming a constant spectral index ($\alpha = -0.7$ for a typical AGN). In \autoref{cha:rlfs}, we will use a machine learning-derived radio source catalogue to estimate a RLF for extended radio objects.
 
     % \subsection{The host galaxies of AGN}
     % \label{sec:host-galaxies}
