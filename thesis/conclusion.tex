@@ -1,12 +1,42 @@
+%!tex root=./thesis.tex
 \chapter{Conclusion}
 \label{cha:conc}
-Summary your thesis and discuss what you are going to do in the future in Section~\ref{sec:future}.
 
-\emph{A conclusion drawing together the published papers or works in a cohesive manner, and addresses how the individual publications link to the theory and methodology adopted and evaluate the contribution that the research in the submitted publications makes to the advancement of the research area.}
+This chapter needs to
+\begin{itemize}
+    \item summarise the thesis
+    \item draw together works
+    \item link each chapter to theory and methodology
+    \item evaluate the contribution of this work to the field
+    \item discuss future work
+\end{itemize}
+
+The future of radio astronomy is immensely exciting, with upcoming radio surveys like EMU and POSSUM sure to revolutionise our understanding of the violent Universe occupied by radio active galactic nuclei. In this thesis we have explored methods for identifying extragalactic radio sources in these future wide-area radio surveys.
+
+\autoref{cha:cross-id} developed a new approach to cross-identifying radio components with their infrared host galaxies and applied this method to the CDFS and ELAIS-S1 ATLAS survey, a pilot survey for the upcoming ASKAP key survey EMU. This was the first ever application of machine learning to radio cross-identification. In the process, we demonstrated that our methods worked on ELAIS-S1 with similar performance to how they worked on CDFS, despite these being different parts of the sky. We also evaluated simple nearest-neighbour cross-identification on the ATLAS fields, showing better performance than either machine learning or Radio Galaxy Zoo volunteers on this dataset, which we suggest is because of how most objects in ATLAS are very compact. Our machine learning methods performed similarly whether they were trained on expert-provided or citizen science-provided labelled datasets, clearly demonstrating the benefit of citizen science labels to radio astroinformatics even if they may be less accurate than labels provided by expert. We showed that the algorithm we had developed could in principle perform much better than nearest-neighbours if only its binary accuracy could be raised, perhaps with a more complex or better-trained classifier. Finally, we concluded that ATLAS was an insufficiently complex dataset to train machine learning algorithms for future radio surveys: more complex and larger training sets would be necessary.
+
+To further investigate our classification-based cross-identification algorithm we needed a more complex dataset, and in \autoref{cha:rlfs} we turned to FIRST, a legacy survey containing around 900~000 radio components. Of these, 250~000 or so were not compact, compared to the vast majority of ATLAS. We increased the complexity of our machine learning model and trained it on this dataset along with 75~000 Radio Galaxy Zoo labels, far more than we had available for ATLAS. The resulting classifier could then be used to cross-identify every extended object in FIRST. Using the fact that any two radio components in the same radio source should also have the same host galaxy, we identified not only the host galaxies of our radio components but also their association to other radio components. This allowed us to produce a catalogue of over 150~000 extended radio sources, the largest extant catalogue of extended radio sources at the time of writing. Such a large catalogue enabled us to estimate a RLF for extended radio sources, the first time a RLF has been produced for just extended sources. We could also subdivide this RLF into a fractional RLF, and we were able to produce RLFs divided by the mid-infrared colour of the host galaxy, their physical extent, and their redshift. Extended radio sources ought to be the sources which contribute the most mechanical energy to their surrounding IGM, and with an RLF dedicated solely to extended sources we were able to estimate this energy contribution as $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$. Perhaps most importantly, we showed our method works and used it to obtain a physically meaningful result. Our method can easily be extended to new surveys, as long as training data exist.
+
+
+\section{Implications for radio citizen science}
+\label{sec:implications-citizen-science}
+
+\section{Implications for wide-area radio surveys}
+\label{sec:implications-wide-area-radio-surveys}
+
+    This section discusses the links between my work and upcoming wide-area radio surveys, including any predictions I may have for them, and impacts of my work on them.
+
+
+    - good generalisation across the sky - from cdfs/elais and first
+    - good, complex data are necessary for training
+    - we need to pick features cleverly to make the best use of the limited radio sky - we only have one, and can't perform repeated experiments like other fields!
+
+\section{What we need to move forward}
+\label{sec:moving-forward}
+    
+    What does radio astronomy need to be able to press ahead with astroinformatics? From my work what do we need to do to set ourselves up for a solid future field?
 
 \section{Future Work}
 \label{sec:future}
-Good luck.
 
-
-
+    Where can my work be taken from here?
