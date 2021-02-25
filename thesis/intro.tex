@@ -49,24 +49,14 @@ This thesis concerns applications of machine learning to radio astronomy for the
 \section{Machine learning in astronomy}
 \label{sec:ml-in-astro}
 
-    why machine learning? As distinct from a computer program that applies rules. \begin{itemize}
-        \item we don't know what rules to apply
-        \item we are pretty good at doing these things by hand
-        \item we have lots of data
-    \end{itemize}
-    why is astronomy a good application of machine learning? E.g. As distinct from computer vision for self driving cars. \begin{itemize}
-        \item different noise properties to natural images e.g. radio has correlated noise
-        \item 
-    \end{itemize}
+    Machine learning is the process and practice of designing algorithms that automatically find and exploit useful patterns in data \citep{deisenroth_mathematics_2020}. It is best suited for scenarios where these patterns are hard to encode by hand. Typically hard-to-describe problems might include data exploration, data visualisation, or interpolation. We face a deluge of data, and our existing methods for data analysis and astronomical discovery are hard to automate due to the often complex, visual nature of much of astronomy. This is where machine learning comes in: if we can find a way to encode the processes underpinning astronomy as algorithms, we could apply them at scale. Machine learning has found much success in other fields with similar difficult-to-describe problems like image classification and outlier identification.
+
+    From the other direction, machine learning finds interesting and unique applications in radio astronomy. Radio images are usually quite different from images in the typical image analysis problems faced in computer science. Standard assumptions are frequently broken: noise is correlated across the image, objects can be different shapes when viewed in different colours, and the number of colours in an image may be in the hundreds. Data points are spatially located and can be close together or far apart in ways that are not solely based on how they look or behave. We often do not have the option of obtaining more data, sometimes because it is prohibitively expensive (e.g. to undertake a new survey) and sometimes because it simply does not exist (as we only have one Universe to look at). The burgeoning field of astroinformatics promises to prove interesting.
 
 \section{How this thesis fits in}
 \label{sec:how-this-fits}
-    Why these two particular problems, and how they relate to the major questions in astronomy. \begin{itemize}
-        \item big issues facing radio astronomy and without solving them we won't be able to make full use of the SKA
-        \item cross-identification is critical to determining galaxy properties (nothing so boring as a radio source)
-        \item lots of magnetic field questions require knowing whether we are looking at reliable bulk sources or not
-    \end{itemize}
 
+    Current methods of identifying radio sources in wide-area radio surveys work best for compact, isolated objects. As resolution and depth of radio surveys increases in the lead-up to the SKA, these limitations are becoming more apparent: resolution increases apparent complexity and depth increases the number of radio sources visible in any given patch of sky. Source identification is critical for analysis of radio sources in large-scale surveys whether one is interested in individual sources or their bulk properties. Without solving issues like cross-identification and Faraday complexity we will not be able to make full use of the SKA when it arrives. As we will discuss in \autoref{sec:xid}, cross-identification of radio sources with their counterparts in infrared or optical is key to understanding these sources. Many galaxy properties can only be derived from observations of the infrared or optical galaxy, including star formation rate, distance, and even mass of the central black hole powering the radio source itself. Bulk analysis of polarised sources greatly benefits from being able to assess their Faraday complexity. The most important application is perhaps in the development of so-called \defn{rotation measure grids}, which help characterise the magnetic field of the Milky Way. Without knowing which sources are complex and which are not, we cannot estimate the grid reliably.
 
 \section{Thesis outline}
 \label{sec:outline}
@@ -103,4 +93,16 @@ During my PhD, I had the good fortune to collaborate with many talented authors 
     \item \emph{Heightened Faraday Complexity in the inner 1 kpc of the Galactic Centre}, by J. D. Livingston, N. M. McClure-Griffiths, B. M. Gaensler, A. Seta, \textbf{M. J. Alger}. Published in 2021 in \emph{Monthly Notices of the Royal Astronomy Society}.
     \item \emph{Radio Galaxy Zoo: Unsupervised Clustering of Convolutionally Auto-encoded Radio-astronomical Images}, by N. O. Ralph, R. P. Norris, G. Fang, L. A. F. Park, T. J. Galvin, \textbf{M. J. Alger}, H. Andernach, C. Lintott, L. Rudnick, S. S. Shabala, and O. I. Wong. Published in 2019 in \emph{Publications of the Astronomical Society of the Pacific}.
     \item \emph{Radio Galaxy Zoo: Knowledge Transfer Using Rotationally Invariant Self-organizing Maps}, by T. J. Galvin, M. Huynh, R. P. Norris, X. R. Wang, E. Hopkins, O. I. Wong, S. S. Shabala, L. Rudnick, \textbf{M. J. Alger}, and K. L. Polsterer. Published in 2019 in \emph{Publications of the Astronomical Society of the Pacific}.
+\end{itemize}
+
+\newpage
+
+I also gave a number of conference talks:
+\begin{itemize}
+    \item \emph{Machine Learning Methods for Radio Host Cross-Identification with Crowdsourced Labels}, presented in 2017 at the seventh SKA Pathfinder Radio Continuum Survey meeting, Perth, Australia.
+    \item \emph{Learning to Cross-identify Wide-area Radio Surveys with Radio Galaxy Zoo: Data challenges in citizen science}, presented in 2018 at the Collaborative Conference on Computational and Data Intensive Science, Melbourne, Australia.
+    \item \emph{Radio luminosity functions with Radio Galaxy Zoo and machine learning}, presented in 2019 at the ninth SKA Pathfinder Radio Continuum Survey meeting, Lisbon, Portugal.
+    \item \emph{Radio luminosity functions with machine learning and Radio Galaxy Zoo}, presented in 2019 at the Annual Scientific Meeting of the Astronomical Society of Australia.
+    \item \emph{Extracting Meaningful Features from Early-Science Radio Data}, presented in 2019 at the Collaborative Conference on Computational and Data Intensive Science, Canberra, Australia.
+    \item \emph{Extracting Meaningful Features from Early-Science Radio Data}, presented in 2019 at Artificial Intelligence in Astronomy, Garching, Germany.
 \end{itemize}

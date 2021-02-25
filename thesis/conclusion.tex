@@ -17,16 +17,18 @@ The future of radio astronomy is immensely exciting, with upcoming radio surveys
 
 To further investigate our classification-based cross-identification algorithm we needed a more complex dataset, and in \autoref{cha:rlfs} we turned to FIRST, a legacy survey containing around 900~000 radio components. Of these, 250~000 or so were not compact, compared to the vast majority of ATLAS. We increased the complexity of our machine learning model and trained it on this dataset along with 75~000 Radio Galaxy Zoo labels, far more than we had available for ATLAS. The resulting classifier could then be used to cross-identify every extended object in FIRST. Using the fact that any two radio components in the same radio source should also have the same host galaxy, we identified not only the host galaxies of our radio components but also their association to other radio components. This allowed us to produce a catalogue of over 150~000 extended radio sources, the largest extant catalogue of extended radio sources at the time of writing. Such a large catalogue enabled us to estimate a RLF for extended radio sources, the first time a RLF has been produced for just extended sources. We could also subdivide this RLF into a fractional RLF, and we were able to produce RLFs divided by the mid-infrared colour of the host galaxy, their physical extent, and their redshift. Extended radio sources ought to be the sources which contribute the most mechanical energy to their surrounding IGM, and with an RLF dedicated solely to extended sources we were able to estimate this energy contribution as $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$. Perhaps most importantly, we showed our method works and used it to obtain a physically meaningful result. Our method can easily be extended to new surveys, as long as training data exist.
 
+In \autoref{cha:faraday} we developed an interpretable Faraday complexity classifier. We constructed features that were easy to understand by measuring the distance of observations from a simple model of Faraday simple sources. Our resulting features could be calculated from both simulated and real observations. We demonstrated the effectiveness of our method on both simulated and real data and showed that on simulated data our simple methods matched the state-of-the-art CNN classifier despite having far less parameters. This was the first application of machine learning to real spectropolarimetric data. This method will be applicable to future surveys like POSSUM.
 
 \section{Implications for radio citizen science}
 \label{sec:implications-citizen-science}
+
+    - even bad labels can be useful
+    - citizen science alone won't solve our data deluge, but in tandem with ML, it might
 
 \section{Implications for wide-area radio surveys}
 \label{sec:implications-wide-area-radio-surveys}
 
     This section discusses the links between my work and upcoming wide-area radio surveys, including any predictions I may have for them, and impacts of my work on them.
-
-
     - good generalisation across the sky - from cdfs/elais and first
     - good, complex data are necessary for training
     - we need to pick features cleverly to make the best use of the limited radio sky - we only have one, and can't perform repeated experiments like other fields!
@@ -40,3 +42,13 @@ To further investigate our classification-based cross-identification algorithm w
 \label{sec:future}
 
     Where can my work be taken from here?
+
+    - domain gap for training on simulated data for FDFs
+    - domain gap for simulated radio continuum data to augment surveys like ATLAS
+    - apply our cross-identification and Faraday complexity methods to EMU and POSSUM, as well as surveys like LoTSS and GLEAM-X
+    - improve our aggregation method for bxid
+    - generate alternative fractional RLFs, e.g. by ML-derived morphology
+    - incorporate photometric redshifts into calculations from rlf
+    - investigate the link between extended sources and their local environments
+    - apply other crowd aggregation strategies to RGZ
+    - use our insights into FDFs to do other interesting things, like outlier detection, data visualisation, or some new way of qu fitting
