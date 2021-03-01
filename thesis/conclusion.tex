@@ -1,3 +1,4 @@
+%!tex engine=xelatex
 %!tex root=./thesis.tex
 \chapter{Conclusion}
 \label{cha:conc}
@@ -22,11 +23,16 @@ In \autoref{cha:faraday} we developed an interpretable Faraday complexity classi
 \section{Implications for radio citizen science}
 \label{sec:implications-citizen-science}
 
-    - even bad labels can be useful
-    - citizen science alone won't solve our data deluge, but in tandem with ML, it might
+    Our results in \autoref{cha:cross-id} demonstrated that machine learning methods trained on citizen science labels perform comparably to those trained on expert labels, even when those labels are lower quality than expert labels. We applied this insight in \autoref{cha:rlfs} to obtain scientific results, using machine learning to extrapolate the labels to a larger dataset. While Radio Galaxy Zoo alone was not enough to fully label FIRST, Radio Galaxy Zoo working in tandem with machine learning was. This is a pattern that may hold true for future surveys and applications, too. Future astronomical research at-scale may leverage the idea of people working with machine learning, sometimes called \defn{human-in-the-loop} \citep[e.g.][]{holzinger_interactive_2016} learning, to pore through data-at-scale.
 
 \section{Implications for wide-area radio surveys}
 \label{sec:implications-wide-area-radio-surveys}
+
+    As we move toward larger and larger datasets, an important question is how applicable our models will be across the sky. Our results in \autoref{cha:cross-id} showed that we can expect some generalisation, as our model trained on one patch of sky was applicable to another without a great loss of performance. Similarly, our classifier trained on part of FIRST seemed to work well on the rest of the dataset. This is promising as it implies that limited area surveys may provide 
+
+    Between \autoref{cha:cross-id} and \autoref{cha:rlfs} we demonstrated that a large set of good quality, complex data is required for training good astroinformatics algorithms. Pilot datasets like ATLAS will not work by themselves: the sources they contain are too simple and their complex sources are too few. A sensible question to ask is, could we simulate data for training purposes? We trained our classifier in \autoref{cha:faraday} on simulated data and found that it was difficult to bridge the domain gap between simulation and observation, even in a well-understood, one-dimensional case---let alone the complex three-dimensional projected morphologies we observe in imagery. Getting across this domain gap will be difficult and will necessarily be a major topic of research in the astroinformatics field in the near future.
+
+    Tying observations, simulations, and models together are the representation of the data: features. Our results in \autoref{cha:faraday} show that judicious choice of features 
 
     This section discusses the links between my work and upcoming wide-area radio surveys, including any predictions I may have for them, and impacts of my work on them.
     - good generalisation across the sky - from cdfs/elais and first
