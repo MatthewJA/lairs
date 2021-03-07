@@ -837,7 +837,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     {We report the scores predicted by each classifier for each
     SWIRE object in \aref{sec:atlas-xid-scores} and the predicted
-    cross-identification for each ATLAS object in \aref{sec:atlas-xids}.
+    cross-identification for each ATLAS object in \aref{sec:atlas-xid-xids}.
     Scores reported for a given object were predicted by binary
     classifiers tested on the quadrant containing that object. The reported scores are not weighted.}
 
@@ -1336,7 +1336,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     \item \emph{Dec}---Declination (J2000).
     \item \emph{Expert host}---Whether the candidate host galaxy is a host galaxy according to \citet{norris06} or \citet{middelberg08} cross-identifications of CDFS and ELAIS-S1 respectively.
     \item \emph{RGZ host}---Whether the candidate host galaxy is a host galaxy according to Radio Galaxy Zoo cross-identifications (Wong et al. in prep). This is always "no" for ELAIS-S1 objects.
-    \item \emph{$C$($L$ / $D$)}---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:experimental-setup}.
+    \item \emph{$C$($L$ / $D$)}---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
   \end{itemize}
 
   \begin{table*}
@@ -1410,7 +1410,7 @@ J002928.80-440306.8 & 7.3700 & -44.0519 & no & no & 0.0003 & 0.8405 & 0.5668 & 0
     \item \emph{RGZ Dec}---Right ascension of SWIRE cross-identification from Radio Galaxy Zoo (Wong et al. in prep).
     \item \emph{RGZ radio consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the radio component configuration.
     \item \emph{RGZ IR consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the host galaxy of this radio component.
-    \item \emph{$C$($L$ / $D$)}---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:experimental-setup}.
+    \item \emph{$C$($L$ / $D$)}---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
     \item \emph{$C$($L$ / $D$) RA}---Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
     \item \emph{$C$($L$ / $D$) Dec}---Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
   \end{itemize}
