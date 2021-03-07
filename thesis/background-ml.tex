@@ -136,7 +136,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
 
         Given a loss function and a parametrised model, how can we find parameters for the model that minimise the loss function? There are many optimisation strategies but if both the loss function and model are differentiable with respect to the parameters then we can employ a particularly efficient approach: \defn{gradient descent}. Assume we have a model $f(x; \vec w)$ parametrised by some vector $\vec w$ and a loss function $\mathcal L(\vec w; T, X)$. Then the value of $\vec w$ after the $k + 1$th update of gradient descent is
         \begin{equation}
-            \label{sec:gradient-descent}
+            \label{eq:gradient-descent}
             \vec w^{(k + 1)} = \vec w^{(k)} - \lambda \nabla_{\vec w} \mathcal L(\vec w^{(t)}; T, X)
         \end{equation}
         where $\lambda > 0$ is a small scalar called the \defn{learning rate}. With an appropriately small choice of $\lambda$ $\vec w$ will converge to a local minimum of $\mathcal L$. Many variations on this concept exist which attempt to avoid local minima, such as introducing a `momentum' term that accumulates as multiple iterations move $\vec w$ in the same direction. If the loss function is convex, then any minimum is the global minimum (there are no local minima).
