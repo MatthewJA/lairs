@@ -38,13 +38,13 @@ M.J.A. and J.D.L. were supported by the Australian Government Research Training 
 
     \begin{figure}
       \includegraphics[width=\linewidth]{faraday-images/spectra_simple.pdf}
-      \caption{A simple FDF and its corresponding polarised spectra: (a) groundtruth FDF $F$, (b) noise-free polarised spectrum $P$, (c) noisy observed FDF $\hat F$, (d) noisy polarised spectrum $\hat P$. Blue and orange mark real and imaginary components respectively.}
+      \caption[A simple FDF and its corresponding polarised spectra.]{A simple FDF and its corresponding polarised spectra: (a) groundtruth FDF $F$, (b) noise-free polarised spectrum $P$, (c) noisy observed FDF $\hat F$, (d) noisy polarised spectrum $\hat P$. Blue and orange mark real and imaginary components respectively.}
       \label{fig:faraday-simple-fdf}
     \end{figure}
 
     \begin{figure}
       \includegraphics[width=\linewidth]{faraday-images/spectra.pdf}
-      \caption{A complex FDF and its corresponding polarised spectra: (a) groundtruth FDF $F$, (b) noise-free polarised spectrum $P$, (c) noisy observed FDF $\hat F$, (d) noisy polarised spectrum $\hat P$. Blue and orange mark real and imaginary components respectively.}
+      \caption[A complex FDF and its corresponding polarised spectra.]{A complex FDF and its corresponding polarised spectra: (a) groundtruth FDF $F$, (b) noise-free polarised spectrum $P$, (c) noisy observed FDF $\hat F$, (d) noisy polarised spectrum $\hat P$. Blue and orange mark real and imaginary components respectively.}
       \label{fig:faraday-complex-fdf}
     \end{figure}
 
@@ -139,7 +139,7 @@ M.J.A. and J.D.L. were supported by the Australian Government Research Training 
     \begin{figure}
       \centering
       \includegraphics[width=\linewidth]{faraday-images/features_on_graph.pdf}
-      \caption{\label{fig:faraday-features-on-fdf} An example of how an observed FDF $\hat F$ relates to our features. $\phi_w$ is the $W_2$-minimising Faraday depth, and $\phi_a$ is the $\hat F$-maximising Faraday depth (approximately equal to the Euclidean-minimising Faraday depth). The remaining two features are the $W_2$ and Euclidean distances between the depicted FDFs.}
+      \caption[An illustration of our FDF features.]{\label{fig:faraday-features-on-fdf} An example of how an observed FDF $\hat F$ relates to our features. $\phi_w$ is the $W_2$-minimising Faraday depth, and $\phi_a$ is the $\hat F$-maximising Faraday depth (approximately equal to the Euclidean-minimising Faraday depth). The remaining two features are the $W_2$ and Euclidean distances between the depicted FDFs.}
     \end{figure}
 
     In summary, we provide the following features to the classifier:
@@ -176,7 +176,7 @@ M.J.A. and J.D.L. were supported by the Australian Government Research Training 
 \section{Experimental method and results}
 \label{sec:faraday-experiment-classification}
 
-  We applied our classifiers to classify simulated (\autoref{sec:faraday-cnn-comparison} and \ref{sec:results-simulated}) and real (\autoref{sec:faraday-results-observed}) FDFs. We replicated the experimental setup of \citet{brown_classifying_2018} for comparison with the state-of-the-art CNN classification method, and we also applied our method to 142 real FDFs observed with the Australia Telescope Compact Array (ATCA) from Livingston et al. (2020, submitted) and \citet{osullivan_broad-band_2017}.
+  We applied our classifiers to classify simulated (\autoref{sec:faraday-cnn-comparison} and \ref{sec:faraday-results-simulated}) and real (\autoref{sec:faraday-results-observed}) FDFs. We replicated the experimental setup of \citet{brown_classifying_2018} for comparison with the state-of-the-art CNN classification method, and we also applied our method to 142 real FDFs observed with the Australia Telescope Compact Array (ATCA) from Livingston et al. (2020, submitted) and \citet{osullivan_broad-band_2017}.
 
   \subsection{Data}
 
@@ -235,7 +235,7 @@ M.J.A. and J.D.L. were supported by the Australian Government Research Training 
         \includegraphics[width=\linewidth]{faraday-images/mean_lr_prediction_dphi_amp.pdf}
         \caption{\label{fig:faraday-mean-lr-pred}}
       \end{subfigure}
-      \caption{\label{fig:faraday-amps-dphi-mean} Mean prediction as a function of component depth separation and minimum component amplitude for (a) XGB and (b) LR.}
+      \caption[Mean prediction as a function of component depth separation and minimum component amplitude for XGB and LR.]{\label{fig:faraday-amps-dphi-mean} Mean prediction as a function of component depth separation and minimum component amplitude for (a) XGB and (b) LR.}
     \end{figure}
 
     As we know the true Faraday depths of the components in our simulation, we can investigate the behaviour of these classifiers as a function of physical properties. \autoref{fig:faraday-amps-dphi-mean} shows the mean classifier prediction as a function of component depth separation and minimum component amplitude. This is tightly related to the mean accuracy, as the entire plot domain contains complex spectra besides the left and bottom edge: by thresholding the classifier prediction to a certain value, the accuracy will be one hundred per cent on the non-edge for all sources with higher prediction values.
@@ -246,13 +246,13 @@ M.J.A. and J.D.L. were supported by the Australian Government Research Training 
     \begin{figure*}
       \centering
       \includegraphics[width=\linewidth]{faraday-images/pca_with_overlay.pdf}
-      \caption{Principal component analysis for simulated data (coloured dots) with observations overlaid (black-edged circles). Observations are coloured by their XGB or LR estimated probability of being complex, with blue indicating `most simple' and pink indicating `most complex'.}
+      \caption[Principal component analysis for simulated data with observations overlaid.]{Principal component analysis for simulated data (coloured dots) with observations overlaid (black-edged circles). Observations are coloured by their XGB or LR estimated probability of being complex, with blue indicating `most simple' and pink indicating `most complex'.}
       \label{fig:faraday-pca}
     \end{figure*}
     \begin{figure}
       \centering
       \includegraphics[width=\linewidth]{faraday-images/pc_complex_curves.pdf}
-      \caption{Estimated rates of Faraday complexity for the Livingston and O'Sullivan datasets as functions of threshold. The horizontal lines indicate the rates of Faraday complexity estimated by Livingston and O'Sullivan respectively.}
+      \caption[Estimated rates of Faraday complexity for the Livingston and O'Sullivan datasets as functions of threshold.]{Estimated rates of Faraday complexity for the Livingston and O'Sullivan datasets as functions of threshold. The horizontal lines indicate the rates of Faraday complexity estimated by Livingston and O'Sullivan respectively.}
       \label{fig:faraday-complexity-rates}
     \end{figure}
 
@@ -440,14 +440,14 @@ M.J.A. and J.D.L. were supported by the Australian Government Research Training 
   \begin{figure*}
     \centering
     \includegraphics[width=\linewidth]{faraday-images/both_spectra_lr.pdf}
-    \caption{The 142 observed FDFs ordered by LR-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the LR estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
+    \caption[The 142 observed FDFs ordered by LR-estimated probability of being Faraday complex.]{The 142 observed FDFs ordered by LR-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the LR estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
     \label{fig:faraday-all-observed-fdfs-lr}
   \end{figure*}
 
   \begin{figure*}
     \centering
     \includegraphics[width=\linewidth]{faraday-images/both_spectra_xgb.pdf}
-    \caption{The 142 observed FDFs ordered by XGB-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the XGB estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
+    \caption[The 142 observed FDFs ordered by XGB-estimated probability of being Faraday complex.]{The 142 observed FDFs ordered by XGB-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the XGB estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
     \label{fig:faraday-all-observed-fdfs-xgb}
   \end{figure*}
 
