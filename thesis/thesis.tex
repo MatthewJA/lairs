@@ -32,7 +32,8 @@
 % bib options
 % \usepackage[square]{natbib}
 \usepackage[english]{babel}
-\usepackage[style=authoryear,natbib=true,uniquename=false,uniquelist=false,backend=biber]{biblatex}
+\usepackage{csquotes}
+\usepackage[style=apa,natbib=true,uniquename=false,uniquelist=false,backend=biber]{biblatex}
 
 \DeclareSourcemap{
   \maps[datatype=bibtex]{
@@ -158,7 +159,8 @@
 
 \backmatter
 
-\printbibliography
+\chapter{Bibliography}
+\printbibliography[heading=none]
 % \bibliographystyle{anuthesis}
 % \bibliography{thesis}
 
