@@ -13,7 +13,7 @@
 \usepackage[hyperindex=true,
             unicode,
       			bookmarks=true,
-            pdftitle={}, pdfauthor={Matthew Alger},
+            pdftitle={Learning to Identify Extragalactic Radio Sources}, pdfauthor={Matthew Alger},
             colorlinks=false,
             pdfborder=0,
             pagebackref=false,
@@ -133,9 +133,13 @@
 \cleardoublepage
 \pagestyle{headings}
 \markboth{Contents}{Contents}
-\tableofcontents
+\tableofcontents\newpage
+\addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
+\markboth{List of Figures}{}\newpage
+\addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
+\markboth{List of Tables}{}
 \input{listofconstants}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
