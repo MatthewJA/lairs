@@ -84,14 +84,14 @@ extended radio source cross-identifications. We call our catalogue
 \defn{RGZ-extrapolated} or \defn{RGZ-Ex}. Due to our large sample size we are able to further divide the
 source population by properties of the host galaxies. We refer to the trained machine learning model and the associated cross-identification algorithm jointly as \defn{binary cross-identification}, or \defn{BXID}. Note that there are two stages to our automated approach: first, we train BXID using an existing catalogue of cross-identified sources; second, we generate new cross-identifications for radio components not in the training catalogue. We refer to these stages as \defn{training} and \defn{prediction} respectively. Our data sources are described in \autoref{sec:rlfs-data}. Our approach is discussed in \autoref{sec:rlfs-method}. Radio luminosity functions of extended sources are presented in \autoref{sec:rlfs-rlf} and we discuss these functions in \autoref{sec:rlfs-discussion}.
 
-Throughout this chapter we assume a flat $\Lambda$-CDM cosmology of $H_0 =
+Throughout this chapter we assume a flat $\Lambda$-CDM cosmology of \linebreak $H_0 =
 69.3$~km~s$^{-1}$~Mpc$^{-1}$, $\Omega_m = 0.287$. These are the cosmological
 parameters from the Nine-year Wilkinson Microwave Anisotropy Probe
 \citep[WMAP9;][]{hinshaw13wmap9}.
 
 \section{Data} \label{sec:rlfs-data}
 
-In this section we describe how we obtain our training and prediction data. To enable the estimation of the extended RLF, we apply a number of selection criteria to the data which are described in \autoref{sec:rlfs-sankey}.
+In this section we describe how we obtain our training and prediction data. To enable the estimation of the extended RLF, we apply a number of selection criteria to the data which are shown in \autoref{fig:sankey-sources}.
 
     \subsection{RGZ} \label{sec:rlfs-rgz-data}
 
@@ -141,7 +141,7 @@ cross-identification catalogues and most assume compact radio sources or that th
     \label{tab:medians-stdevs}}
     \centering
   \begin{tabular}{ccc}
-    \hline
+    \hline\hline
     Feature & Median & Standard deviation\\
     \hline
     Radio image & \unit{13.2}{\micro{}Jy} & \unit{3.01}{\milli{}Jy}\\
@@ -152,7 +152,7 @@ cross-identification catalogues and most assume compact radio sources or that th
     $W2 - W4$ & 7.541 mag & 1.046 mag\\
     $W3 - W4$ & 3.518 mag & 0.409 mag\\
     $W1$ & 16.659 mag & 1.154 mag\\
-    \hline
+    \hline\hline
   \end{tabular}
 \end{table}
 
@@ -244,7 +244,7 @@ host'.
 
 \begin{figure}
     \centering
-    \includegraphics{rlf-images/colour-colour.pdf}
+    \includegraphics[width=\linewidth]{rlf-images/colour-colour.pdf}
     \caption[\emph{WISE} colour-colour distributions.]{\emph{WISE} colour-colour distributions. The dashed grey lines show
       simple host galaxy class divisions from \citet{jarrett17wise}. These
       classes are labelled in the plot. The blue dot-dashed line shows
@@ -254,7 +254,7 @@ host'.
 
   \begin{figure}
       \centering
-    \includegraphics{rlf-images/frlf-ir-colours.pdf}
+    \includegraphics[width=\linewidth]{rlf-images/frlf-ir-colours.pdf}
     \caption[RLFs split by \emph{WISE} colour regions.]{RLFs split by host galaxy
       location in the \emph{WISE} colour-colour plot (\autoref{fig:colour-colour}),
       using our automated cross-identifications. The grey line is the
@@ -343,11 +343,11 @@ host'.
 
     FIRST itself is also biased. \citet{helfand15first} describe several reasons why FIRST flux may be systematically underestimated. Most of these effects are insignificant for extended objects in our sample or are corrected in the FIRST catalogue from which we draw our flux information. The exception is the `resolving out' of diffuse and low surface brightness radio emission by the Very Large Array in its B configuration. This means that we lose flux on most nearby radio galaxies (especially those with very
     diffuse components) and may miss diffuse or dim radio galaxies entirely.
-    More diffuse radio galaxies such as Fanaroff-Riley type I \citep[FRI;][]{Fanaroff1974} galaxies tend to
+    More diffuse radio galaxies such as Fanaroff-Riley type I \citep[FRI;][]{fanaroff1974} galaxies tend to
     be toward the low end of the radio-loud luminosity distribution, about
     $10^{23}$~W~Hz$^{-1}$ \citep{best09radio}, so we expect that losing
     diffuse sources would lower our estimates of density around this
-    luminosity. Large, extended lobes such as those associated with Fanaroff-Riley type II \citep[FRII;][]{Fanaroff1974} galaxies may also be resolved out, so by the same mechanism we expect to lose an increasing amount of flux with increasing source angular size. This effect is compounded by flux loss at 1.4~GHz associated with synchrotron losses and adiabatic expansion losses \citep{blundell99doubles}.
+    luminosity. Large, extended lobes such as those associated with Fanaroff-Riley type II \citep[FRII;][]{fanaroff1974} galaxies may also be resolved out, so by the same mechanism we expect to lose an increasing amount of flux with increasing source angular size. This effect is compounded by flux loss at 1.4~GHz associated with synchrotron losses and adiabatic expansion losses \citep{blundell99doubles}.
 
     Our host galaxy redshifts may be biased. Incorrectly identifying the host galaxy may introduce sources with incorrect redshifts into the RLF, an effect which will be dominated by misidentifying galaxies as hosts where the true host is not detected. Since we are matching to optical spectra in SDSS to find
     redshifts, we are biased toward brighter host galaxies that are more
@@ -385,12 +385,13 @@ host'.
 
     While we have not investigated the link between extended sources and their local environments, this will be the focus of future work. Environment will heavily factor into the source sizes, morphologies, and so on, following work such as \citet{rodman19asymmetry} and \citet{garon19bending}.
 
-    Ongoing radio surveys such as EMU, VLASS \citep{lacy20vlass}, and LoTSS \citep{shimwell19lotss} will greatly increase the number of extended sources. However, our sample size limitations in this chapter are not from FIRST, but from SDSS: until next-generation spectroscopic surveys are available, redshifts will be the limiting factor. To significantly increase our sample size would require much greater numbers of redshifts.
+    Ongoing radio surveys such as EMU, VLASS \citep{lacy20vlass}, and LoTSS \linebreak \citep{shimwell19lotss} will greatly increase the number of extended sources. However, our sample size limitations in this chapter are not from FIRST, but from SDSS: until next-generation spectroscopic surveys are available, redshifts will be the limiting factor. To significantly increase our sample size would require much greater numbers of redshifts.
 
 \section{Summary}\label{sec:rlfs-summary}
 
   Extended radio sources provide an opportunity to study the interaction between AGN and their large-scale environments. We trained the binary cross-identification method on the Radio Galaxy Zoo to generate the largest sample of reliably cross-identified, extended radio sources, and this large sample allows us to investigate their bulk distributions in new, detailed ways. We estimated radio luminosity functions split by mid-infrared colour, physical extent and redshift. Despite our extendedness criterion, we found a significant star-forming population. We estimated that extended AGN contribute between $1.3 \times 10^{30}$ and $1.2 \times 10^{32}$~W~Mpc$^{-3}$ of mechanical energy to their environment. Ongoing and future surveys such as EMU will provide even greater numbers of extended radio sources, and our combination of machine learning and astronomy methodology will allow these samples to be cross-identified and investigated efficiently and reliably.
 
+\section{Acknowledgements}
 
 This publication has been made possible by the participation of more than
 11~000 volunteers in the Radio Galaxy Zoo project. Their contributions are
@@ -403,5 +404,5 @@ National Aeronautics and Space Administration. The National Radio Astronomy
 Observatory is a facility of the National Science Foundation operated under
 cooperative agreement by Associated Universities, Inc. The figures in this
 work made use of Astropy, a community-developed core Python package for
-Astronomy \citep{astropy18}. Partial support for this work for L.R. and A.F.G. comes from National Science Foundation grant AST-1714205 to the University of Minnesota. H.A. benefited from grant CIIC 218/2019 of Universidad de Guanajuato. M.A. and A.T. were supported by the Australian Government Research Training Program. We thank J.~Nabaglo and A.~Gruen for their help with efficient data preprocessing. We thank H.~Zovaro, T.~J.~Galvin and H.~Tang for their comments on the draft of this chapter.
+Astronomy \citep{astropy}. Partial support for this work for L.R. and A.F.G. comes from National Science Foundation grant AST-1714205 to the University of Minnesota. H.A. benefited from grant CIIC 218/2019 of Universidad de Guanajuato. M.A. and A.T. were supported by the Australian Government Research Training Program. We thank J.~Nabaglo and A.~Gruen for their help with efficient data preprocessing. We thank H.~Zovaro, T.~J.~Galvin and H.~Tang for their comments on the draft of this chapter.
 

@@ -23,7 +23,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         \end{subfigure}
         \begin{subfigure}{0.3\textwidth}
             \includegraphics[width=\textwidth]{atlas-images/elais_57_resolved.png}
-            \caption{One resolved component and resolved source.}
+            \caption{One resolved component and resolved source.\\\phantom{a}}
         \end{subfigure}
         \begin{subfigure}{0.3\textwidth}
             \includegraphics[width=\textwidth]{atlas-images/cdfs_185_resolved.png}
@@ -126,9 +126,10 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         and ELAIS-S1 fields. The method used to generate each catalogue is
         shown, along with the number of radio components cross-identified in each
         field.}
+      \centering
       \label{tab:atlas-cids}
       \begin{tabular}{llcc}
-        \hline
+        \hline\hline
         Catalogue & Method & CDFS & ELAIS-S1\\
         \hline
         \citet{norris06} & Manual & 784 & 0\\
@@ -136,7 +137,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         \citet{fan15} & Bayesian models & 784 & 0\\
         \citet{weston18lrpy} & Likelihood ratio & 3078 & 2113\\
         Wong et al. (in prep) & Crowdsourcing & 2460 & 0 \\
-        \hline
+        \hline\hline
       \end{tabular}
     \end{table}
 
@@ -385,7 +386,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     \begin{figure}
       \centering
-      \includegraphics[width=\linewidth]{atlas-images/CI0077C1_fig.pdf}
+      \includegraphics[width=0.6\linewidth]{atlas-images/CI0077C1_fig.pdf}
       \caption[A radio source breaking our assumption that there are no other radio sources with 1~arcmin of the source.]{A $2'$-wide radio image centred on ATLAS3\textunderscore{}J033402.87-282405.8C.
         %
         This radio source breaks the assumption that there are no other radio
@@ -398,7 +399,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     \begin{figure}
       \centering
-      \includegraphics[width=\linewidth]{atlas-images/CI2363_fig.pdf}
+      \includegraphics[width=0.6\linewidth]{atlas-images/CI2363_fig.pdf}
       \caption[A radio source where the window centred on the host galaxy does not contain enough radio information to correctly identify the galaxy as a host.]{An example of a radio source where the window centred on the
         host galaxy, shown as a rectangle, does not contain enough radio
         information to correctly identify the galaxy as the host. {The background image
@@ -408,7 +409,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     \begin{figure}
       \centering
-      \includegraphics[width=\linewidth]{atlas-images/FIRSTJ151227_fig.pdf}
+      \includegraphics[width=0.6\linewidth]{atlas-images/FIRSTJ151227_fig.pdf}
       \caption[A radio source breaking our assumption that the whole radio source is visible in the chosen radius.]{A $8'$-wide radio image from FIRST, centred on
         FIRST\ J151227.2+454026. The $3'$-wide red box indicates the boundaries of
         the image of this radio component shown to volunteers in Radio Galaxy
@@ -502,7 +503,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     \unit{5.8}{\micro\meter} flux selects galaxies where the infrared emission
     is dominated by non-equilibrium emission of dust grains {due to active galactic nuclei},
     while the \unit{8.0}{\micro\meter} flux
-    traces strong PAH emission at low redshift \citep{Sajina2005}. The
+    traces strong PAH emission at low redshift \citep{sajina2005}. The
     stellarity index {is a value in the SWIRE catalogue that represents how likely the object is to be a star rather
     than a galaxy \citep{surace05swire}. It was estimated by a neural network in
     \texttt{SExtractor} \citep{bertin96sextractor}}.
@@ -564,8 +565,9 @@ In this chapter, we consider the problem of determining the host galaxies of rad
       expert catalogue \citep{norris06} provides as it uses a deeper data release of ATLAS, and
       so has more objects in each quadrant for training.}
       \label{tab:radio-count}
+      \centering
       \begin{tabular}{lcccc}
-        \hline
+        \hline\hline
         Quadrant & Compact & Resolved & Compact & Resolved\\
         &&&(RGZ)&(RGZ)\\
         \hline
@@ -575,7 +577,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         3 & 95 & 18 & 631 & 51 \\
         \hline
         \textit{Total} & 381 & 87 & 2255 & 205\\
-        \hline
+        \hline\hline
       \end{tabular}
     \end{table}
 
@@ -727,7 +729,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     \begin{figure*}
     \centering
-    \includegraphics[]{atlas-images/cdfs-grid-new.pdf}
+    \includegraphics[width=1.0\linewidth]{atlas-images/cdfs-grid-new.pdf}
     \caption[Performance of our method with different binary classifiers on the binary classification task.]{Performance of our method with logistic regression (`LR'), convolutional neural networks (`CNN') and random forest (`RF') binary classifiers. `Norris' indicates the performance of binary classifiers trained on the expert labels and `RGZ' indicates the performance of binary classifiers trained on the Radio Galaxy Zoo labels. One point is shown per binary classifier per testing quadrant. The training and testing sets have been split into compact (left) and resolved (right) objects. {Shown for comparison is the accuracy of the Radio Galaxy Zoo consensus cross-identifications on the cross-identification task, shown as `Labels'.} The cross-identification accuracy attained by a perfect binary classifier is shown by a solid green line, and the cross-identification accuracy of a nearest-neighbours approach is shown by a dashed grey line. The standard deviation of these accuracies across the four CDFS quadrants is shown by the shaded area. Note that the pipeline shown in \autoref{fig:flowchart} is not used for these results. \label{fig:ba}}
     \end{figure*}
 

@@ -1,11 +1,14 @@
 %!tex root=./thesis.tex
 
-\chapter*{Appendix}
-\addcontentsline{toc}{chapter}{Appendix}
-
 \appendix
 
+\chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix}
+\markboth{Appendix}{}
+
 \todo{Fix these to be their own chapter.}
+
+\renewcommand{\thefigure}{\Alph{section}.\arabic{figure}}
 
 \section{Classification models}\label{sec:atlas-xid-models}
 

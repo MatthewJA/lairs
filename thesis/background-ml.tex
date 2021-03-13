@@ -1,5 +1,5 @@
 %!tex root=./thesis.tex
-\chapter{Machine Learning and Astroinformatics}
+\chapter{Machine Learning for Astroinformatics}
 \label{cha:background-ml}
 
 Machine learning was once described to me by an anonymous supervisor as ``the statistics kept at the back of the textbook''. But even accepting its grounding in statistics, is this really an accurate description of the field? I think of machine learning as a data-driven way of formalising predictive problems and converting between different kinds of statistical problems, as well as an accompanying set of methods and practices for handling data and uncertainty. The eventual goal is to design some method or algorithm that automatically discovers useful patterns in (potentially very large) data sets. There are three core components of machine learning: the data, the model, and learning \citep{deisenroth_mathematics_2020}. Before discussing these, we will look at the kinds of problems that machine learning solves.
@@ -40,7 +40,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
     \subsection{Regression}
     \label{sec:regression}
  
-        The other main kind of supervised prediction task is \defn{regression}, which is the machine learning task of predicting ordered (and usually continuous) values. In a regression problem, we seek a predictor where $\mathcal Y$ is a set of ordered values, usually a subset of $\mathbb R^k$ for some positive natural $k$. Regression is ubiquitous in astronomy, from simple linear relationships like the famous Tully-Fisher relation \citep{tully_new_1977} to estimation of redshifts from photometric observations \citep[called \defn{photometric redshifts}; first introduced by]{baum_photoelectric_1962}. We will not directly address any regression problems in this thesis, but we will make use of their results.
+        The other main kind of supervised prediction task is \defn{regression}, which is the machine learning task of predicting ordered (and usually continuous) values. In a regression problem, we seek a predictor where $\mathcal Y$ is a set of ordered values, usually a subset of $\mathbb R^k$ for some positive natural $k$. Regression is ubiquitous in astronomy, from simple linear relationships like the famous Tully-Fisher relation \citep{tully_new_1977} to estimation of redshifts from photometric observations \citep[called \defn{photometric redshifts}; first introduced by][]{baum_photoelectric_1962}. We will not directly address any regression problems in this thesis, but we will make use of their results.
 
 \section{Data and representation}
 \label{sec:data-and-representation}
@@ -222,7 +222,8 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
 
         It is important to note that label noise affects training and validation differently. While it is perfectly possible to train a good model with noisy labels, performance measures are not as robust to label noise. Noise in the validation set can change the reported performance in unpredictable ways and wherever possible should be avoided.
 
-    %         \item training labels and testing labels
-    %         \item where do labels come from? domain experts, crowdsourcing, citizen science, simulations...
-    %         \item label noise and unreliable annotators
-    %         \item multiple unreliable annotators
+
+\section{Summary: machine learning}
+\label{sec:summary-ml}
+
+    Machine learning is a field of study concerned with ways of automatically finding useful patterns in large datasets, formalising predictive problems, converting between different statistical problems, and handling data and uncertainty. With the large volumes of data radio astronomy faces in the lead-up to the SKA, machine learning provides an avenue for enabling scientific discovery at scale. In this chapter we introduced key concepts of machine learning, including predictors, features, labels, and loss functions. We also highlighted classification tasks as a key kind of prediction problem that we will use to frame astronomical questions throughout this thesis and introduced three classification models: logistic regression, decision tree ensembles, and CNNs. In the next chapter, we will frame the astronomical problem of cross-identification as binary classification, allowing us to train a cross-identification algorithm using an existing catalogue of cross-identifications and hopefully allowing us to cross-identify radio sources en masse.
