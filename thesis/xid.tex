@@ -85,7 +85,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     cross-identification can be cast as a function approximation problem, then machine learning will allow data
     sets such as Radio Galaxy Zoo to be generalised to work on new data. Data sets from
     citizen scientists have already been used to train machine learning methods.
-    Some astronomical examples can be found in \citet{marshall15citizenscience}.}
+    Some astronomical examples can be found in \citet{marshall15citizen}.}
 
     In this chapter we {cast cross-identification as a function
     approximation problem by} applying an approach from computer vision
@@ -275,7 +275,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     {In sliding-window object detection, we want to find an object in an image.
     We develop a function to score each location in the image such that the
-    highest-scored location coincides with the desired object (\eref{eq:atlas-score}). Square image
+    highest-scored location coincides with the desired object. Square image
     cutouts called `windows' are taken centred on each location and these
     windows are used to represent that location in our scoring function. To
     find the infrared host galaxy, we choose the location with the highest
@@ -303,7 +303,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         \For{$g \in \mathcal G$}{
           $x \leftarrow$ a $k$-dimensional vector representation of $g$ (\autoref{vector-representation-of-infrared-sources})\;
           $d \leftarrow$ distance between $g$ and the radio component\;
-          $score \leftarrow f(x) \times \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{d^2}{2\sigma^2}\right);\quad \stepcounter{equation}\hfill(\theequation)\label{eq:atlas-score}$
+          $score \leftarrow f(x) \times \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{d^2}{2\sigma^2}\right);$
           \BlankLine
           \If{$score > max$}{
             $max \leftarrow score$\;
