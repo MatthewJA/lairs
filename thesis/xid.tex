@@ -365,7 +365,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     angular separation between the candidates and the radio component.} The
     width of the Gaussian, $\sigma$, controls the influence of the Gaussian on
     the final cross-identification. When $\sigma$ is small, our approach is
-    equivalent to a nearest-neighbours approach where we select the nearest
+    equivalent to a nearest neighbours approach where we select the nearest
     infrared object to the radio component as the host galaxy. In the limit
     where $\sigma \to \infty$, we maximise the score output by the
     classifier as above. We take $\sigma = 30''$ as this was the best value
@@ -376,7 +376,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {We can improve upon this method by cross-identifying compact radio sources
     separately from extended sources, as compact sources are much easier to
     cross-identify. For a compact source, the nearest SWIRE object may be
-    identified as the host galaxy (a \emph{nearest-neighbours} approach), or a
+    identified as the host galaxy (a \emph{nearest neighbours} approach), or a
     more complex method such as likelihood ratios may be applied
     \citep[see][]{weston18lrpy}. We cross-identify compact sources separately
     in our pipeline and this process is shown in \autoref{fig:flowchart}.}
@@ -730,7 +730,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     \begin{figure*}
     \centering
     \includegraphics[width=1.0\linewidth]{atlas-images/cdfs-grid-new.pdf}
-    \caption[Performance of our method with different binary classifiers on the binary classification task.]{Performance of our method with logistic regression (`LR'), convolutional neural networks (`CNN') and random forest (`RF') binary classifiers. `Norris' indicates the performance of binary classifiers trained on the expert labels and `RGZ' indicates the performance of binary classifiers trained on the Radio Galaxy Zoo labels. One point is shown per binary classifier per testing quadrant. The training and testing sets have been split into compact (left) and resolved (right) objects. {Shown for comparison is the accuracy of the Radio Galaxy Zoo consensus cross-identifications on the cross-identification task, shown as `Labels'.} The cross-identification accuracy attained by a perfect binary classifier is shown by a solid green line, and the cross-identification accuracy of a nearest-neighbours approach is shown by a dashed grey line. The standard deviation of these accuracies across the four CDFS quadrants is shown by the shaded area. Note that the pipeline shown in \autoref{fig:flowchart} is not used for these results. \label{fig:ba}}
+    \caption[Performance of our method with different binary classifiers on the binary classification task.]{Performance of our method with logistic regression (`LR'), convolutional neural networks (`CNN') and random forest (`RF') binary classifiers. `Norris' indicates the performance of binary classifiers trained on the expert labels and `RGZ' indicates the performance of binary classifiers trained on the Radio Galaxy Zoo labels. One point is shown per binary classifier per testing quadrant. The training and testing sets have been split into compact (left) and resolved (right) objects. {Shown for comparison is the accuracy of the Radio Galaxy Zoo consensus cross-identifications on the cross-identification task, shown as `Labels'.} The cross-identification accuracy attained by a perfect binary classifier is shown by a solid green line, and the cross-identification accuracy of a nearest neighbours approach is shown by a dashed grey line. The standard deviation of these accuracies across the four CDFS quadrants is shown by the shaded area. Note that the pipeline shown in \autoref{fig:flowchart} is not used for these results. \label{fig:ba}}
     \end{figure*}
 
     \begin{figure}
@@ -771,7 +771,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     on the candidate classification task and the cross-identification
     accuracies of our method using each of these models. Results are shown for both
     the resolved and compact sets.} For comparison, we also plot the cross-identification accuracy of Radio Galaxy
-    Zoo and a nearest-neighbours approach, as well as estimates for upper and
+    Zoo and a nearest neighbours approach, as well as estimates for upper and
     lower limits on the cross-identification accuracy. {We estimate the upper limit on performance by assigning all
     true host galaxies a score of 1 and
     assigning all other candidate host galaxies a score of 0. This
@@ -787,7 +787,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     In \autoref{fig:cross-id-accuracy} we plot the performance {of our
     method using different binary classification models}, as well as the
-    performance of Radio Galaxy Zoo, nearest-neighbours, and the perfect and
+    performance of Radio Galaxy Zoo, nearest neighbours, and the perfect and
     random binary classifiers, on the full set of ATLAS~DR1 radio components
     using the pipeline in \autoref{fig:flowchart}. The accuracy
     {associated with each classification model} and training label set
@@ -813,11 +813,11 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     in training. This shows the usefulness of crowdsourced training data, even
     when the data is noisy.
 
-    Our method performs comparably to a nearest-neighbours approach. For
-    compact objects, this is to be expected---indeed, nearest-neighbours
+    Our method performs comparably to a nearest neighbours approach. For
+    compact objects, this is to be expected---indeed, nearest neighbours
     attains nearly 100 per cent accuracy on the compact test set. Our results
-    do not improve on nearest-neighbours for resolved objects. However, our
-    method does allow for improvement on nearest-neighbours with a
+    do not improve on nearest neighbours for resolved objects. However, our
+    method does allow for improvement on nearest neighbours with a
     sufficiently good binary classifier: a `perfect' binary classifier attains
     nearly 100 per cent accuracy on resolved sources. This shows that our
     method may be useful provided that a good binary classifier can be
@@ -902,7 +902,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   comparable performance between ELAIS-S1 and CDFS}. In \autoref{fig:elais-ba}
   we plot the performance of CDFS-trained classification models on the candidate classification task and
   the performance of our method on the cross-identification task using these models. We also plot
-  the cross-identification accuracy of a nearest-neighbours approach\footnote{{We cannot
+  the cross-identification accuracy of a nearest neighbours approach\footnote{{We cannot
   directly compare our method applied to ELAIS-S1 with Radio Galaxy Zoo, as
   Radio Galaxy Zoo does not include ELAIS-S1.}}. In
   \autoref{fig:elais-cross-id-accuracy} we plot the performance of our method
@@ -912,11 +912,11 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
   Cross-identification results from ELAIS-S1 are similar to those for CDFS,
   showing that our method trained on CDFS performs comparably well on
-  ELAIS-S1. However, nearest-neighbours outperforms most methods on ELAIS-S1.
+  ELAIS-S1. However, nearest neighbours outperforms most methods on ELAIS-S1.
   This is likely because there is a much higher percentage of compact objects
   in ELAIS-S1 than in CDFS. The maximum achievable accuracy we have estimated
   for ELAIS-S1 is very close to 100 per cent, so (as for CDFS) a very accurate
-  binary classifier would outperform nearest-neighbours.
+  binary classifier would outperform nearest neighbours.
 
   One interesting difference between the ATLAS fields is that random forests
   trained on expert labels perform well on CDFS but poorly on ELAIS-S1. This
@@ -955,16 +955,16 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   to cast radio host galaxy cross-identification as a machine learning task
   for which standard methods can be applied. These methods can then be trained
   with a variety of label sets derived from cross-identification catalogues.
-  While our methods have not outperformed nearest-neighbours, we have demonstrated that
+  While our methods have not outperformed nearest neighbours, we have demonstrated that
   for a very accurate binary classifier, good cross-identification results can
   be obtained using our method. Future work could combine multiple catalogues
   or physical priors to boost performance.
 
-  Nearest-neighbours approaches outperform most methods we investigated,
+  Nearest neighbours approaches outperform most methods we investigated,
   notably including Radio Galaxy Zoo. This is due to the large number of
   compact or partially-resolved objects in ATLAS. This result shows that for
   compact and partially-resolved objects methods that do not use machine
-  learning such as a nearest-neighbours approach or likelihood ratio
+  learning such as a nearest neighbours approach or likelihood ratio
   \citep{weston18lrpy} should be preferred to machine learning methods. It
   also shows that ATLAS is not an ideal data set for developing machine
   learning methods like ours. Our use of ATLAS is motivated by its status as a
@@ -1029,7 +1029,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   from Radio Galaxy Zoo will provide a valuable source of training
   data for future machine learning methods in radio astronomy.
 
-  Compared to nearest-neighbours, cross-identification accuracy on ELAIS-S1 is
+  Compared to nearest neighbours, cross-identification accuracy on ELAIS-S1 is
   lower than on CDFS. Particularly notable is that our performance on compact
   objects is very low for ELAIS-S1, while it was near-optimal for CDFS. These
   differences may be for a number of reasons. ELAIS-S1 has beam size and noise
@@ -1078,8 +1078,8 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     ATLAS observations of ELAIS-S1, demonstrating that training on a single
     patch of sky is a feasible option for training machine learning methods
     for wide-area radio surveys;
-    \item Performance was comparable to nearest-neighbours even on resolved
-    sources, showing that nearest-neighbours is useful for datasets consisting
+    \item Performance was comparable to nearest neighbours even on resolved
+    sources, showing that nearest neighbours is useful for datasets consisting
     mostly of unresolved sources such as ATLAS and EMU;
     \item Radio Galaxy Zoo-trained models performed comparably to
     expert-trained models and outperformed Radio Galaxy Zoo, showing that
