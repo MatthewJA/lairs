@@ -524,7 +524,7 @@ J002951.26-440556.4 & 7.4636 & -44.0990 & J002951.26-440556.4 & 7.4636 & -44.099
 
 \section{Cross-identification figures}\label{sec:atlas-xid-examples}
 
-    This section contains figures of our \autoref{cha:cross-id} cross-identifications of each ATLAS radio component in CDFS and ELAIS-S1, and was originally an appendix to \citet{alger18radio}. These are just five examples, but all 469 examples are available online at the \emph{Monthly Notices of the Royal Astronomical Society} website\footnote{\url{https://doi.org/10.1093/mnras/sty1308}}.
+    \autoref{fig:examples} shows figures of our \autoref{cha:cross-id} cross-identifications of each ATLAS radio component in CDFS and ELAIS-S1. This was originally an appendix to \citet{alger18radio}. There are just five examples shown here, but all 469 examples are available online at the \emph{Monthly Notices of the Royal Astronomical Society} website\footnote{\url{https://doi.org/10.1093/mnras/sty1308}}.
 
 
     \begin{figure}
@@ -549,7 +549,7 @@ J002951.26-440556.4 & 7.4636 & -44.0990 & J002951.26-440556.4 & 7.4636 & -44.099
             \includegraphics[width=\textwidth]{atlas-images/examples_all/example_sorted_0_306.pdf}
             \caption{Two compact components, each a compact source.}
         \end{subfigure}
-        \caption[Examples of resolved sources with high disagreement between cross-identifiers.]{\label{fig:examples} Examples of resolved sources with high disagreement between cross-identifiers. The contours show ATLAS radio data and start at $4\sigma$, increasing geometrically by a factor of 2. The background image is the \unit{3.6}{\micro\meter} SWIRE image. Binary classifier model/training set combinations are denoted $C(S)$ where $C$ is the binary classifier model and $S$ is the training set. `LR' is logistic regression, `CNN' is convolutional neural networks, and `RF' is random forests. `Norris' refers to the expert labels and `RGZ' refers to the Radio Galaxy Zoo labels. The cross-identification made by nearest neighbours is shown by `NN'. The complete set of figures for 469 examples is available in the supplementary information online.}
+        \caption[Examples of resolved sources with high disagreement between cross-identifiers.]{\label{fig:examples} Examples of resolved sources with high disagreement between cross-identifiers. The contours show ATLAS radio data and start at $4\sigma$, increasing geometrically by a factor of 2. The background image is the \unit{3.6}{\micro\meter} SWIRE image. Binary classifier model/training set combinations are denoted $C(S)$ where $C$ is the binary classifier model and $S$ is the training set. `LR' is logistic regression, `CNN' is convolutional neural networks, and `RF' is random forests. `Norris' refers to the expert labels and `RGZ' refers to the Radio Galaxy Zoo labels. The cross-identification made by nearest neighbours is shown by `NN'.}
     \end{figure}
 
 
@@ -599,7 +599,8 @@ J002951.26-440556.4 & 7.4636 & -44.0990 & J002951.26-440556.4 & 7.4636 & -44.099
     \item For each source, compute the comoving volume $V_{\mathrm{max}}$ at
       redshift $z_{\mathrm{max}}$.
     \item The count for each luminosity bin is the sum over $1 / V_{\max}$ for
-      each source in the bin. We account for the fact FIRST does not cover the
+      each source in the bin. We divided these counts by the estimated completeness (\autoref{sec:rlfs-completeness}) to account for redshift incompleteness.
+      We account for the fact FIRST does not cover the
       whole sky by multiplying by the total area of the sky divided by the area
       of our selection.
   \end{enumerate}
