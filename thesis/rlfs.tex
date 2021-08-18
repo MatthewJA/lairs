@@ -137,7 +137,7 @@ include Bayesian methods \citep{fan15}, likelihood ratio \citep{weston18lrpy},
 cross-identification catalogues and most assume compact radio sources or that the projected radio emission overlaps the host galaxy.
 
 \begin{table}
-  \caption{Medians and standard deviations used to normalise input features.
+  \caption{Medians and standard deviations used to normalise input features for our classifiers.
     \label{tab:medians-stdevs}}
     \centering
   \begin{tabular}{ccc}
@@ -373,11 +373,13 @@ host'.
       \begin{equation}
         \ln Q = \ln (f^{3/2} 3 \times 10^{38}) + \frac{6}{7} \ln \left[\frac{L_{151~\mathrm{MHz}}}{10^{28}~\mathrm{W\ Hz}^{-1}}\right],
       \end{equation}
-      with a scaling constant $1 \leq f \leq 20$ and $Q$ in watts. Other models exist with different slopes, e.g. \citet{birzan08power} suggest that $\beta \approx 0.5 - 0.7$ and \citet{cavagnolo10relation} find $\beta \approx 0.7$. \citet{godfrey16power} provide a summary of the literature in this field and suggest that these correlations are from mutual distance dependence rather than intrinsic relationships. They find that there is no strong empirical evidence for such a correlation in either FRI or FRII. However, their theoretical models suggest $\beta \approx 0.5,0.8$ for FRI and FRII respectively, which is consistent with \citet{willott99radio}. \citet{shabala13power} on the other hand show that the scalings presented by \citet{willott99radio} are consistent with independent theoretical modelling for high-power radio galaxies. Scaling the frequency to $1.4$~GHz, and assuming a spectral index of $\alpha = -0.7$, $\beta = 6/7$, and $Q_0 = \ln (f^{3/2}) + 89.9$, we can write the \citet{willott99radio} relation as
+      with a scaling constant $1 \leq f \leq 20$ and $Q$ in watts. Other models exist with different slopes, e.g. \citet{birzan08power} suggest that $\beta \approx 0.5 - 0.7$ and \citet{cavagnolo10relation} find $\beta \approx 0.7$. \citet{shabala13power} show that the scalings presented by \citet{willott99radio} are consistent with independent theoretical modelling for high-power radio galaxies. \citet{godfrey16power} on the other hand provide a summary of the literature in this field and suggest that these correlations are from mutual distance dependence rather than intrinsic relationships. They find that there is no strong empirical evidence for such a correlation in either FRI or FRII. However, their theoretical models suggest $\beta \approx 0.5,0.8$ for FRI and FRII respectively, which is consistent with \citet{willott99radio}. The relationship between luminosity and kinetic energy is not yet settled, but we can still use this popular scaling method both to explore the consequences of our RLFs and for comparison with previous work.
+
+      Scaling the frequency to $1.4$~GHz, and assuming a spectral index of $\alpha = -0.7$, $\beta = 6/7$, and $Q_0 = \ln (f^{3/2}) + 89.9$, we can write the \citet{willott99radio} relation as
       \begin{equation}
         \ln (Q) = \ln (f^{3/2}) + 89.9 + \frac{6}{7} \ln \left[\frac{L_{1400~\mathrm{MHz}}}{10^{28}~\mathrm{W\ Hz}^{-1}}\right].
       \end{equation}
-      Assuming $f \in [1, 20]$ gives $Q_0 \in [89.9, 94.4]$. Integrating over our RLF we find $Q \in [1.3 \times 10^{30}, 1.2 \times 10^{32}]$~W~Mpc$^{-3}$. This is likely a lower limit as we are missing extended radio sources oriented along our line-of-sight and nearby diffuse extended radio sources (e.g. FRI), and \citet{shabala18plane} argues that many `compact' AGN may in fact be extended but below the sensitivity of surveys such as FIRST. Our results are consistent with other literature \citep[e.g][who estimated the energy contribution as $7 \times 10^{31}$ W~Mpc$^{-3}$]{hardcastle19rlagn}.
+      Assuming $f \in [1, 20]$ gives $Q_0 \in [89.9, 94.4]$. Integrating over our RLF we find $Q \in [1.3 \times 10^{30}, 1.2 \times 10^{32}]$~W~Mpc$^{-3}$. This is likely a lower limit as we are missing extended radio sources oriented along our line-of-sight and nearby diffuse extended radio sources (e.g. FRI), and \citet{shabala18plane} argues that many `compact' AGN may in fact be extended but below the sensitivity of surveys such as FIRST. Our results are consistent with other literature \citep[e.g][who estimated the energy contribution as $7 \times 10^{31}$ W~Mpc$^{-3}$]{hardcastle19rlagn}. 
 
   \subsection{Future work}
 
