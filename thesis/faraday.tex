@@ -74,7 +74,7 @@ Faraday complexity describes whether a spectropolarimetric observation has simpl
 
     We do not consider external or internal Faraday dispersion in this work. External Faraday dispersion would broaden the delta functions of \autoref{eq:faraday-true-fdf} into peaks, and internal Faraday dispersion would broaden them into top-hat functions. All sources have at least a small amount of dispersion as the Faraday depth is a bulk property of the intervening medium and is subject to noise, but the assumption we make is that this dispersion is sufficiently small that the groundtruth FDFs are well-modelled with delta functions. Faraday thick sources would also invalidate our assumptions, and we assume that there are none in our data as Faraday thickness can be consistent with a two-component model depending on the wavelength sampling \citep[e.g.][]{ma_broad-band_2019,brentjens_faraday_2005}. Nevertheless some external Faraday dispersion would be covered by our model, as depending on observing parameters Faraday thick sources may appear as two screens \citep{van_eck_faraday_2017}.
 
-    To simulate observed FDFs we follow the method of \citet{brown_classifying_2018}, which we describe in \autoref{sec:faraday-simulating}.
+    To simulate observed FDFs we follow the method of \citet{brown_classifying_2018}, which we describe in \aref{sec:faraday-simulating}.
 
 \section{Classification approach}
 \label{sec:faraday-approach}
@@ -162,7 +162,7 @@ Faraday complexity describes whether a spectropolarimetric observation has simpl
         D_{W_2}(F) &= \min_{\phi_w \in \mathbb{R}} D_{W_2}\infdivx{F(\phi)}{F_{\mathrm{simple}}(\phi; \phi_w)}\label{eq:faraday-W2-distance}\\
             &= \left(\frac{A_0A_1}{(A_0 + A_1)^2} (\phi_0 - \phi_1)^2\right)^{1/2}.
     \end{align}
-    See \autoref{sec:faraday-w2-to-faraday-moments} for the corresponding calculation. In this sense, the $W_2$ distance can be thought of as a generalised Faraday moment, and conversely an interpretation of Faraday moments as a distance from the simple manifold in the case where there is no RMSF. Euclidean distance behaves quite differently in this case, and the resulting distance measure is totally independent of Faraday depth:
+    See \aref{sec:faraday-w2-to-faraday-moments} for the corresponding calculation. In this sense, the $W_2$ distance can be thought of as a generalised Faraday moment, and conversely an interpretation of Faraday moments as a distance from the simple manifold in the case where there is no RMSF. Euclidean distance behaves quite differently in this case, and the resulting distance measure is totally independent of Faraday depth:
     \begin{align}
         D_{E}(F) &= \min_{\phi_e \in \mathbb{R}} D_E\infdivx{F(\phi)}{F_{\mathrm{simple}}(\phi; \phi_e)}\label{eq:faraday-Euclidean-distance}\\
             &= \sqrt{2} \frac{\min(A_0, A_1)}{A_0 + A_1}.
@@ -173,7 +173,7 @@ Faraday complexity describes whether a spectropolarimetric observation has simpl
   \subsection{Classifiers}
   \label{sec:faraday-classifiers}
 
-    We trained two classifiers on simulated observations using these features: logistic regression (LR) and extreme gradient boosted trees (XGB). These classifiers are useful together for understanding Faraday complexity classification. LR is a linear classifier that is readily interpretable by examining the weights it applies to each feature, and is one of the simplest possible classifiers. XGB is a powerful off-the-shelf non-linear ensemble classifier, and is an example of a decision tree ensemble which are widely used in astronomy \citep[e.g.][]{machado_poletti_valle_shaping_2020,hlozek20lsst}. We used the \texttt{scikit-learn} implementation of LR and we use the \texttt{XGBoost} library for XGB. We optimised hyperparameters for XGB using a fork of \texttt{xgboost-tuner}\footnote{\url{https://github.com/chengsoonong/xgboost-tuner}} as utilised by \citet{zhu20mutagenic}. We used 1~000 iterations of randomised parameter tuning and the hyperparameters we found are tabulated in \autoref{tab:faraday-hyperparameters-xgb}. We optimised hyperparameters for LR using a 5-fold cross-validation grid search implemented in \texttt{sklearn.model\textunderscore{}selection.GridSearchCV}. The resulting hyperparameters are tabulated in \autoref{tab:faraday-hyperparameters-lr} in the Appendix.
+    We trained two classifiers on simulated observations using these features: logistic regression (LR) and extreme gradient boosted trees (XGB). These classifiers are useful together for understanding Faraday complexity classification. LR is a linear classifier that is readily interpretable by examining the weights it applies to each feature, and is one of the simplest possible classifiers. XGB is a powerful off-the-shelf non-linear ensemble classifier, and is an example of a decision tree ensemble which are widely used in astronomy \citep[e.g.][]{machado_poletti_valle_shaping_2020,hlozek20lsst}. We used the \texttt{scikit-learn} implementation of LR and we use the \texttt{XGBoost} library for XGB. We optimised hyperparameters for XGB using a fork of \texttt{xgboost-tuner}\footnote{\url{https://github.com/chengsoonong/xgboost-tuner}} as utilised by \citet{zhu20mutagenic}. We used 1~000 iterations of randomised parameter tuning and the hyperparameters we found are tabulated in \autoref{tab:faraday-hyperparameters-xgb}. We optimised hyperparameters for LR using a 5-fold cross-validation grid search implemented in \texttt{sklearn.model\textunderscore{}selection.GridSearchCV}. The resulting hyperparameters are tabulated in \autoref{tab:faraday-hyperparameters-lr} in \aref{sec:faraday-hyperparameters}.
 
 \section{Experimental method and results}
 \label{sec:faraday-experiment-classification}
@@ -265,7 +265,7 @@ Faraday complexity describes whether a spectropolarimetric observation has simpl
 
     With a threshold of 0.5, LR predicted that 96 and 83 per cent of the Livingston and O'Sullivan sources were complex respectively. This is in line with expectations that the Livingston data should have more Faraday complex sources than the O'Sullivan data due to their location near the Galactic Centre. XGB predicted that 93 and 100 per cent of the Livingston and O'Sullivan sources were complex respectively. \citet{livingston21faraday} found that 90 per cent of their sources were complex, and \citet{osullivan_broad-band_2017} found that 64 per cent of their sources were complex. This suggests that our classifiers are overestimating complexity, though it could also be the case that the methods used by Livingston and O'Sullivan underestimate complexity. Modifying the prediction threshold from 0.5 changes the estimated rate of Faraday complexity, and we show the estimated rates against threshold for both classifiers in \autoref{fig:faraday-complexity-rates}. We suggest that this result is indicative of our probabilities being uncalibrated, and a higher threshold should be chosen in practice. We chose to keep the threshold at 0.5 as this had the highest accuracy on the simulated validation data. The very high complexity rates of XGB and two outlying classifications indicate that the XGB classifier may be overfitting to the simulation and that it is unable to generalise across the domain gap.
 
-    \autoref{fig:faraday-all-observed-fdfs-lr} and \autoref{fig:faraday-all-observed-fdfs-xgb} show every observed FDF ordered by estimated Faraday complexity, alongside the models predicted by Livingston and \citet{osullivan_broad-band_2017}, for LR and XGB respectively. There is a clear visual trend of increasingly complex sources with increasing predicted probability of being complex.
+    \autoref{fig:faraday-all-observed-fdfs-lr} and \autoref{fig:faraday-all-observed-fdfs-xgb} in \aref{sec:faraday-real-data-fig} show every observed FDF ordered by estimated Faraday complexity, alongside the models predicted by Livingston and \citet{osullivan_broad-band_2017}, for LR and XGB respectively. There is a clear visual trend of increasingly complex sources with increasing predicted probability of being complex.
 
 \section{Discussion}
 \label{sec:faraday-discussion}
@@ -297,4 +297,196 @@ Faraday complexity describes whether a spectropolarimetric observation has simpl
 
 \section{Acknowledgements}
 
-This research was conducted in Canberra, on land for which the Ngunnawal and Ngambri people are the traditional and ongoing custodians. M.J.A. and J.D.L. were supported by the Australian Government Research Training Program. M.J.A. was supported by the Astronomical Society of Australia. The Australia Telescope Compact Array is part of the Australia Telescope National Facility which is funded by the Australian Government for operation as a National Facility managed by CSIRO. We acknowledge the Gomeroi people as the traditional owners of the Observatory site. We thank the anonymous referee for their comments on this work.
+This research was conducted in Canberra, on land for which the Ngunnawal and Ngambri people are the traditional and ongoing custodians. M.J.A. and J.D.L. were supported by the Australian Government Research Training Program. M.J.A. was supported by the Astronomical Society of Australia. The Australia Telescope Compact Array is part of the Australia Telescope National Facility which is funded by the Australian Government for operation as a National Facility managed by CSIRO. We acknowledge the Gomeroi people as the traditional custodians of the Observatory site. We thank the anonymous referee for their comments on this work.
+
+
+\appendix
+
+\section{Simulating observed FDFs}
+\label{sec:faraday-simulating}
+
+  This appendix describes how we simulated FDFs in \autoref{cha:faraday}. We simulated FDFs by approximating them by arrays of complex numbers. An FDF $F$ is approximated on the domain $[-\phi_{\max}, \phi_{\max}]$ by a vector $\vec F \in \mathbb R^d$:
+    \begin{equation}
+      \label{eq:faraday-vec-f}
+      \vec F_j = \sum_{k = 0}^1 A_k \delta(-\phi_{\max} + j \delta \phi - \phi_k)
+    \end{equation}
+    where $\delta\phi = (\phi_{\max} - \phi_{\min}) / d$ and $d$ is the number of Faraday depth samples in the FDF.
+    $\vec F$ is sampled by uniformly sampling its parameters:
+    \begin{align}
+      \label{eq:faraday-model-distributions}
+      \phi_k &\in [\phi_{\min}, \phi_{\min} + \delta\phi, \dots, \phi_{\max}]\\
+      A_k &\sim \mathcal U(0, 1).
+    \end{align}
+    We then generate a vector polarisation spectrum $\vec P \in \mathbb R^m$ from $\vec F$ using a \autoref{eq:faraday-discrete-f-to-p}:
+    \begin{equation}
+      \label{eq:faraday-discrete-f-to-p}
+      \vec P_\ell = \sum_{j = 0}^{j} F_j e^{2i(\phi_{\min} + j\delta_\phi)\lambda^2_\ell}\ \mathrm{d}\phi.
+    \end{equation}
+    $\lambda^2_\ell$ is the discretised value of $\lambda^2$ at the $\ell$th index of $\vec P$. This requires a set of $\lambda^2$ values, which depends on the dataset being simulated. These values can be treated as the channel wavelengths at which the polarisation spectrum was observed. We then add Gaussian noise with variance $\sigma^2$ to each element of $\vec P$ to obtain a discretised noisy observation $\hat{\vec{P}}$. Finally, we perform RM synthesis using the Canadian Initiative for Radio Astronomy Data Analysis \texttt{RM} package\footnote{\url{https://github.com/CIRADA-Tools/RM}}, which is a \texttt{Python} module that implements a discrete version of RM synthesis:
+    \begin{equation}
+      \label{eq:faraday-discrete-rm-synthesis}
+      \hat{\vec{F}}_j = m^{-1} \sum_{\ell = 1}^m \vec{\hat P}_\ell e^{-2i(\phi_{\min} + j\delta_\phi)\lambda^2_\ell}.
+    \end{equation}
+
+\section{2-Wasserstein begets Faraday moments}
+  \label{sec:faraday-w2-to-faraday-moments}
+    Minimising the 2-Wasserstein distance between a model FDF and the simple manifold gives the second Faraday moment of that FDF. This appendix demonstrates that fact. Let $\tilde F$ be the sum-normalised model FDF and let $\tilde S$ be the sum-normalised simple model FDF:
+    \begin{align}
+      \tilde F(\phi) &= \frac{A_0 \delta(\phi - \phi_0) + A_1 \delta(\phi - \phi_1)}{A_0 + A_1}\\
+      \tilde S(\phi; \phi_w) &= \delta(\phi - \phi_w).
+    \end{align}
+    The $W_2$ distance, usually defined on probability distributions, can be extended to one-dimensional complex functions $A$ and $B$ by normalising them:
+      \begin{align}
+        \label{eq:faraday-w2}
+        D_{W_2}\infdivx{A}{B}^2 &= \inf_{\gamma \in \Gamma(A, B)} \iint_{\phi_{\min}}^{\phi_{\max}} |x - y|^2\ \mathrm{d}\gamma(x, y) \\
+        \label{eq:faraday-normalised}
+        \tilde A(\phi) &= \frac{|A(\phi)|}{\int_{\phi_{\min}}^{\phi_{\max}} |A(\theta)|\ \mathrm{d}\theta}\\
+        \tilde B(\phi) &= \frac{|B(\phi)|}{\int_{\phi_{\min}}^{\phi_{\max}} |B(\theta)|\ \mathrm{d}\theta}
+      \end{align}
+      where $\Gamma(A, B)$ is the set of couplings of $A$ and $B$, i.e. the set of joint probability distributions that marginalise to $A$ and $B$; and $\inf_{\gamma \in \Gamma(A, B)}$ is the infimum over $\Gamma(A, B)$. This can be interpreted as the minimum cost to `move' one probability distribution to the other, where the cost of moving one unit of probability mass is the squared distance it is moved.
+
+    The set of couplings $\Gamma(\tilde F, \tilde S)$ is the set of all joint probability distributions $\gamma$ such that
+    \begin{align}
+      \int_{\phi_{\min}}^{\phi_{\max}} \gamma(\phi, \varphi)\ \mathrm{d}\phi &= \tilde S(\varphi; \phi_w),\\
+      \int_{\phi_{\min}}^{\phi_{\max}} \gamma(\phi, \varphi)\ \mathrm{d}\varphi &= \tilde F(\phi).
+    \end{align}
+    The coupling that minimises the integral in \autoref{eq:faraday-w2} will be the optimal transport plan between $\tilde F$ and $\tilde S$. Since $\tilde F$ and $\tilde S$ are defined in terms of delta functions, the optimal transport problem reduces to a discrete optimal transport problem and the optimal transport plan is:
+    \begin{equation}
+      \gamma(\phi, \varphi) = \frac{A_0 \delta(\phi - \phi_0) + A_1 \delta(\phi - \phi_1)}{A_0 + A_1} \delta(\varphi - \phi_w).
+    \end{equation}
+    In other words, to move the probability mass of $\tilde S$ to $\tilde F$, a fraction $A_0/(A_0 + A_1)$ is moved from $\phi_w$ to $\phi_0$ and the complementary fraction $A_1/(A_0 + A_1)$ is moved from $\phi_w$ to $\phi_1$. Then:
+    \begin{align}
+      D_{W_2}\infdivx{\tilde F}{\tilde S}^2 &= \iint_{\phi_{\min}}^{\phi_{\max}} |\phi - \varphi|^2\ \mathrm{d}\gamma(\phi, \varphi)\\
+        &= \frac{A_0 (\phi_0 - \phi_w)^2 + A_1 (\phi_1 - \phi_w)^2}{A_0 + A_1}.
+    \end{align}
+    To obtain the $W_2$ distance to the simple manifold, we need to minimise this over $\phi_w$. Differentiate with respect to $\phi_w$ and set equal to zero to find
+    \begin{equation}
+      \phi_w = \frac{A_0 \phi_0 + A_1 \phi_1}{A_0 + A_1}.
+    \end{equation}
+    Substituting this back in, we find
+    \begin{align}
+      \varsigma_{W_2}(F)^2 &= \frac{A_0 A_1}{A_0 + A_1}(\phi_0 - \phi_1)^2
+    \end{align}
+    which is the Faraday moment.
+
+\section{Euclidean distance in the no-RMSF case}
+\label{sec:faraday-euclidean-calculation}
+
+  In this appendix we calculate the minimised Euclidean distance evaluated on a model FDF (\autoref{eq:faraday-true-fdf}). Let $\tilde F$ be the sum-normalised model FDF and let $\tilde S$ be the normalised simple model FDF:
+  \begin{align}
+    \tilde F(\phi) &= \frac{A_0 \delta(\phi - \phi_0) + A_1 \delta(\phi - \phi_1)}{A_0 + A_1}\\
+    \tilde S(\phi; \phi_e) &= \delta(\phi - \phi_e).
+  \end{align}
+
+  The Euclidean distance between $\tilde F$ and $\tilde S$ is then
+  \begin{align}
+    &D_E\infdivx{\tilde F(\phi)}{\tilde S(\phi; \phi_e)}^2\\
+    &= \int_{\phi_{\min}}^{\phi_{\max}} \left|\tilde F(\phi) - \delta(\phi - \phi_e) \right|^2\ \mathrm{d}\phi.
+  \end{align}
+
+  Assume $\phi_0 \neq \phi_1$ (otherwise, $D_E$ will always be either $0$ or $2$). If $\phi_e = \phi_0$, then
+  \begin{align}
+    &D_E\infdivx{\tilde F(\phi)}{\tilde S(\phi; \phi_e)}^2\\
+      &= \frac{1}{(A_0 + A_1)^2} \int_{\phi_{\min}}^{\phi_{\max}} A_1^2 \left|\delta(\phi - \phi_1) - \delta(\phi - \phi_0) \right|^2\ \mathrm{d}\phi\\
+      &= \frac{2 A_1^2}{(A_0 + A_1)^2}
+  \end{align}
+  and similarly for $\phi_e = \phi_1$. If $\phi_e \neq \phi_0$ and $\phi_e \neq \phi_1$, then
+  \begin{equation}
+    D_E\infdivx{\tilde F(\phi)}{\tilde S(\phi; \phi_e)}^2 = \frac{A_0^2 + A_1^2 + 1}{(A_0 + A_1)^2}.
+  \end{equation}
+  The minimised Euclidean distance when $\phi_0 \neq \phi_1$ is therefore
+  \begin{align}
+      D_E(F) &= \min_{\phi_e \in \mathbb{R}} D_E\infdivx{F(\phi)}{F_{\mathrm{simple}}(\phi; \phi_e)}\\
+          &= \sqrt{2} \frac{\min(A_0, A_1)}{A_0 + A_1}.
+  \end{align}
+  If $\phi_0 = \phi_1$, then the minimised Euclidean distance is 0.
+
+\section{Hyperparameters for LR and XGB}
+\label{sec:faraday-hyperparameters}
+
+  This section contains tables of the hyperparameters that we used for our classifiers in \autoref{cha:faraday}. \autoref{tab:faraday-hyperparameters-xgb} and \autoref{tab:faraday-hyperparameters-lr} tabulate the hyperparameters for XGB and LR respectively for the `ATCA' dataset. \autoref{tab:faraday-hyperparameters-xgb-askap12} and \autoref{tab:faraday-hyperparameters-lr-askap12} tabulate the hyperparameters for XGB and LR respectively for the `ASKAP' dataset.
+
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-xgb} XGB hyperparameters for the `ATCA' dataset.}
+    \centering
+    \begin{tabular}{ll}
+      \hline\hline
+      Parameter & Value\\\hline
+      colsample\textunderscore{}bytree & 0.912\\
+      gamma & 0.532\\
+      learning\textunderscore{}rate & 0.1\\
+      max\textunderscore{}depth & 7\\
+      min\textunderscore{}child\textunderscore{}weight & 2\\
+      scale\textunderscore{}pos\textunderscore{}weight & 1\\
+      subsample & 0.557\\
+      n\textunderscore{}estimators & 135\\
+      reg\textunderscore{}alpha & 0.968\\
+      reg\textunderscore{}lambda & 1.420\\
+      \hline\hline
+    \end{tabular}
+  \end{table}
+
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-lr} LR hyperparameters for the `ATCA' dataset.}
+    \centering
+    \begin{tabular}{ll}
+      \hline\hline
+      Parameter & Value\\\hline
+      penalty & L1\\
+      C & 1.668\\
+      \hline\hline
+    \end{tabular}
+  \end{table}
+
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-xgb-askap12} XGB hyperparameters for the `ASKAP' dataset.}
+    \centering
+    \begin{tabular}{ll}
+      \hline\hline
+      Parameter & Value\\\hline
+      colsample\textunderscore{}bytree & 0.865\\
+      gamma & 0.256\\
+      learning\textunderscore{}rate & 0.1\\
+      max\textunderscore{}depth & 6\\
+      min\textunderscore{}child\textunderscore{}weight & 1\\
+      scale\textunderscore{}pos\textunderscore{}weight & 1\\
+      subsample & 0.819\\
+      n\textunderscore{}estimators & 108\\
+      reg\textunderscore{}alpha & 0.049\\
+      reg\textunderscore{}lambda & 0.454\\
+      \hline\hline
+    \end{tabular}
+  \end{table}
+
+  \begin{table}[htbp]
+    \caption{\label{tab:faraday-hyperparameters-lr-askap12} LR hyperparameters for the `ASKAP' dataset.}
+    \centering
+    \begin{tabular}{ll}
+      \hline\hline
+      Parameter & Value\\\hline
+      penalty & L2\\
+      C & 0.464\\
+      \hline\hline
+    \end{tabular}
+  \end{table}
+
+\section{Predictions on real data}
+\label{sec:faraday-real-data-fig}
+
+  This appendix contains \autoref{fig:faraday-all-observed-fdfs-lr} and \autoref{fig:faraday-all-observed-fdfs-xgb}. These show the predicted probability of being Faraday complex for all real data used in \autoref{cha:faraday}, drawn from \citet{livingston21faraday} and \citet{osullivan_broad-band_2017}.
+
+  \begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{faraday-images/both_spectra_lr.pdf}
+    \caption[The 142 observed FDFs ordered by LR-estimated probability of being Faraday complex.]{The 142 observed FDFs ordered by LR-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the LR estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
+    \label{fig:faraday-all-observed-fdfs-lr}
+  \end{figure*}
+
+  \begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{faraday-images/both_spectra_xgb.pdf}
+    \caption[The 142 observed FDFs ordered by XGB-estimated probability of being Faraday complex.]{The 142 observed FDFs ordered by XGB-estimated probability of being Faraday complex. Livingston-identified components are shown in orange while O'Sullivan-identified components are shown in magenta. Simpler FDFs (as deemed by the classifier) are shown in purple while more complex FDFs are shown in green, and the numbers overlaid indicate the XGB estimate. A lower number indicates a lower probability that the corresponding source is complex, i.e. lower numbers correspond to simpler spectra.}
+    \label{fig:faraday-all-observed-fdfs-xgb}
+  \end{figure*}
+
+\unappendix
