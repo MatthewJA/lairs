@@ -666,20 +666,20 @@ Astronomy \citep{astropy}. Partial support for this work for L.R. and A.F.G. com
   \begin{enumerate}
     \item Remove all radio sources that do not fit the selection criteria.
       This applies for both radio and infrared properties, so we choose a minimum radio flux density $f_{\min}$ and a maximum infrared magnitude
-      $m_{\max}$, as well as redshift limits $z_{\mathrm{lower}}$ and $z_{\mathrm{upper}}$.
+      $m_{\max,\text{ir}}$, as well as redshift limits $z_{\mathrm{lower}}$ and $z_{\mathrm{upper}}$.
     \item For each source, compute the maximum redshift that the source could
       have been observed within the selection criteria. We find this redshift
       by first numerically solving \autoref{eq:luminosity} for $z$ with $L$ as
       the luminosity of each radio source and $f = f_{\min}$ to obtain the
       maximum redshift $z_\text{radio}$ at which the source could be observed
-      in radio. We find the maximum redshift $z_{\text{ir}}$ that the host
-      galaxy could be observed within the selection criteria by numerically
-      solving \autoref{eq:ir-limits} for $z$, where $d(z)$ is the luminosity
-      distance at a redshift $z$, $d$ is the luminosity distance of the host
-      galaxy, and $m$ is the apparent magnitude of the host galaxy.
+      in radio. We similarly find the maximum redshift that the infrared host
+      galaxy could be observed at within the selection criteria, $z_{\text{ir}}$, by numerically
+      solving \autoref{eq:ir-limits}. $d(z_{\text{ir}})$ is the luminosity
+      distance at a redshift $z_{\text{ir}}$, $d$ is the luminosity distance of the host
+      galaxy, and $m$ is the apparent magnitude of the host galaxy, all in the infrared.
       \begin{equation}
         \label{eq:ir-limits}
-        5 \log_{10}\left(\frac{d(z)}{d}\right) + m = m_{\max}
+        5 \log_{10}\left(\frac{d(z_{\text{ir}})}{d}\right) + m = m_{\max,\text{ir}}
       \end{equation}
       The maximum redshift that the source could have been observed within the
       selection criteria is then $z_{\mathrm{max}} = \min(z_{\mathrm{ir}}, z_{\mathrm{radio}}, z_{\mathrm{upper}})$.
