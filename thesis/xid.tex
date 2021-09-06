@@ -19,15 +19,15 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         \centering
         \begin{subfigure}{0.3\textwidth}
             \includegraphics[width=\textwidth]{atlas-images/cdfs_100_compact.png}
-            \caption{Two compact components, each a compact source.}
+            \caption{\raggedright{} Two compact components, each a compact source.}
         \end{subfigure}
         \begin{subfigure}{0.3\textwidth}
             \includegraphics[width=\textwidth]{atlas-images/elais_57_resolved.png}
-            \caption{One resolved component and resolved source.\\\phantom{a}}
+            \caption{\raggedright{} One resolved component and resolved source.}
         \end{subfigure}
         \begin{subfigure}{0.3\textwidth}
             \includegraphics[width=\textwidth]{atlas-images/cdfs_185_resolved.png}
-            \caption{Three resolved components comprising one resolved source.}
+            \caption{\raggedright{} Three resolved components comprising one resolved source.}
         \end{subfigure}
         \caption[Examples showing key definitions of radio emission regions used throughout this chapter.]{\label{fig:definitions} Examples showing key definitions of radio emission regions used throughout this chapter.
                  Compact and resolved components are defined by \autoref{eq:atlas-compact}.}
@@ -161,8 +161,8 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     SWIRE. In the present work, we train methods on
     CDFS\footnote{{Radio Galaxy Zoo only contains CDFS sources and so
     we cannot train methods on ELAIS-S1.}} and test these methods on both CDFS
-    and ELAIS-S1. This ensures our methods are transferable to different
-    areas of the sky observed by the same telescope as will be the case for
+    and ELAIS-S1. This helps confirm that our methods are transferable to different
+    areas of the sky observed by the same telescope, as will be the case for
     EMU.
 
   \subsection{SWIRE}\label{sec:atlas-xid-swire}
@@ -369,7 +369,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     infrared object to the radio component as the host galaxy. In the limit
     where $\sigma \to \infty$, we maximise the score output by the
     classifier as above. We take $\sigma = 30''$ as this was the best value
-    found by a grid search. {Note that the optimum width will depend on
+    found by a grid search maximising cross-identification accuracy. {Note that the optimum width will depend on
     the density of radio sources on the sky, the angular separation of the
     host galaxy and its radio components and the angular resolution of the survey.}
 
