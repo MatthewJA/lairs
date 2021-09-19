@@ -10,7 +10,9 @@
 
 This chapter is based on my paper \emph{Radio Galaxy Zoo: Machine learning for radio source host galaxy cross-identification}, by M. J. Alger, J. K. Banfield, C. S. Ong, L. Rudnick, O. I. Wong, C. Wolf, H. Andernach, R. P. Norris, and S. S. Shabala; published in the \emph{Monthly Notices of the Royal Astronomical Society} in 2018. Some minor changes have been made to match the rest of this thesis.\\
 
-In this chapter, we consider the problem of determining the host galaxies of radio sources by cross-identification. This has traditionally been done manually, which will be intractable for upcoming and ongoing wide-area radio surveys like the Evolutionary Map of the Universe (EMU). {Automated cross-identification will be critical for these future surveys, and machine learning may provide the tools to develop such methods. We applied a standard approach from computer vision to cross-identification, introducing one possible way of automating this problem, and explored the pros and cons of this approach}. We applied our method to the $1.4$~GHz Australian Telescope Large Area Survey (ATLAS) observations of the \emph{Chandra} Deep Field South (CDFS) and the ESO Large Area ISO Survey South 1 (ELAIS-S1) fields by cross-identifying them with the \emph{Spitzer} Wide-area Infrared Extragalactic (SWIRE) survey. We trained our method with two sets of data: expert cross-identifications of CDFS from the initial ATLAS data release and crowdsourced cross-identifications of CDFS from Radio Galaxy Zoo. {We found that a simple strategy of cross-identifying a radio component with the nearest galaxy performs comparably to our more complex methods, though our estimated best-case performance is near 100 per cent. ATLAS contains 87 complex radio sources that have been cross-identified by experts, so there are not enough complex examples to learn how to cross-identify them accurately. Much larger datasets are therefore required for training methods like ours. We also showed that training our method on Radio Galaxy Zoo cross-identifications gives comparable results to training on expert cross-identifications, demonstrating the value of crowdsourced training data.}
+In this chapter, we consider the problem of determining the host galaxies of radio sources by cross-identification. This has traditionally been done manually, which will be intractable for upcoming and ongoing wide-area radio surveys like the Evolutionary Map of the Universe (EMU). {Automated cross-identification will be critical for these future surveys, and machine learning may provide the tools to develop such methods.
+
+We applied a standard approach from computer vision to cross-identification, introducing one possible way of automating this problem, and explored the pros and cons of this approach}. We applied our method to the $1.4$~GHz Australian Telescope Large Area Survey (ATLAS) observations of the \emph{Chandra} Deep Field South (CDFS) and the ESO Large Area ISO Survey South 1 (ELAIS-S1) fields by cross-identifying them with the \emph{Spitzer} Wide-area Infrared Extragalactic (SWIRE) survey. We trained our method with two sets of data: expert cross-identifications of CDFS from the initial ATLAS data release and crowdsourced cross-identifications of CDFS from Radio Galaxy Zoo. {We found that a simple strategy of cross-identifying a radio component with the nearest galaxy performs comparably to our more complex methods, though our estimated best-case performance is near 100 per cent. ATLAS contains 87 complex radio sources that have been cross-identified by experts, so there are not enough complex examples to learn how to cross-identify them accurately. Much larger datasets are therefore required for training methods like ours. We also showed that training our method on Radio Galaxy Zoo cross-identifications gives comparable results to training on expert cross-identifications, demonstrating the value of crowdsourced training data.}
 
 \section{Introduction to cross-identification}
 \label{sec:atlas-xid-intro-cross-id}
@@ -33,9 +35,9 @@ In this chapter, we consider the problem of determining the host galaxies of rad
                  Compact and resolved components are defined by \autoref{eq:atlas-compact}.}
     \end{figure}
 
-    Next generation radio telescopes such as the Australian SKA Pathfinder \citep[ASKAP;][]{johnston07} and Apertif \citep{verheijen08} will conduct increasingly wide, deep, and high-resolution radio surveys, producing large amounts of data. The Evolutionary Map of the Universe \citep[EMU;][]{norris11} survey using ASKAP is expected to detect over 70 million radio sources, compared to the 2.5 million radio sources currently known \citep{banfield15}. An important part of processing these data is cross-identifying observed radio emission regions with observations of their host galaxy in surveys at other wavelengths.
+    Next generation radio telescopes such as the Australian SKA Pathfinder \citep[ASKAP;][]{johnston07} and Apertif \citep{verheijen08} will conduct increasingly wide, deep, and high-resolution radio surveys, producing large amounts of data. The Evolutionary Map of the Universe \citep[EMU;][]{norris11} survey using ASKAP is expected to detect over 70 million radio sources, compared to the 2.5 million radio sources currently known \citep{banfield15}. An important part of processing these data is cross-identifying observed radio emission regions with observations of their host galaxies in surveys at other wavelengths.
 
-    In the presence of extended radio emission cross-identification of the host can be a
+    In the presence of extended radio emission, cross-identification of the host can be a
     difficult task. {Radio emission may extend far from the host galaxy
     and emission regions from a single physical object may appear disconnected. As a result, the
     observed structure of a radio source may have a complex relationship
@@ -46,7 +48,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     but this is impractical for larger surveys.
 
     One approach to cross-identification of large numbers of sources is crowdsourcing, where volunteers
-    cross-identify radio sources with their host galaxy. This is the premise of Radio Galaxy
+    cross-identify radio sources with their host galaxies. This is the premise of Radio Galaxy
     Zoo\footnote{\url{https://radio.galaxyzoo.org}} \citep{banfield15}, a
     citizen science project hosted on the Zooniverse platform \citep{lintott08}.
     Volunteers are shown radio and infrared images and are asked to
@@ -54,7 +56,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     explanation of the project can be found in \citet{banfield15}. The first
     data release for Radio Galaxy Zoo will provide a large dataset of over
     75~000 radio-host cross-identifications and radio source morphologies
-    (Wong et al., in prep). While this is a much larger number of visual
+    (Wong et al., in prep.). While this is a much larger number of visual
     cross-identifications than have been made by experts \citep[e.g.,
     ][]{taylor2007,Gendre2008,grant2010,norris06,middelberg08} it is still far
     short of the millions of radio sources expected to be detected in upcoming
@@ -67,7 +69,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     are composed of a core radio component and two lobe components. The core
     radio component is coincident with the host galaxy, so cross-identification
     amounts to finding the galaxy coincident with the core radio component in
-    the most likely model fit. This method is easily extended to use other, more
+    the most likely model fit. This method could be easily extended to use other, more
     complex models, but it is purely geometric. It does not incorporate
     other information such as the physical properties of the potential host
     galaxy. Additionally, there may be new classes of radio source detected in
@@ -82,8 +84,8 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {One possibility is that machine learning techniques can
     be developed to automatically cross-identify catalogues drawn from new surveys}. Machine learning
     describes a class of methods that learn approximations to functions. {If
-    cross-identification can be cast as a function approximation problem, then machine learning will allow data
-    sets such as Radio Galaxy Zoo to be generalised to work on new data. Data sets from
+    cross-identification can be cast as a function approximation problem, then machine learning will allow datasets
+    such as Radio Galaxy Zoo to be generalised to work on new data. Datasets from
     citizen scientists have already been used to train machine learning methods.
     Some astronomical examples can be found in \citet{marshall15citizen}.}
 
@@ -103,7 +105,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {Throughout this chapter, a `radio source' refers to all radio emission observed associated with a single host galaxy, and a `radio component' refers to a single, contiguous
     region of radio emission. Multiple components may arise from a single
     source. A `compact' source is composed of a {single unresolved component. \autoref{eq:atlas-compact} shows the definition of a resolved component. We
-    assume that all unresolved components are compact sources, i.e. we assume that each unresolved component has its own host galaxy\footnote{{This will be incorrect if the unresolved components are actually compact lobes or hotspots, but determining which components correspond to unique radio sources is outside the scope of this thesis.}}.} An `extended'
+    assume that all unresolved components are compact sources, i.e. we assume that each unresolved component has its own host galaxy\footnote{{This will be incorrect if the unresolved components are actually compact lobes or hot-spots, but determining which components correspond to unique radio sources is outside the scope of this thesis.}}.} An `extended'
     source is a non-compact source, i.e. resolved single-component sources or a
     multi-component source. \autoref{fig:definitions} illustrates these definitions.}
 
@@ -136,7 +138,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         \citet{middelberg08} & Manual & 0 & 1366\\
         \citet{fan15} & Bayesian models & 784 & 0\\
         \citet{weston18lrpy} & Likelihood ratio & 3078 & 2113\\
-        Wong et al. (in prep) & Crowdsourcing & 2460 & 0 \\
+        Wong et al. (in prep.) & Crowdsourcing & 2460 & 0 \\
         \hline\hline
       \end{tabular}
     \end{table}
@@ -184,7 +186,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     Release 1 catalogue will only include cross-identifications for which over
     65 per cent of volunteers agree. However, we use a preliminary catalogue containing volunteer
     cross-identifications for all components.} is generated can be found in Wong
-    et al. (in prep).
+    et al. (in prep.).
 
     The ATLAS~CDFS radio components that appear in Radio Galaxy Zoo {are drawn from a prerelease version of} the third data release
     of ATLAS by \citet{franzen15}. In this release, each radio component was fit with a
@@ -192,7 +194,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     one Gaussian may be fit to one region of radio emission. Each of these
     Gaussian fits is listed as a radio component in the ATLAS component catalogue. The
     brightest radio component from the multiple-Gaussian fit is called the
-    `primary component'. {If there was only one Gaussian fit then this Gaussian is the primary component}. Each primary component found in the ATLAS
+    `primary component'. {If there is only one Gaussian fit then this Gaussian is the primary component}. Each primary component found in the ATLAS
     component catalogue appears in Radio Galaxy Zoo. Non-primary components
     may appear within the image of a primary component, but do not have their
     own entry in Radio Galaxy Zoo. We will henceforth only discuss the primary
@@ -261,13 +263,13 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     the sky centred on a radio component {and potentially other information about
     objects in the image (such as the redshift or infrared colour)}. {Images at other wavelengths (notably infrared) might be
     useful, but we defer this for now as it complicates the task.
-    {We chose a $2' \times 2'$ image to match} the size of the images used
+    {We choose a $2' \times 2'$ image to match} the size of the images used
     by Radio Galaxy Zoo. To avoid solving the separate task of identifying
     which radio components are associated with the same source, we assume
     that each radio image represents a single extended
     source\footnote{Limitations of this assumption are discussed in
     \autoref{sec:atlas-xid-limitations}.}. Radio cross-identification can then
-    be formalised as follows: given a radio image centred on a radio
+    be formalised as follows: Given a radio image centred on a radio
     component, locate the host galaxy of the source containing this radio
     component. This is a standard computer vision problem called `object
     detection', and we apply a common technique called a `sliding-window'
@@ -312,7 +314,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         }
 
         \KwRet{$host$}
-        \caption{Cross-identifying a radio component given a radio image of the component, a catalogue of infrared candidate host galaxies and a binary classifier.
+        \caption{Cross-identifying a radio component given a radio image of the component, a catalogue of infrared candidate host galaxies, and a binary classifier.
           {$\sigma$ is a parameter of the method.}}
         \label{alg:xid}
     \end{algorithm}
@@ -345,7 +347,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     as input, we need to represent candidate host galaxies by vectors. We
     describe this in \autoref{vector-representation-of-infrared-sources}.
     There are many options for modelling $f$. In this chapter we apply three
-    different models: logistic regression, random forests and convolutional
+    different models: logistic regression, random forests, and convolutional
     neural networks.}
 
     {We cross-identify each radio component in turn. The classifier $f$
@@ -354,7 +356,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     component we are currently cross-identifying. If there are other nearby host
     galaxies, then multiple candidate hosts may have high scores (e.g.
     \autoref{fig:broken-isolation}). This difficulty is necessary---a classifier
-    with dependence on radio object would be impossible to train. We
+    with dependence on the radio object would be impossible to train. We
     need multiple positive examples (i.e. host galaxies) to train a binary classifier, but
     for any specific radio component there is only one host galaxy. As a
     result, the candidate classification task aims to answer the general question
@@ -368,8 +370,8 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     equivalent to a nearest neighbours approach where we select the nearest
     infrared object to the radio component as the host galaxy. In the limit
     where $\sigma \to \infty$, we maximise the score output by the
-    classifier as above. We take $\sigma = 30''$ as this was the best value
-    found by a grid search maximising cross-identification accuracy. {Note that the optimum width will depend on
+    classifier as above. We take $\sigma = 30''$, the best value
+    found by a grid search maximising cross-identification accuracy. {Note that the optimum width depends on
     the density of radio sources on the sky, the angular separation of the
     host galaxy and its radio components and the angular resolution of the survey.}
 
@@ -452,7 +454,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     emission may extend past the edges of the window and we may miss critical
     information required to identify the galaxy as a host galaxy. If the
     window is too large, then irrelevant information will be included and it
-    may be difficult or computationally expensive to score. We chose a
+    may be difficult or computationally expensive to score. We choose a
     window size of $32 \times 32$ pixels, corresponding to approximately $48'' \times 48''$ in
     ATLAS. This is shown as squares in \autoref{fig:windows} and
     \autoref{fig:broken-window-size}. These kinds of size problems are
@@ -475,7 +477,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     (\autoref{vector-representation-of-infrared-sources}) and to improve
     efficiency. Our method is applicable even when host galaxies are not detected in
     the infrared by considering every pixel of the radio image as a candidate
-    location as would be done in the original computer vision approach. {If the host galaxy location does not correspond to an infrared source, the radio source would be classified as infrared-faint.}
+    location as would be done in the original computer vision approach. {If the host galaxy location does not correspond to an infrared source, the radio source can be classified as infrared-faint.}
 
     Our assumptions impose an upper bound on how well we can cross-identify
     radio sources. We estimate this upper bound in \autoref{sec:atlas-xid-cdfs-results}.
@@ -520,7 +522,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     a good avenue for potential improvement in our pipeline but this is beyond
     the scope of this initial study.
 
-  \subsection{Binary Classifiers}\label{sec:atlas-xid-classifiers}
+  \subsection{Binary classifiers}\label{sec:atlas-xid-classifiers}
 
     We use three different binary classification models: logistic regression,
     convolutional neural networks, and random forests. These models cover
@@ -553,7 +555,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
       \includegraphics[width=0.6\columnwidth, trim={0cm 0.5cm 0cm 0.5cm}, clip]{atlas-images/quadrants.pdf}
       \caption[CDFS field training and testing quadrants.]{CDFS field training and testing quadrants labelled 0 -- 3. The
         central dot is located at $\alpha = 03^\text{h}31^\text{m}12^\text{s},
-        \delta = -28^\circ{}06'00''$. The quadrants were chosen such that
+        \delta = -28^\circ{}06'00''$. The quadrants are chosen such that
         there are similar numbers of radio sources in each
         quadrant.\label{fig:quadrants}}
     \end{figure}
@@ -586,7 +588,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     they can be used to train binary classifiers. There are two challenges with this conversion:
     \begin{itemize}
       \item We can only say that an object is \emph{a} host galaxy, not which radio object it is associated with, and
-      \item We cannot disambiguate between non-host infrared objects and host galaxies that were not in the cross-identification catalogue.
+      \item We cannot disambiguate between non-host infrared objects and host galaxies that are not in the cross-identification catalogue.
     \end{itemize}
     
     We use the Gaussian weighting described in \autoref{sec:atlas-xid-as-binary-classification} to address the first issue.
@@ -598,10 +600,9 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     We first generate positive labels from a cross-identification catalogue.
     We decide that if an infrared object is listed in the catalogue, then it
-    is assigned a positive label as a host galaxy. We then assign every other galaxy a negative label. This has some problems
-   ---an example is that if the cross-identification catalogue did not include a radio
-    object (e.g.~it was below the signal-to-noise ratio) then the host galaxy
-    of that radio object would receive a negative label. This occurs with
+    is assigned a positive label as a host galaxy. We then assign every other galaxy a negative label. This has some problems---an example is that if the cross-identification catalogue does not include a radio
+    object (e.g.~it is below the signal-to-noise ratio) then the host galaxy
+    of that radio object receives a negative label. This occurs with
     \citet{norris06} cross-identifications, as these are associated with the
     first data release of ATLAS. The first data release went to a 5$\sigma$
     flux density level of $S_{1.4} \geq \unit{200}{\micro\jansky}\text{
@@ -614,7 +615,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     classifiers on infrared objects within a 1~arcmin radius of an ATLAS radio
     component.
 
-  \subsection{Experimental Setup}
+  \subsection{Experimental setup}
   \label{sec:atlas-xid-experimental-setup}
 
     We trained binary classifiers on infrared objects in the CDFS field using
@@ -680,7 +681,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     We then used the scores to predict the host galaxy
     for each radio component cross-identified by both \citet{norris06} and
     Radio Galaxy Zoo. {We followed \autoref{alg:xid}:
-    the score of each SWIRE object within 1~arcmin of a given radio
+    The score of each SWIRE object within 1~arcmin of a given radio
     component was weighted by a Gaussian function of angular separation from the
     radio component and the object with the highest
     weighted score was chosen as the host galaxy.} The
@@ -742,7 +743,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {We can assess trained binary classifiers either by their performance on
     the candidate classification task or by their performance on the
     cross-identification task when used in our method. Both performances are
-    useful: performance on the candidate classification task provides a robust
+    useful: Performance on the candidate classification task provides a robust
     and simple way to compare binary classifiers without the limitations of
     our specific formulation, and performance on the cross-identification task
     can be compared with other cross-identification methods. We therefore
@@ -762,7 +763,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {that after thresholding} there can be
     many `false positives' that do not affect cross-identification. An example
     of this is shown in \autoref{fig:positives}, where the classifier has
-    identified 8 `host galaxies'. However, there are only three true host
+    identified eight `host galaxies'. However, there are only three true host
     galaxies in this image---one per radio component---and so in the
     cross-identification task, only three of these galaxies will be identified
     as hosts.}
@@ -782,13 +783,13 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     useful binary classifier to produce better
     results than this, so this represents the lowest expected
     cross-identification performance.} The upper estimates, lower estimates,
-    and nearest-neighbour accuracy are shown as horizontal lines in
+    and nearest neighbour accuracy are shown as horizontal lines in
     \autoref{fig:ba}.
 
     In \autoref{fig:cross-id-accuracy} we plot the performance {of our
     method using different binary classification models}, as well as the
     performance of Radio Galaxy Zoo, nearest neighbours, and the perfect and
-    random binary classifiers, on the full set of ATLAS~DR1 radio components
+    random binary classifiers on the full set of ATLAS~DR1 radio components
     using the pipeline in \autoref{fig:flowchart}. The accuracy
     {associated with each classification model} and training label set
     averaged across all four quadrants is shown in \aref{sec:atlas-xid-accuracies}.
@@ -818,21 +819,21 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     attains nearly 100 per cent accuracy on the compact test set. Our results
     do not improve on nearest neighbours for resolved objects. However, our
     method does allow for improvement on nearest neighbours with a
-    sufficiently good binary classifier: a `perfect' binary classifier attains
+    sufficiently good binary classifier: A `perfect' binary classifier attains
     nearly 100 per cent accuracy on resolved sources. This shows that our
     method may be useful provided that a good binary classifier can be
     trained. The most obvious place for improvement is in feature selection:
-    we use pixels of radio images directly and these are likely not conducive
+    We use pixels of radio images directly and these are likely not conducive
     to good performance on the candidate classification task. Convolutional
     neural networks, which are able to extract features from images,
     \emph{should} work better, but these require far more training data than
-    the other methods we have applied and the small size of ATLAS thus limits their performance.
+    the other methods that we applied and the small size of ATLAS thus limits their performance.
 
     We noted in \autoref{sec:atlas-xid-labels} that the test set of expert labels,
     derived from the initial ATLAS data release, was less deep than the third
     data release used by Radio Galaxy Zoo and this chapter, introducing a source
     of label noise in the testing labels. Specifically, true host galaxies may
-    be misidentified as non-host galaxies if the associated radio source was
+    be misidentified as non-host galaxies if the associated radio source is
     below the 5 signal-to-noise limit in ATLAS~DR1 but not in ATLAS~DR3. This
     has the effect of reducing the accuracy for Radio Galaxy Zoo-trained
     classifiers.
@@ -840,10 +841,10 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {We report the scores predicted by each classifier for each
     SWIRE object in \aref{sec:atlas-xid-scores} and the predicted
     cross-identification for each ATLAS object in \aref{sec:atlas-xid-xids}.
-    Scores reported for a given object were predicted by binary
+    Scores we report for a given object were predicted by binary
     classifiers tested on the quadrant containing that object. The reported scores are not weighted.}
 
-    In \autoref{fig:examples} we show 5 resolved sources where the most classifiers disagreed on the correct cross-identification.
+    In \autoref{fig:examples} we show five resolved sources where the most classifiers disagreed on the correct cross-identification.
 
 \subsection{Application to ATLAS-ELAIS-S1}
   \label{sec:atlas-xid-elais}
@@ -853,7 +854,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   \includegraphics[]{atlas-images/elais-grid-new.pdf}
   \caption[Performance of different classification models on the binary classification task, tested on ELAIS-S1.]{Performance of different classification models trained on CDFS and tested on
   resolved and compact sources in ELAIS-S1. Points represent classification models
-  trained on different quadrants of CDFS, with markers, lines and axes as in
+  trained on different quadrants of CDFS, with markers, lines, and axes as in
   \autoref{fig:ba}. The balanced acccuracy of expert-trained random forest
   binary classifiers falls below the axis and the corresponding mean accuracy is
   shown by an arrow. The estimated best attainable accuracy is almost 100 per cent.
@@ -963,20 +964,20 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   Nearest neighbours approaches outperform most methods we investigated,
   notably including Radio Galaxy Zoo. This is due to the large number of
   compact or partially-resolved objects in ATLAS. This result shows that for
-  compact and partially-resolved objects methods that do not use machine
+  compact and partially-resolved objects, methods that do not use machine
   learning such as a nearest neighbours approach or likelihood ratio
   \citep{weston18lrpy} should be preferred to machine learning methods. It
-  also shows that ATLAS is not an ideal data set for developing machine
+  also shows that ATLAS is not an ideal dataset for developing machine
   learning methods like ours. Our use of ATLAS is motivated by its status as a
   pilot survey for EMU, so methods developed for ATLAS should also work for
   EMU. New methods developed should work well with extended radio sources, but
   this goal is almost unsupported by ATLAS as it has very few examples of such
   sources. This makes both training and testing difficult---there are too
   few extended sources to train on and performance on such a small test set
-  may be unreliable. Larger data sets with many extended sources like FIRST
+  may be unreliable. Larger datasets with many extended sources like FIRST
   exist, but these are considerably less deep than and at a different
   resolution to EMU, so there is no reason to expect methods trained on such
-  data sets to be applicable to EMU.
+  datasets to be applicable to EMU.
 
   The accuracies of our trained cross-identification methods generally fall
   far below the estimated best possible accuracy attainable using our approach,
@@ -1005,7 +1006,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   sizes, but this is considerably more expensive.
 
   Larger training sets, better model selection, and larger window sizes would
-  improve performance, but only so far: we would still be bounded above by the
+  improve performance, but only so far: We would still be bounded above by the
   estimated `perfect' classifier accuracy. From this point, the performance
   can only be improved by addressing our broken assumptions. We detailed
   these assumptions in \autoref{sec:atlas-xid-limitations}, and we will discuss here how
@@ -1062,14 +1063,14 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   disambiguate between candidate host
   galaxies selected by model-based algorithms, or used to weight candidate
   host galaxies while a source detector attempts to associate radio
-  components. Our method can also be extended using other data sources: for
+  components. Our method can also be extended using other data sources: For
   example, information from source identification algorithms could be
   incorporated into the feature set of candidate host galaxies.
 
 \section{Summary}
 
   We presented a machine learning approach for cross-identification of radio
-  components with their corresponding infrared host galaxy. Using the CDFS
+  components with their corresponding infrared host galaxies. Using the CDFS
   field of ATLAS as a training set we trained our
   methods on expert and crowdsourced cross-identification catalogues.
   Applying these methods on both fields of ATLAS, we found that:
@@ -1122,7 +1123,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   Aeronautics and Space Administration. The National Radio Astronomy
   Observatory is a facility of the National Science Foundation operated under
   cooperative agreement by Associated Universities, Inc. The figures
-  in this work made use of Astropy, a community-developed core Python package
+  in this work make use of Astropy, a community-developed core Python package
   for Astronomy \citep{astropy}. The Australia Telescope Compact Array is part
   of the Australia Telescope, which is funded by the Commonwealth of Australia
   for operation as a National Facility managed by CSIRO. We acknowledge the Gomeroi people as the traditional custodians of the Observatory site.
@@ -1140,7 +1141,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   This appendix describes the three different models we used for binary classification in this chapter: logistic
   regression, convolutional neural networks, and random forests.
 
-  \subsection{Logistic Regression}
+  \subsection{Logistic regression}
   \label{sec:atlas-logistic-regression}
     Logistic regression is linear in the feature space and outputs the
     probability that the input has a positive label. The model is
@@ -1180,7 +1181,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
       concatenate layer flattens the output of the previous layer and adds the
       10 features derived from the candidate host in SWIRE, i.e. the flux
       ratios, stellarity indices, and distance. The dropout layer randomly
-      sets $25\%$ of its inputs to zero during training to prevent
+      sets $25$ per cent of its inputs to zero during training to prevent
       overfitting. Diagram based on \url{ https://github.com/dnouri/nolearn}.}
       \label{fig:cnn}
     \end{figure}
@@ -1191,7 +1192,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     be used for class probability prediction on radio images. The model
     architecture we used is shown in \autoref{fig:cnn}.
 
-  \subsection{Random Forests}
+  \subsection{Random forests}
   \label{sec:atlas-random-forests}
 
     Random forests are an ensemble of decision
@@ -1363,7 +1364,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     \item \emph{Dec}---Declination (J2000).
     \item \emph{Expert host}---Whether the candidate host galaxy is a host galaxy according to \citet{norris06} or \citet{middelberg08} cross-identifications of CDFS and ELAIS-S1 respectively.
     \item \emph{RGZ host}---Whether the candidate host galaxy is a host galaxy according to Radio Galaxy Zoo cross-identifications \citep{wong21rgz}. This is always `no' for ELAIS-S1 objects.
-    \item \emph{$C$/$L$/$D$}---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
+    \item \emph{$C$/$L$/$D$}---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression, or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
   \end{itemize}
 
   \begin{sidewaystable}
@@ -1478,9 +1479,9 @@ All & Compact & Resolved & All & Compact & Resolved & All & Compact & Resolved &
     \item \emph{RGZ Dec}---Right ascension of SWIRE cross-identification from Radio Galaxy Zoo \citep{wong21rgz}.
     \item \emph{RGZ radio consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the radio component configuration.
     \item \emph{RGZ IR consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the host galaxy of this radio component.
-    \item \emph{$C$ / $L$ / $D$}---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
-    \item \emph{$C$/ $L$ / $D$ RA}---Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
-    \item \emph{$C$/ $L$ / $D$ Dec}---Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
+    \item \emph{$C$ / $L$ / $D$}---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR', or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
+    \item \emph{$C$/ $L$ / $D$ RA}---Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
+    \item \emph{$C$/ $L$ / $D$ Dec}---Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
   \end{itemize}
 
   \begin{sidewaystable}
