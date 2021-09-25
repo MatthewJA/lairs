@@ -181,12 +181,12 @@
   \setcounter{savesection}{\value{section}}%
   \setcounter{section}{\value{apdxsection}}%
   \setcounter{subsection}{0}%
-  \gdef\thesection{\@Alph\c@section}}
+  \gdef\thesection{\thechapter.\@Alph\c@section}}
 \newcommand\unappendix{\par
   \setcounter{apdxsection}{\value{section}}%
   \setcounter{section}{\value{savesection}}%
   \setcounter{subsection}{0}%
-  \gdef\thesection{\@arabic\c@section}}
+  \gdef\thesection{\thechapter.\@arabic\c@section}}
 \makeatother
 
 % %% https://tex.stackexchange.com/a/160850

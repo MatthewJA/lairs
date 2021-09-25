@@ -1,7 +1,7 @@
 %!tex use_biblatex=true
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL /Users/alger/repos/lairs-2/thesis/thesis.tex   Mon Sep  6 22:42:09 2021
-%DIF ADD thesis.tex                                     Mon Sep  6 22:41:33 2021
+%DIF DEL ../../lairs-2/thesis/thesis.tex   Mon Sep  6 22:42:09 2021
+%DIF ADD thesis.tex                        Mon Sep  6 22:41:33 2021
 %!tex spellcheck=en_AU
 %!tex output_directory=_latex_aux
 %!tex copy_output_on_build=true
@@ -32,11 +32,11 @@
 \usepackage{graphicx}
 \usepackage{thesis}
 \usepackage{longtable}
-\usepackage{draftwatermark}
-\SetWatermarkText{REVISION DIFF}
-\SetWatermarkScale{0.6}
 \usepackage{lineno}
 \linenumbers
+\usepackage{draftwatermark}
+\SetWatermarkText{REVISION DIFF}
+\SetWatermarkScale{0.5}
 
 % bib options
 % \usepackage[square]{natbib}
@@ -547,7 +547,7 @@ The work and writing behind this thesis was completed in Australia on the land o
 \addcontentsline{toc}{chapter}{Abstract}
 \vspace{-1em}
 
-Radio observations of actively accreting supermassive black holes outside of the galaxy can provide insight into the history of galaxies and their evolution. With the construction of fast new radio telescopes and the undertaking of large new radio surveys in the lead-up to the Square Kilometre Array (SKA), radio astronomy faces a `data deluge' where traditional methods of data analysis cannot keep up with the scale of the data. Astronomers are increasingly looking to machine learning to provide ways of handling large-scale data like these. This thesis introduces machine learning methods for use in wide-area radio surveys and demonstrate their application to radio astronomy data. To help understand the issues facing large-scale wide-area radio surveys, and contribute toward their solutions, we consider the problems of automated radio-infrared cross-identification and Faraday complexity classification.
+Radio observations of actively accreting supermassive black holes outside of the galaxy can provide insight into the history of galaxies and their evolution. With the construction of fast new radio telescopes and the undertaking of large new radio surveys in the lead-up to the Square Kilometre Array (SKA), radio astronomy faces a `data deluge' where traditional methods of data analysis cannot keep up with the scale of the data. Astronomers are increasingly looking to machine learning to provide ways of handling large-scale data like these. This thesis introduces machine learning methods for use in wide-area radio surveys and \DIFdelbegin \DIFdel{demonstrate }\DIFdelend \DIFaddbegin \DIFadd{demonstrates }\DIFaddend their application to radio astronomy data. To help understand the issues facing large-scale wide-area radio surveys, and contribute toward their solutions, we consider the problems of automated radio-infrared cross-identification and Faraday complexity classification.
 
 We developed an automated machine learning method for cross-identifying radio objects with their infrared counterparts, training the algorithm with data from the citizen science project Radio Galaxy Zoo. The trained result performed comparably to an algorithm trained on expert cross-identifications, demonstrating the benefit of non-expert labelling in radio astronomy. By examining the theoretical maximum accuracy of this algorithm we showed that existing pilot studies for future surveys were not sufficiently large enough to train machine learning methods. We showed the utility of our cross-identification algorithm by applying it instead to a large survey, Faint Images of the Radio Sky at Twenty Centimeters (FIRST), producing the largest catalogue of cross-identified extended sources available at the time of writing. From this catalogue, we calculated a mid-infrared-divided fractional radio luminosity function as well as an estimate of energy injected into the intergalactic medium by active galactic nuclei jets---one of the first applications of machine learning to radio astronomy to obtain a physics result. A key result from this work was that the limitation in our sample size was not due to the number of radio objects cross-identified but rather by the number of available redshift measurements. Finally, we developed interpretable features for spectropolarimetric measurements of radio sources and used these features to design a machine learning algorithm that can identify Faraday complexity, while the features themselves may be used for other tasks. The methods in this thesis will be applicable to future radio surveys such as the Evolutionary Map of the Universe (EMU) continuum survey and the Polarised Sky Survey of the Universe's Magnetism (POSSUM), as well as surveys produced with the SKA, allowing the development of higher resolution radio luminosity functions, better estimates of the impact of radio galaxies on their environments, faster analysis of polarised surveys, and better quality rotation measure grids.
 
@@ -603,7 +603,7 @@ The following list summarises abbreviations that are commonly used in this thesi
     \item FDF: Faraday dispersion function, a representation of a polarisation spectrum
     \item FIRST: Faint Images of the Radio Sky at Twenty Centimeters, a large radio survey
     \item FRI: Fanaroff-Riley type I, an edge-darkened radio galaxy
-    \item FRII: Fanaroff-Riley type II, an edge-brightned radio galaxy
+    \item FRII: Fanaroff-Riley type II, an \DIFdelbegin \DIFdel{edge-brightned }\DIFdelend \DIFaddbegin \DIFadd{edge-brightened }\DIFaddend radio galaxy
     \item ISM: interstellar medium, the stuff between stars
     \item LR: logistic regression, a classification model
     \item MWA: Murchison Widefield Array, a next-generation radio telescope in Murchison
@@ -655,7 +655,7 @@ This thesis concerns applications of machine learning to radio astronomy for the
 \section{Problems in extragalactic radio astronomy}
 \label{sec:problems-radio-astronomy}
 
-    Galaxies produce radio emission through a variety of methods. The main emission mechanisms are star formation and active galactic nuclei (AGN, \autoref{sec:agn}) and only the latter show extended structure well beyond the galaxy itself. AGN are the central focus of this thesis. They are intensely energetic objects at the centre of galaxies, which actively accrete matter and eject huge jets of plasma that develop into extended lobes over huge distances. Radio astronomy has many uses for AGN: their energy scales provide a test-bed for high energy physics, and the extremely bright lobes and jets can be seen throughout the Universe making AGN an accessible probe of the distant and old Universe.
+    Galaxies produce radio emission through a variety of methods. The main emission mechanisms are star formation and active galactic nuclei (AGN, \autoref{sec:agn}) and only the latter show extended structure well beyond the galaxy itself. AGN are the central focus of this thesis. They are intensely energetic objects at the centre of galaxies, which actively accrete matter and eject huge jets of plasma that develop into extended lobes over huge distances. Radio astronomy has many uses for AGN: \DIFdelbegin \DIFdel{their }\DIFdelend \DIFaddbegin \DIFadd{Their }\DIFaddend energy scales provide a test-bed for high energy physics, and the extremely bright lobes and jets can be seen throughout the Universe\DIFaddbegin \DIFadd{, }\DIFaddend making AGN an accessible probe of the distant and old Universe.
 
     AGN are thought to be critical to galaxy evolution and perhaps the early reionisation of the Universe \citep{bosch-ramon_role_2018}, but their exact role in their host galaxies is an open question. The radiative and mechanical energy released by AGN impacts the interstellar medium (ISM) and is a key component of contemporary galaxy simulations and models \citep{morganti_many_2017}. The quenching of star formation due to AGN activity is called \defn{AGN feedback}, the idea being that the energy expelled from an AGN is returned to the ISM of the galaxy, heating the gas so it cannot condense into stars. The different impacts of radiative and mechanical energy, the location and scales within the galaxy for which star formation is quenched, and whether star formation material is ejected from the galaxy by the AGN are all open questions \citep{husemann_reality_2018}. One of our key results in \autoref{cha:rlfs} is an estimation of the mechanical energy contributed to the intergalactic medium by AGN. Solving these questions requires an understanding of AGN at both small and large scales, as well as connecting AGN to their host galaxies at other wavelengths so that redshift, emission lines, star formation rates, etc. can be determined. \autoref{cha:cross-id} describes our new method for performing such cross-identifications.
 
@@ -665,7 +665,7 @@ This thesis concerns applications of machine learning to radio astronomy for the
 \citep{taylor16alignments,contigiani_radio_2017,panwar_alignment_2020}}\hspace{0pt}%DIFAUXCMD
 }\DIFaddend , though investigation continues as to whether this effect is real or due to some unknown systematic bias. New radio surveys will reveal more radio sources than ever before, and if they can be identified, radio structures in these surveys will allow us to investigate the structure of the Universe.
 
-    The magnetic structure of AGN and their extended lobes may be probed by radio polarimetry observations \citep{anderson_broadband_2015,grant11polarised}. Through polarisation, though, extragalactic AGN can provide insight into our own Galaxy: the Faraday depth and complexity (\autoref{sec:polarisation}) of extragalactic radio sources can be used to quantify local magnetic fields. With more polarised radio sources to be revealed through upcoming wide-area polarisation surveys, the magnetic field of the Milky Way and its surrounding intergalactic medium can be better resolved. Polarimetry also allows us to determine some aspects of the structure of unresolved extragalactic sources, even though we cannot spatially see that structure: spatially extended, polarised radio sources may have different polarisation spectra to those which are spatially compact when projected onto the sky.
+    The magnetic structure of AGN and their extended lobes may be probed by radio polarimetry observations \citep{anderson_broadband_2015,grant11polarised}. Through polarisation, though, extragalactic AGN can provide insight into our own \DIFdelbegin \DIFdel{Galaxy: the }\DIFdelend \DIFaddbegin \DIFadd{galaxy: The }\DIFaddend Faraday depth and complexity (\autoref{sec:polarisation}) of extragalactic radio sources can be used to quantify local magnetic fields. With more polarised radio sources to be revealed through upcoming wide-area polarisation surveys, the magnetic field of the Milky Way and its surrounding intergalactic medium can be better resolved. Polarimetry also allows us to determine some aspects of the structure of unresolved extragalactic sources, even though we cannot spatially see that structure: \DIFdelbegin \DIFdel{spatially }\DIFdelend \DIFaddbegin \DIFadd{Spatially }\DIFaddend extended, polarised radio sources may have different polarisation spectra to those which are spatially compact when projected onto the sky.
 
     Other problems in radio astronomy relate to the new level of data that we are about to obtain from large telescopes like the SKA, which we discuss in \autoref{sec:big-data}.
 
@@ -674,24 +674,24 @@ This thesis concerns applications of machine learning to radio astronomy for the
 
     The scale of radio data underpins many of the methodology problems facing radio astronomy. There are two main scientific benefits that come from large-scale data: better statistics and more unusual objects. However, methods for dealing with radio data at scale are still very much in their infancy, and need to be developed before instruments like ASKAP and MeerKAT can be used to their full potential.
 
-    Many results in astronomy are statistical, from measuring the expansion of the Universe to understanding the distribution of galaxy properties. With more observations we can not just narrow the uncertainty of these results, but also diversify them. When the number of objects under study is large, we can subdivide the population into subpopulations based on their physical properties and determine a statistic on each subpopulation. This can help understand the physical basis behind the statistic, or 
+    Many results in astronomy are statistical, from measuring the expansion of the Universe to understanding the distribution of galaxy properties. With more observations\DIFaddbegin \DIFadd{, }\DIFaddend we can not \DIFdelbegin \DIFdel{just }\DIFdelend \DIFaddbegin \DIFadd{only }\DIFaddend narrow the uncertainty of these results, but \DIFdelbegin \DIFdel{also diversify them }\DIFdelend \DIFaddbegin \DIFadd{diversify them as well}\DIFaddend . When the number of objects under study is large, we can subdivide the population into subpopulations based on their physical properties and determine a statistic on each subpopulation. This can help understand the physical basis behind the statistic, or 
     remove unwanted subpopulations from analysis. Even with less data it is still possible to subdivide or filter populations, but this will dramatically raise the uncertainty in the results due to the low sample size of each bin. An example of such a statistic is the radio luminosity function (RLF), which describes the density of radio sources throughout the Universe. It can be divided into a fractional RLF to examine the distribution of subpopulations, or to remove the effect of star-forming galaxies. We use large datasets to improve the uncertainty of RLFs and subdivide RLFs by the infrared properties of the population in \autoref{cha:rlfs}.
 
-    With large datasets, highly unusual or rare objects are more likely to be included. Much of astronomy has been pushed forward by serendipitous discoveries, and (provided we have some way of combing through the dataset) large datasets should provide a wealth of such discoveries to be found. These may be found either through identifying objects where statistical methods seem to fail, or perhaps through direct searches \citep{norris17unexpected}. By applying machine learning techniques, we found a number of new, rare giant radio galaxies in \autoref{cha:rlfs}.
+    With large datasets, highly unusual or rare objects are more likely to be included. Much of astronomy has been pushed forward by serendipitous discoveries, and (provided we have some way of combing through the dataset) large datasets should provide a wealth of such discoveries to be found. These may be found either through identifying objects where statistical methods seem to fail, or perhaps through direct searches \citep{norris17unexpected}. By applying machine learning techniques, we \DIFdelbegin \DIFdel{found }\DIFdelend \DIFaddbegin \DIFadd{find }\DIFaddend a number of new, rare giant radio galaxies in \autoref{cha:rlfs}.
 
-    But with the benefits of big data come new challenges. At these new scales, the ability to store all of our science data is no longer a given. Many methods that previously had the luxury to run over a whole dataset at their own pace will now need to process data on-the-fly. This is in contrast to how most science observations are currently performed, with new discoveries coming from legacy surveys many years after they were conducted. Many discoveries are unplanned, and losing the ability to make serendipitous discoveries would be a major blow to astronomy \citep{norris17unexpected}: how can we deal with so much data but still retain the ability to discover the unknown? Even with storage, the scale is tremendous: FIRST, for example, contains around 900~000 sources, of which very few were manually labelled. Over 10~000 volunteers labelled interesting objects in FIRST over four years of the Radio Galaxy Zoo project, with 75~000 aggregated labels passing quality assurance testing. While a phenomenal and, in radio, unparalleled labelling effort, it pales in comparison to the estimated 70~000~000 sources that EMU will find \citep{banfield15}.
+    But with the benefits of big data come new challenges. At these new scales, the ability to store all of our science data is no longer a given. Many methods that previously had the luxury to run over a whole dataset at their own pace will now need to process data on-the-fly. This is in contrast to how most science observations are currently performed, with new discoveries coming from legacy surveys many years after they were conducted. Many discoveries are unplanned, and losing the ability to make serendipitous discoveries would be a major blow to astronomy \citep{norris17unexpected}: \DIFdelbegin \DIFdel{how }\DIFdelend \DIFaddbegin \DIFadd{How }\DIFaddend can we deal with so much data but still retain the ability to discover the unknown? Even with storage, the scale is tremendous: FIRST, for example, contains around 900~000 sources, of which very few were manually labelled. Over 10~000 volunteers labelled interesting objects in FIRST over four years of the Radio Galaxy Zoo project, with 75~000 aggregated labels passing quality assurance testing. While a phenomenal and, in radio, unparalleled labelling effort, it pales in comparison to the estimated 70~000~000 sources that EMU will find \citep{banfield15}.
 
 \section{Machine learning in astronomy}
 \label{sec:ml-in-astro}
 
-    Machine learning is the process and practice of designing algorithms that automatically find and exploit useful patterns in data \citep{deisenroth_mathematics_2020}. It is best suited for scenarios where these patterns are hard to encode by hand. Typically hard-to-describe problems might include data exploration, data visualisation, or interpolation. We face a deluge of data, and our existing methods for data analysis and astronomical discovery are hard to automate due to the often complex, \DIFdelbegin \DIFdel{visual }\DIFdelend \DIFaddbegin \DIFadd{imagery-based }\DIFaddend nature of much of astronomy. This is where machine learning comes in: if we can find a way to encode the processes underpinning astronomy as algorithms, we could apply them at scale. Machine learning has found much success in other fields with similar difficult-to-describe problems like image classification and outlier identification.
+    Machine learning is the process and practice of designing algorithms that automatically find and exploit useful patterns in data \citep{deisenroth_mathematics_2020}. It is best suited for scenarios where these patterns are hard to encode by hand. Typically hard-to-describe problems might include data exploration, data visualisation, or interpolation. We face a deluge of data, and our existing methods for data analysis and astronomical discovery are hard to automate due to the often complex, \DIFdelbegin \DIFdel{visual }\DIFdelend \DIFaddbegin \DIFadd{imagery-based }\DIFaddend nature of much of astronomy. This is where machine learning comes in: \DIFdelbegin \DIFdel{if we can }\DIFdelend \DIFaddbegin \DIFadd{If we could }\DIFaddend find a way to encode the processes underpinning astronomy as algorithms, we could apply them at scale. Machine learning has found much success in other fields with similar difficult-to-describe problems like image classification and outlier identification.
 
-    From the other direction, machine learning finds interesting and unique applications in radio astronomy. Radio images are usually quite different from images in the typical image analysis problems faced in computer science. Standard assumptions are frequently broken: noise is correlated across the image, objects can be different shapes when viewed at different wavelengths, and the number of colours in an image may be in the hundreds. Data points are spatially located and can be close together or far apart in ways that are not solely based on how they look or behave. We often do not have the option of obtaining more data, sometimes because it is prohibitively expensive (e.g. to undertake a new survey) and sometimes because it simply does not exist (as we only have one Universe to look at or because the event is a transient one-off). The burgeoning field of astroinformatics promises to prove interesting.
+    From the other direction, machine learning finds interesting and unique applications in radio astronomy. Radio images are usually quite different from images in the typical image analysis problems faced in computer science. Standard assumptions are frequently broken: \DIFdelbegin \DIFdel{noise }\DIFdelend \DIFaddbegin \DIFadd{Noise }\DIFaddend is correlated across the image, objects can be different shapes when viewed at different wavelengths, and the number of colours in an image may be in the hundreds. Data points are spatially located and can be close together or far apart in ways that are not solely based on how they look or behave. We often do not have the option of obtaining more data, sometimes because it is prohibitively expensive (e.g. to undertake a new survey) and sometimes because it simply does not exist (as we only have one Universe to look at or because the event is a transient one-off). The burgeoning field of astroinformatics promises to prove interesting.
 
 \section{How this thesis fits in}
 \label{sec:how-this-fits}
 
-    Current methods of identifying radio sources in wide-area radio surveys work best for compact, isolated objects. As resolution and depth of radio surveys increases in the lead-up to the SKA, these limitations are becoming more apparent: resolution increases apparent complexity and depth increases the number of radio sources visible in any given patch of sky.
+    Current methods of identifying radio sources in wide-area radio surveys work best for compact, isolated objects. As resolution and depth of radio surveys \DIFdelbegin \DIFdel{increases }\DIFdelend \DIFaddbegin \DIFadd{increase }\DIFaddend in the lead-up to the SKA, these limitations are becoming more apparent: \DIFdelbegin \DIFdel{resolution }\DIFdelend \DIFaddbegin \DIFadd{Resolution }\DIFaddend increases apparent complexity and depth increases the number of radio sources visible in any given patch of sky.
 
     Source identification is critical for analysis of radio sources in large-scale surveys whether one is interested in individual sources or their bulk properties. Without solving issues like cross-identification and Faraday complexity we will not be able to make full use of the SKA when it arrives. As we will discuss in \autoref{sec:xid}, cross-identification of radio sources with their counterparts in infrared or optical is key to understanding these sources. Many \DIFaddbegin \DIFadd{radio }\DIFaddend galaxy properties can only be derived from \DIFaddbegin \DIFadd{non-radio }\DIFaddend observations of the galaxy, the stellar component of which can be traced by emission in the infrared and optical. This can yield properties including distance, star formation rate, and even mass of the central black hole powering the radio source itself. We develop an automated machine learning method for cross-identification in \autoref{cha:cross-id} and apply it to obtain physical results in \autoref{cha:rlfs}.
 
@@ -700,9 +700,9 @@ This thesis concerns applications of machine learning to radio astronomy for the
 \section{Thesis outline}
 \label{sec:outline}
 
-We begin by introducing key concepts from radio astronomy in \autoref{cha:background}, including radio active galactic nuclei (AGN), as well as motivations for and difficulties in cross-identifying observed radio emission from AGN. \autoref{cha:background-ml} introduces machine learning and describes the machine learning background required for the remainder of the thesis. These chapters together comprise the background knowledge.
+We begin by introducing key concepts from radio astronomy in \autoref{cha:background}, including radio active galactic nuclei (AGN), as well as motivations for and difficulties in cross-identifying observed radio emission from AGN. \DIFaddbegin \DIFadd{In }\DIFaddend \autoref{cha:background-ml} \DIFdelbegin \DIFdel{introduces }\DIFdelend \DIFaddbegin \DIFadd{we introduce }\DIFaddend machine learning and \DIFdelbegin \DIFdel{describes }\DIFdelend \DIFaddbegin \DIFadd{describe }\DIFaddend the machine learning background required for the remainder of the thesis. These chapters together comprise the background knowledge.
 
-\autoref{cha:cross-id} is my paper \emph{Radio Galaxy Zoo: Machine learning for radio source host galaxy cross-identification} \citep{alger18radio}. This chapter describes a new, machine learning method for cross-identifying extended radio emission with host galaxies in the infrared. We apply this approach to cross-identifying all extended radio sources in the Faint Images of the Radio Sky at Twenty Centimeters radio survey \citep[FIRST;][]{becker95first} with their infrared counterparts in All\emph{WISE} \citep{cutri2013wiseexplanatory} and use the resulting catalogue of cross-identifications to create a fractional radio luminosity function in \autoref{cha:rlfs}, which itself is my paper \emph{Radio Galaxy Zoo: Radio luminosity functions of extended sources} \citep{alger21rlfs}. \autoref{cha:faraday} is my paper \emph{Interpretable Faraday Complexity Classification} \citep{alger2021interpretable}, which introduces an interpretable method for classifying radio emission as Faraday complex or simple, which could be used to identify whether it is an extended source that is below the resolution limit. \autoref{cha:conc} provides a discussion of the insights gained from the findings of this thesis and suggests future directions for research building on our results.
+\autoref{cha:cross-id} is my paper \emph{Radio Galaxy Zoo: Machine learning for radio source host galaxy cross-identification} \citep{alger18radio}. This chapter describes a new \DIFdelbegin \DIFdel{, }\DIFdelend machine learning method for cross-identifying extended radio emission with host galaxies in the infrared. We apply this approach to cross-identifying all extended radio sources in the Faint Images of the Radio Sky at Twenty Centimeters radio survey \citep[FIRST;][]{becker95first} with their infrared counterparts in All\emph{WISE} \citep{cutri2013wiseexplanatory} and use the resulting catalogue of cross-identifications to create a fractional radio luminosity function in \autoref{cha:rlfs}, which itself is my paper \emph{Radio Galaxy Zoo: Radio luminosity functions of extended sources} \citep{alger21rlfs}. \autoref{cha:faraday} is my paper \emph{Interpretable Faraday Complexity Classification} \citep{alger2021interpretable}, which introduces an interpretable method for classifying radio emission as Faraday complex or simple, which could be used to identify whether it is an extended source that is below the resolution limit. \DIFaddbegin \DIFadd{In }\DIFaddend \autoref{cha:conc} \DIFdelbegin \DIFdel{provides }\DIFdelend \DIFaddbegin \DIFadd{we provide }\DIFaddend a discussion of the insights gained from the findings of this thesis and \DIFdelbegin \DIFdel{suggests }\DIFdelend \DIFaddbegin \DIFadd{suggest }\DIFaddend future directions for research building on our results.
 
 \section{Contributions}
 \label{sec:contributions}
@@ -752,7 +752,7 @@ I also gave a number of conference talks:
 \chapter{Radio Sources}
 \label{cha:background}
 
-    As its title suggests, this thesis is focused on the identification of extended radio sources. This chapter introduces extended radio sources, describing what we see when we look at the sky with radio eyes and radio telescopes. We will discuss the different kinds of radio sources that we can observe, how they are distributed throughout the Universe, and key issues surrounding their identification. We will start by looking at the extragalactic radio sky, introducing what it is we see through radio telescopes (\autoref{sec:extragalactic-radio-sky}). Then, we will describe the physics behind radio emission, including the emission mechanisms that allow us to observe active galactic nuclei in radio, and how radio polarisation can help us determine aspects of distant magnetic fields (\autoref{sec:radio-astronomy}). From there we will turn to active galactic nuclei as they will be the objects of interest in this thesis (\autoref{sec:agn}): what do they look like, how are they structured, and what do they do? Finally, we will cover three different tasks we may face when presented with a collection of observed AGN, including classification (\autoref{sec:classification-of-agn}), cross-identification (\autoref{sec:xid}), and source aggregation (\autoref{sec:aggregation}).
+    As its title suggests, this thesis \DIFdelbegin \DIFdel{is focused }\DIFdelend \DIFaddbegin \DIFadd{focuses }\DIFaddend on the identification of extended radio sources. This chapter introduces extended radio sources, describing what we see when we look at the sky with radio eyes and radio telescopes. We will discuss the different kinds of radio sources that we can observe, how they are distributed throughout the Universe, and key issues surrounding their identification. We will start by looking at the extragalactic radio sky, introducing what it is \DIFaddbegin \DIFadd{that }\DIFaddend we see through radio telescopes (\autoref{sec:extragalactic-radio-sky}). Then, we will describe the physics behind radio emission, including the emission mechanisms that allow us to observe active galactic nuclei in radio, and how radio polarisation can help us determine aspects of distant magnetic fields (\autoref{sec:radio-astronomy}). From there we will turn to active galactic nuclei as they \DIFdelbegin \DIFdel{will be }\DIFdelend \DIFaddbegin \DIFadd{are }\DIFaddend the objects of interest in this thesis (\autoref{sec:agn}): \DIFdelbegin \DIFdel{what }\DIFdelend \DIFaddbegin \DIFadd{What }\DIFaddend do they look like, how are they structured, and what do they do? Finally, we will cover three different tasks we may face when presented with a collection of observed AGN, including classification (\autoref{sec:classification-of-agn}), cross-identification (\autoref{sec:xid}), and source aggregation (\autoref{sec:aggregation}).
 
     \begin{figure}[ht]
         \includegraphics[width=\textwidth]{images/gleam.jpg}
@@ -763,17 +763,17 @@ I also gave a number of conference talks:
 \label{sec:extragalactic-radio-sky}
 
     The extragalactic sky appears quite different at different wavelengths. While an optical observer may look at a distant galaxy and see spirals and halos, an infrared observer will see discs and dust. What does the radio astronomer see? 
-    \autoref{fig:gleam} shows a false-colour image of the radio sky from 72--231~MHz. The plane of the Milky Way is clearly visible through the centre, but nearly every other object in this image is a galaxy. These galaxies fall into two main categories: those that emit radio due to star formation (called \defn{star-forming galaxies}), and those that emit radio due to \defn{active galactic nuclei} (AGN; called \defn{radio galaxies} in this thesis). AGN can be observed at many frequencies: for the remainder of this thesis, except where otherwise noted, `AGN' refers to \emph{radio} `AGN'.
+    \autoref{fig:gleam} shows a false-colour image of the radio sky from 72--231~MHz. The plane of the Milky Way is clearly visible through the centre, but nearly every other object in this image is a galaxy. These galaxies fall into two main categories: those that emit radio due to star formation (called \defn{star-forming galaxies}), and those that emit radio due to \defn{active galactic nuclei} (AGN; called \defn{radio galaxies} in this thesis). AGN can be observed at many frequencies: \DIFdelbegin \DIFdel{for }\DIFdelend \DIFaddbegin \DIFadd{For }\DIFaddend the remainder of this thesis, except where otherwise noted, `AGN' refers to \emph{radio} \DIFdelbegin \DIFdel{`AGN'}\DIFdelend \DIFaddbegin \DIFadd{AGN}\DIFaddend .
 
-    Non-AGN emission from distant galaxies traces the recent star-formation rate (SFR). Besides low-power thermal emission, stellar radio emission from galaxies mainly comes from massive ($\gtrapprox 8$ M$_\odot$) stars, through two emission mechanisms. The first is through H~II regions, which are ionised by such stars. The ionised electrons emit bremsstrahlung radiation at radio wavelengths. The second emission mechanism is supernovae. Massive stars may end their lives in Type II and Type Ib supernovae, which can result in supernova remnants. \DIFdelbegin \DIFdel{These remnants emit }\DIFdelend \DIFaddbegin \DIFadd{Interaction of the supernova remnant with the interstellar medium (ISM) causes the emission of }\DIFaddend synchrotron radiation. Massive stars like these are short-lived (a few $10^6$ yr), and the corresponding emitting electrons have similarly short lifetimes ($\lessapprox 10^8$ yr). The radio effects of these stars are therefore also short-lived, which is why radio emission traces the recent SFR \citep{condon92radio}. Star formation-associated emission is mainly found in the disc of spiral galaxies, as this is where the star formation rate is highest. In particular, there is no star-forming radio emission extending outside of the galaxy proper. The radio power emitted by these galaxies at 1.4~GHz is on the order of $10^{18}$--$10^{23}$~W~Hz$^{-1}$ \citep{condon92radio}. For a radio survey like the NRAO VLA Sky Survey \citep[NVSS;][]{condon98nvss}, with a detection limit of 2.3~mJy, this luminosity range corresponds to a maximum redshift range of $0.0004$--$0.1272$ (corresponding to $6\times10^6$--$1.646\times10^9$ yr lookback time\footnote{Assuming cosmological parameters from \autoref{cha:rlfs}. Calculated using \citetitle{wright2006ned} \citep{wright2006ned}.}). Upcoming surveys such as the Evolutionary Map of the Universe \citep[EMU;][]{norris11}, with 5$\sigma$ detection thresholds of 50~$\upmu${}Jy \citep{norris11}, will push this redshift range to $0.0030$--$0.6684$ (corresponding to $4.2\times10^7$--$6.261\times10^9$ yr lookback time).
+    Non-AGN emission from distant galaxies traces the recent star-formation rate (SFR). Besides low-power thermal emission, stellar radio emission from galaxies mainly comes from massive ($\gtrapprox 8$ M$_\odot$) stars \DIFdelbegin \DIFdel{, }\DIFdelend through two emission mechanisms. The first is through H~II regions, which are ionised by such stars. The ionised electrons emit bremsstrahlung radiation at radio wavelengths. The second emission mechanism is supernovae. Massive stars may end their lives in Type II and Type Ib supernovae, which can result in supernova remnants. \DIFdelbegin \DIFdel{These remnants emit }\DIFdelend \DIFaddbegin \DIFadd{Interaction between the supernova remnant and the interstellar medium (ISM) causes the emission of }\DIFaddend synchrotron radiation. Massive stars like these are short-lived (a few $10^6$ yr), and the corresponding emitting electrons have similarly short lifetimes ($\lessapprox 10^8$ yr). The radio effects of these stars are therefore also short-lived, which is why radio emission traces the recent SFR \citep{condon92radio}. Star formation-associated emission is mainly found in the \DIFdelbegin \DIFdel{disc }\DIFdelend \DIFaddbegin \DIFadd{discs }\DIFaddend of spiral galaxies, as this is where the star formation rate is highest. In particular, there is no star-forming radio emission extending outside of the galaxy proper. The radio power emitted by these galaxies at 1.4~GHz is on the order of $10^{18}$--$10^{23}$~W~Hz$^{-1}$ \citep{condon92radio}. For a radio survey like the NRAO VLA Sky Survey \citep[NVSS;][]{condon98nvss}, with a detection limit of 2.3~mJy, this luminosity range corresponds to a maximum redshift range of $0.0004$--$0.1272$ (corresponding to $6\times10^6$--$1.646\times10^9$ yr lookback time\footnote{Assuming cosmological parameters from \autoref{cha:rlfs}. Calculated using \citetitle{wright2006ned} \citep{wright2006ned}.}). Upcoming surveys such as the Evolutionary Map of the Universe \citep[EMU;][]{norris11}, with 5$\sigma$ detection thresholds of 50~$\upmu${}Jy \citep{norris11}, will push this redshift range to $0.0030$--$0.6684$ (corresponding to $4.2\times10^7$--$6.261\times10^9$ yr lookback time).
 
     AGN are energetic objects at the centre of galaxies, powered by accretion into supermassive black holes. The extended, strongly-magnetised plasma they eject emits synchrotron radiation from accelerating relativistic electrons, which is what we see when we observe a radio galaxy. The radio luminosity of a radio galaxy can range from $10^{20}$--$10^{28}$ W~Hz$^{-1}$ \citep{pracy16rlf} at 1.4~GHz, making them some of the most luminous objects in the Universe. They are therefore visible throughout the Universe, with the most distant AGN detected at a redshift of 7.5 \citep{banados_800-million-solar-mass_2018}. Depending on the orientation and type of AGN, as well as its interaction with its host galaxy, the radio emission may extend far beyond the galaxy itself---up to megaparsec scales---and this emission may have complex structure. Perhaps the most impressive local example is Centaurus A (Cen A), the prominent double-lobed cloud in the upper-right of \autoref{fig:gleam} extending over 8 degrees across the sky. \autoref{sec:agn} discusses AGN in more detail.
 
-    Most \DIFdelbegin \DIFdel{radio galaxies are }\DIFdelend \DIFaddbegin \DIFadd{AGN emission is }\DIFaddend compact and unresolved in any given radio survey due to the distance at which \DIFdelbegin \DIFdel{they }\DIFdelend \DIFaddbegin \DIFadd{it }\DIFaddend can be detected and \DIFdelbegin \DIFdel{their }\DIFdelend \DIFaddbegin \DIFadd{the }\DIFaddend orientation or type \DIFaddbegin \DIFadd{of the galaxy}\DIFaddend . This means that \DIFdelbegin \DIFdel{their }\DIFdelend \DIFaddbegin \DIFadd{observed }\DIFaddend structure does not always help to distinguish AGN radio emission from star-forming radio emission. How can we tell these apart? Synchrotron emission has a considerably steeper spectral index than bremsstrahlung, but synchrotron emission dominates the bremsstrahlung in star-forming galaxies at 1.4~GHz \citep{condon92radio}. Truly star-forming galaxies can be distinguished from AGN host galaxies by using optical spectroscopy \citep[e.g.][]{mauch07rlf,groves_distinguishing_2007}, but radio emission is detectable at much greater distances than good quality optical spectra can be obtained at, making this solution impractical for many galaxies. Separating star-forming galaxies from AGN host galaxies at radio wavelengths remains a difficult problem in radio astronomy.
+    Most \DIFdelbegin \DIFdel{radio galaxies are }\DIFdelend \DIFaddbegin \DIFadd{AGN emission is }\DIFaddend compact and unresolved in any given radio survey due to the distance at which \DIFdelbegin \DIFdel{they }\DIFdelend \DIFaddbegin \DIFadd{it }\DIFaddend can be detected and \DIFdelbegin \DIFdel{their }\DIFdelend \DIFaddbegin \DIFadd{the }\DIFaddend orientation or type \DIFaddbegin \DIFadd{of the galaxy}\DIFaddend . This means that \DIFdelbegin \DIFdel{their }\DIFdelend \DIFaddbegin \DIFadd{observed }\DIFaddend structure does not always help to distinguish AGN radio emission from star-forming radio emission. How can we tell these apart? Synchrotron emission has a considerably steeper spectral index than bremsstrahlung, but synchrotron emission dominates the bremsstrahlung in star-forming galaxies at 1.4~GHz \citep{condon92radio}. Truly star-forming galaxies can be distinguished from AGN host galaxies by using optical spectroscopy \citep[e.g.][]{mauch07rlf,groves_distinguishing_2007}, but radio emission is detectable at much greater distances than \DIFaddbegin \DIFadd{those at which }\DIFaddend good quality optical spectra can be obtained\DIFdelbegin \DIFdel{at}\DIFdelend , making this solution impractical for many galaxies. Separating star-forming galaxies from AGN host galaxies at radio wavelengths remains a difficult problem in radio astronomy.
 
-    Polarised radio surveys can provide extra information. While radio emission due to star formation tends to not have detectable polarisation, AGN may be very strongly polarised. This makes polarisation an excellent indicator of whether a source is an AGN, though very incomplete: many AGN will also not have detectable polarisation, and the polarised intensity is usually less than ten per cent of the total radio intensity, meaning we detect far fewer polarised radio sources than we do radio sources in general.
+    Polarised radio surveys can provide extra information. While radio emission due to star formation tends to not have detectable polarisation, AGN may be very strongly polarised. This makes polarisation an excellent indicator of whether a source is an AGN, though very incomplete: \DIFdelbegin \DIFdel{many AGN will also }\DIFdelend \DIFaddbegin \DIFadd{Many AGN do }\DIFaddend not have detectable polarisation, and the polarised intensity is usually less than \DIFdelbegin \DIFdel{ten }\DIFdelend \DIFaddbegin \DIFadd{10 }\DIFaddend per cent of the total radio intensity, meaning we detect far fewer polarised radio sources than we do radio sources in general.
 
-    From the size scales described above, it should be clear that a survey of extended radio sources will be dominated by AGN. Nevertheless, star-forming galaxies present a significant part of the radio population, and the fraction of the radio sky they comprise varies significantly with survey parameters.
+    From the size scales described above, it should be clear that a survey of extended radio sources \DIFdelbegin \DIFdel{will be }\DIFdelend \DIFaddbegin \DIFadd{is }\DIFaddend dominated by AGN. Nevertheless, star-forming galaxies present a significant part of the radio population, and the fraction of the radio sky they comprise varies significantly with survey parameters.
 
 \section{Radio emission}
 \label{sec:radio-astronomy}
@@ -783,12 +783,16 @@ I also gave a number of conference talks:
     \subsection{Synchrotron radiation}
     \label{sec:synchrotron}
 
-        Most radio emission from radio galaxies is \defn{synchrotron radiation}, produced by relativistic charged particles accelerating in a magnetic field. A non-relativistic charged particle will spiral with a fixed angular frequency when it moves in a magnetic field in a process called \defn{gyro radiation}. Synchrotron radiation is a relativistic effect: it can be thought of as gyro radiation which has been Lorentz transformed to energies much greater than $mc^2$. The spectrum of \DIFaddbegin \DIFadd{optically thin }\DIFaddend synchrotron radiation follows a power law \citep{condon_essential_2016}:
+        Most radio emission from radio galaxies is \defn{synchrotron radiation}, produced by relativistic charged particles accelerating in a magnetic field. A non-relativistic charged particle \DIFdelbegin \DIFdel{will spiral }\DIFdelend \DIFaddbegin \DIFadd{spirals }\DIFaddend with a fixed angular frequency when it moves in a magnetic field in a process called \defn{gyro radiation}. Synchrotron radiation is a relativistic effect: \DIFdelbegin \DIFdel{it }\DIFdelend \DIFaddbegin \DIFadd{It }\DIFaddend can be thought of as gyro radiation which has been Lorentz transformed to energies much greater than $mc^2$. The spectrum of \DIFaddbegin \DIFadd{optically thin }\DIFaddend synchrotron radiation follows a power law \citep{condon_essential_2016}:
         \begin{equation}
             \label{eq:spectral-index}
             S(\nu) \propto \nu^{\alpha}.
         \end{equation}
-        where $\nu$ is the frequency of radiation and $\alpha$ is called the \defn{spectral index}\footnote{Note that the sign of $\alpha$ varies by convention, and both $S \propto \nu^{\alpha}$ and $S \propto \nu^{-\alpha}$ exist in the literature.}. It is related to the energy distribution of the emitting electrons: assuming that the electron energy distribution follows a power law \citep[which it generally does,][]{rybicki_radiative_2008}, where the number density of electrons at a given energy $E$ is given by
+        where $\nu$ is the frequency of radiation and $\alpha$ is called the \defn{spectral index}\footnote{Note that the sign of $\alpha$ varies by convention, and both $S \propto \nu^{\alpha}$ and $S \propto \nu^{-\alpha}$ exist in the literature.}. It is related to the energy distribution of the emitting electrons\DIFdelbegin \DIFdel{: assuming }\DIFdelend \DIFaddbegin \DIFadd{. Assuming }\DIFaddend that the electron energy distribution follows a power law \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\citep[which it generally does,][]{rybicki_radiative_2008}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\citep[which it generally does;][]{rybicki_radiative_2008}}\hspace{0pt}%DIFAUXCMD
+}\DIFaddend , where the number density of electrons at a given energy $E$ is given by
         \begin{equation}
             n(E) \propto E^\Gamma,
         \end{equation}
@@ -807,7 +811,7 @@ I also gave a number of conference talks:
         \begin{equation}
             \vec E = (\hat x E_x \exp(i \varphi_x) + \hat y E_y \exp(i \varphi_y)) \exp(i (\vec k \cdot \hat z - \omega t)).
         \end{equation}
-        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$, and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component, called \defn{Stokes parameters} \citep{stokes_composition_1851,condon_essential_2016}. These are:
+        In an astronomical context, $\hat z$ is the line-of-sight from the source of the radiation to the observer. $\vec k$ is the \defn{wave vector} which points in the direction of travel and has magnitude $2\pi/\lambda$, and $\omega = 2\pi\nu$ is the \defn{angular frequency}. $\varphi_x$ and $\varphi_y$ are the phase offsets of each component. As this wave propagates along the line-of-sight toward an observer, the electric field oscillates in an ellipse across the $x$--$y$ plane. When the two components are in phase, this ellipse is degenerate and the radiation is called \defn{linearly polarised}. When the two components are perfectly out of phase, the ellipse is a circle, and the radiation is called \defn{circularly polarised}. Of course, any ellipse in between these extremes is also possible. For this reason, we decompose the polarisation into linearly polarised components and a circularly polarised component \DIFdelbegin \DIFdel{, }\DIFdelend called \defn{Stokes parameters} \citep{stokes_composition_1851,condon_essential_2016}. These are:
         \begin{align}
             \label{eq:stokes-i}
             I &= \frac{1}{R_0} \mathbb E_t[E_x^2 + E_y^2],\\
@@ -818,12 +822,12 @@ I also gave a number of conference talks:
             \label{eq:stokes-v}
             V &= \frac{1}{R_0} \mathbb E_t[2 E_x^2 E_y^2 \sin (\varphi_x - \varphi_y)].
         \end{align}
-        $\mathbb E_t$ denotes the expectation value over time. $I$ is the \defn{total intensity} of the radiation. $Q$ and $U$ together describe the linear polarisation and together can be used to define the \defn{polarisation angle} $\chi$:
+        $\mathbb E_t$ denotes the expectation value over time. $I$ is the \defn{total intensity} of the radiation. $Q$ and $U$ together describe the linear polarisation and \DIFdelbegin \DIFdel{together can be }\DIFdelend \DIFaddbegin \DIFadd{are }\DIFaddend used to define the \defn{polarisation angle} $\chi$:
         \begin{equation}
             \label{eq:polarisation-angle}
             \tan (2 \chi) = \frac{U}{Q}.
         \end{equation}
-        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the contribution of circular polarisation is tremendously small, especially compared to that linear polarisation, and can be assumed to be zero \citep{rayner_radio_2000,saikia_polarization_1988}. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out: this is called \defn{unpolarised} or \defn{partially-polarised} radiation respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} $P$ and is given by
+        $V$ is the circular polarisation and describes the eccentricity of the ellipse. For most extragalactic sources, the contribution of circular polarisation is tremendously small, especially compared to that \DIFaddbegin \DIFadd{of }\DIFaddend linear polarisation, and can be assumed to be zero \citep{rayner_radio_2000,saikia_polarization_1988}. Incoherent radiation may be composed of radiation with many different polarisations, and these polarisations may fully or partially cancel out\DIFdelbegin \DIFdel{: this }\DIFdelend \DIFaddbegin \DIFadd{. This }\DIFaddend is called \defn{unpolarised} or \DIFdelbegin \DIFdel{\defn{partially-polarised} }\DIFdelend \DIFaddbegin \DIFadd{\defn{partially polarised} }\DIFaddend radiation respectively. The total intensity of polarised radiation is called the \defn{polarised intensity} $P$ and is given by
         \begin{equation}
             \label{eq:polarised-intensity}
             P^2 = Q^2 + U^2 + V^2.
@@ -833,7 +837,11 @@ I also gave a number of conference talks:
             p = \frac{P}{I}.
         \end{equation}
 
-        The synchrotron radiation from radio galaxies is polarised, though this polarisation is not always detectable as the polarised signal tends to be much weaker than the total intensity, on the order of ten per cent \citep{osullivan_magnetic_2015}. Additionally, the most common non-AGN cause for radio emission is star formation, which does not generally have detectable polarisation in extragalactic surveys. Polarisation is therefore an excellent way to confirm that a radio source is an AGN.
+        The synchrotron radiation from radio galaxies is polarised, though this polarisation is not always detectable as the polarised signal tends to be much weaker than the total intensity \DIFdelbegin \DIFdel{, on the order of ten per cent \mbox{%DIFAUXCMD
+\citep{osullivan_magnetic_2015}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\citep[on the order of 10 per cent;][]{osullivan_magnetic_2015}}\hspace{0pt}%DIFAUXCMD
+}\DIFaddend . Additionally, the most common non-AGN cause for radio emission is star formation, which does not generally have detectable polarisation in extragalactic surveys. Polarisation is therefore an excellent way to confirm that a radio source is an AGN.
 
         Polarisation can also be used to describe the magnetic structure of both the radio galaxy jets and lobes as well as the intervening medium. As polarised light from distant galaxies makes its way to us, magnetised plasma along the way can cause the polarisation angle to rotate due to the Faraday effect. The amount of rotation is called the \defn{Faraday depth} $\phi$, and is related to the electron density $n_e$ and the line-of-sight magnetic field strength $\vec B \cdot \hat{z}$ of the intervening medium:
         \begin{equation}
@@ -873,14 +881,14 @@ I also gave a number of conference talks:
             \label{eq:weighted-rm-synthesis}
             F(\phi) \approx \int_{-\infty}^\infty P(\lambda^2) W(\lambda^2) e^{-2i\lambda^2\phi}\ \mathrm{d}\lambda^2 = \sum_{j = 1}^J P(\lambda^2_j) W(\lambda^2_j) e^{-2i\lambda^2_j\phi}.
         \end{equation}
-        $P(\lambda^2_j)$ is the observed polarisation at the $j$th value of wavelength, $W(\lambda^2_j)$ is the corresponding $j$th weight, and $J$ is the total number of wavelengths for which measurements were taken. The weighting function $W$ is analogous to the weighting function in radio synthesis imaging. The most common choices of $W$ are 1) uniform weighting\footnote{The analogous weighting scheme in radio synthesis imaging would be natural weighting, rather than uniform---an unfortunate overlap in terminology.} with $W(\lambda_j^2) = 1$ for all nonzero values, and 2) weighting by the inverse variance at each wavelength.
+        $P(\lambda^2_j)$ is the observed polarisation at the $j$th value of wavelength, $W(\lambda^2_j)$ is the corresponding $j$th weight, and $J$ is the total number of wavelengths for which measurements were taken. The weighting function $W$ is analogous to the weighting function in radio synthesis imaging. The most common choices of $W$ are 1) uniform weighting\footnote{The analogous weighting scheme in radio synthesis imaging would be natural weighting \DIFdelbegin \DIFdel{, }\DIFdelend rather than uniform---an unfortunate overlap in terminology.} with $W(\lambda_j^2) = 1$ for all nonzero values, and 2) weighting by the inverse variance at each wavelength.
 
-        Of course, no physical source has a precise Faraday depth, as there is always intrinsic scatter. Along the line of sight, if we assume \DIFdelbegin \DIFdel{Gaussian noise in an otherwise-constant }\DIFdelend \DIFaddbegin \DIFadd{that }\DIFaddend $n_e$ \DIFaddbegin \DIFadd{is observed with random Gaussian noise }\DIFaddend i.e. $n_e(z) \sim \mathcal N(\overline n_e, \sigma_{n_e}^2)$, and \DIFdelbegin \DIFdel{a constant }\DIFdelend \DIFaddbegin \DIFadd{that }\DIFaddend $B$ \DIFaddbegin \DIFadd{is constant }\DIFaddend for simplicity, then we find
-        \begin{equation}
+        Of course, no physical source has a precise Faraday depth, as there is always intrinsic scatter. Along the \DIFdelbegin \DIFdel{line of sight}\DIFdelend \DIFaddbegin \DIFadd{line-of-sight}\DIFaddend , if we assume \DIFdelbegin \DIFdel{Gaussian noise in an otherwise-constant }\DIFdelend \DIFaddbegin \DIFadd{that }\DIFaddend $n_e$ \DIFaddbegin \DIFadd{is observed with random Gaussian noise }\DIFaddend i.e. $n_e(z) \sim \mathcal N(\overline n_e, \sigma_{n_e}^2)$, and \DIFdelbegin \DIFdel{a constant }\DIFdelend \DIFaddbegin \DIFadd{that }\DIFaddend $B$ \DIFaddbegin \DIFadd{is constant }\DIFaddend for simplicity, then we find\DIFaddbegin \DIFadd{:
+        }\DIFaddend \begin{equation}
             \phi \sim \mathcal N\left(\frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \overline n_e, \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} B \sigma_{n_e}^2\right),
         \end{equation}
-        that is, the depth has an uncertainty proportional to the magnetic field strength and the noise in $n_e$. A similar result follows for noise in $B$ only. There is no analytic solution for noise in both $B$ and $n_e$, but if we approximate the integrand as a Gaussian by calculating the mean and variance, we find
-        \begin{equation}
+        that is, the depth has an uncertainty proportional to the magnetic field strength and the noise in $n_e$. A similar result follows for noise in $B$ only. There is no analytic solution for noise in both $B$ and $n_e$, but if we approximate the integrand as a Gaussian by calculating the mean and variance, we find\DIFaddbegin \DIFadd{:
+        }\DIFaddend \begin{equation}
             \phi \sim \mathcal N\left(\frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \frac{\overline n_e \sigma_B^2 + \overline B \sigma_{n_e}^2}{\sigma_B^2 + \sigma_{n_e}^2}, \frac{e^3}{8\pi^2\epsilon_0m_e^2c^3} \frac{\sigma_{n_e}^2 \sigma_B^2}{\sigma_{n_e}^2 + \sigma_B^2}\right).
         \end{equation}
         We observe multiple lines-of-sight that are coalesced into one within the beam. Due to this noise, even with constant $n_e$ and $B$ across a source, we can see multiple Faraday depths as each line-of-sight is a sample from the above distribution.
@@ -945,7 +953,7 @@ I also gave a number of conference talks:
             \caption[Examples of a FRI and a FRII radio galaxy.]{\label{fig:fri-frii} Examples of (a) a FRI \citep{laing_rotation_1987} and (b) a FRII radio galaxy \citep{leahy_vla_1991}. Both are shown with an arcsinh stretch and were observed with the VLA.}
         \end{figure}
 
-        As powerful sources of radio emission, radio AGN and their associated extended structure can be seen throughout the Universe. Sufficiently close or large radio galaxies can be resolved by telescopes and their structure examined, while more distant or smaller radio galaxies may be unresolved and point-like. A well-resolved radio galaxy can be a striking thing: from the central AGN extend two opposing, tightly-collimated jets, which widen into huge lobes of radio-bright plasma. These lobes may have further structure, particularly bright regions called \defn{hot-spots}, and the jets and lobes may be bent and distorted as they travel away from their host galaxy. For any given radio galaxy, some of these features may or may not be present. In particular, radio galaxies are often divided into two classes based on the kinds of extended structure that are visible, called Fanaroff-Riley type I (FRI) and Fanaroff-Riley type II (FRII) radio galaxies. FRI have wavy, diffuse lobes, appearing brighter toward the host galaxy and dimming further out (e.g. \autoref{fig:m84}). FRII, on the other hand, have long, tightly-collimated jets and sharp-edged lobes with bright hot-spots \citep{urry95unified} at the very end of the lobes, and are brighter further away from the host galaxy (e.g. \autoref{fig:3C223}). FRII are also generally higher-luminosity \citep{fanaroff1974} than FRI, and therefore make up the majority of observed extended radio sources throughout the Universe. However, this is by no means the clear-cut divide it was once thought to be \citep{mingo_revisiting_2019} with the difference now being attributed largely to environmental effects rather than jet power. The current understanding is that FRII jets remain at relativistic energies up until the edge of the lobe, where they terminate in a shock that appears as a hot-spot, while FRI jets decelerate within the galaxy itself \citep{hardcastle20feedback}. This sharp difference in extended structure begins with environmental interactions at the very centre of the galaxy.
+        As powerful sources of radio emission, radio AGN and their associated extended structure can be seen throughout the Universe. Sufficiently close or large radio galaxies can be resolved by telescopes and their structure examined, while more distant or smaller radio galaxies may be unresolved and point-like. A well-resolved radio galaxy can be a striking thing: \DIFdelbegin \DIFdel{from }\DIFdelend \DIFaddbegin \DIFadd{From }\DIFaddend the central AGN extend two opposing, tightly-collimated jets, which widen into huge lobes of radio-bright plasma. These lobes may have further structure, particularly bright regions called \defn{hot-spots}, and the jets and lobes may be bent and distorted as they travel away from their host galaxy. For any given radio galaxy, some of these features may or may not be present. In particular, radio galaxies are often divided into two classes based on the kinds of extended structure that are visible, called Fanaroff-Riley type I (FRI) and Fanaroff-Riley type II (FRII) radio galaxies. FRI have wavy, diffuse lobes, appearing brighter toward the host galaxy and dimming further out (e.g. \autoref{fig:m84}). FRII, on the other hand, have long, tightly-collimated jets and sharp-edged lobes with bright hot-spots \citep{urry95unified} at the very end of the lobes, and are brighter further away from the host galaxy (e.g. \autoref{fig:3C223}). FRII are also generally higher-luminosity \citep{fanaroff1974} than FRI, and therefore make up the majority of observed extended radio sources throughout the Universe. However, this is by no means the clear-cut divide it was once thought to be \citep{mingo_revisiting_2019} with the difference now being attributed largely to environmental effects rather than jet power. The current understanding is that FRII jets remain at relativistic energies up until the edge of the lobe, where they terminate in a shock that appears as a hot-spot, while FRI jets decelerate within the galaxy itself \citep{hardcastle20feedback}. This sharp difference in extended structure begins with environmental interactions at the very centre of the galaxy.
 
         A radio galaxy can be tremendously extended, with increasingly many radio galaxies being found with a length of over one megaparsec. Such large galaxies are called \defn{giant radio galaxies}, but even non-giants are still quite big, regularly extending well outside the stellar component of the host galaxy. We will discuss the extended structure in \autoref{sec:extended-structure-of-agn}. \DIFdelbegin %DIFDELCMD < \autoref{sec:rlfs-giants} %%%
 \DIFdelend \DIFaddbegin \aref{sec:rlfs-giants} \DIFaddend lists some giants discovered during the work of this thesis.
@@ -982,9 +990,9 @@ I also gave a number of conference talks:
             \label{fig:interesting}
         \end{figure}
 
-        The strong interaction of AGN with their environment leads to a great variety of exotic-shaped radio galaxies. Some morphological classes of this `radio galaxy zoo' include X-shaped galaxies, which have two sets of lobes roughly perpendicular to each other; wide- and narrow-angled tail galaxies, which are bent about the core with large and small angles respectively; head-tail galaxies, which are so bent that the two lobes seem to be the same or nearly the same; double-doubles, which have two sets of lobes on each side; and many, many more. Some examples of radio galaxies with interesting structure are shown in \autoref{fig:interesting}. Large-scale automated identification of these galaxies can be tricky owing to their variety, extent, and often disconnected structure.
+        The strong interaction of AGN with their \DIFdelbegin \DIFdel{environment }\DIFdelend \DIFaddbegin \DIFadd{environments }\DIFaddend leads to a great variety of exotic-shaped radio galaxies. Some morphological classes of this `radio galaxy zoo' include X-shaped galaxies, which have two sets of lobes roughly perpendicular to each other; wide- and narrow-angled tail galaxies, which are bent about the core with large and small angles respectively; head-tail galaxies, which are so bent that the two lobes seem to be the same or nearly the same; double-doubles, which have two sets of lobes on each side; and many, many more. Some examples of radio galaxies with interesting structure are shown in \autoref{fig:interesting}. Large-scale automated identification of these galaxies can be tricky owing to their variety, extent, and often disconnected structure.
 
-        AGN cores tend to have flat or inverted spectral indices around -0.5--1 \citep{condon_essential_2016,randall_spectral_2012}. Moving out from the host galaxy, the spectral index steepens as the electrons are older and less energetic, with the spectral index of the lobes usually at about -0.7 \citep{condon_essential_2016}. The hot-spots of FRII galaxies have spectral indices between -0.5 -- -0.7, becoming shallower as the electrons reaccelerate. These are only general trends: the spectral structure within lobes can be very complex \citep{treichel_spectral_2001}. The jets do not strongly emit and are only detectable for particularly deep observations or nearby radio galaxies.
+        AGN cores tend to have flat or inverted spectral indices around -0.5--1 \citep{condon_essential_2016,randall_spectral_2012}. Moving out from the host galaxy, the spectral index steepens as the electrons are older and less energetic, with the spectral index of the lobes usually at about -0.7 \citep{condon_essential_2016}. The hot-spots of FRII galaxies have spectral indices between -0.5 -- -0.7, becoming shallower as the electrons reaccelerate. These are only general trends: \DIFdelbegin \DIFdel{the }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend spectral structure within lobes can be very complex \citep{treichel_spectral_2001}. The jets do not strongly emit and are only detectable for particularly deep observations or nearby radio galaxies.
 
     \subsection{The unified model}
     \label{sec:unified-model}
@@ -1009,7 +1017,7 @@ I also gave a number of conference talks:
     \subsection{Polarised structure}
     \label{sec:polarised-structure-of-agn}
 
-        The magnetic field of AGN is thought to be critical to their structure \citep{sikora_magnetic_2013}. A strong magnetic field is required to eject and collimate the jets \citep{lovelace_dynamo_1976} and the magnetic environment influences the structure of the jets \citep{osullivan_magnetic_2015}. Polarisation provides a probe for measuring this magnetic field. Radiative- and jet-mode AGN have different fractional polarisations, with jet-mode AGN having a much wider range of fractional polarisations ($p \sim [0, 30]$ per cent) compared to radiative-mode AGN (limited to $p \lessapprox 15$ per cent), with this difference attributable to the magnetic environment \citep{osullivan_magnetic_2015}. Steep-spectrum ($\alpha > 0.5$) and flat-spectrum ($\alpha < 0.5$) AGN have differing fractional polarisations, with steep-spectrum sources having much higher fractional polarisation for frequencies $> 5$~GHz and flat-spectrum sources having higher fractional polarisation for frequencies $< 1$~GHz due to frequency-dependent depolarisation of the steep-spectrum sources \citep{saikia_polarization_1988}. Hotspots of FRII radio galaxies have low polarisation ($<10$ per cent) while the more diffuse sections may have much greater polarisation ($>20$ per cent) \citep{saikia_polarization_1988}. The direction of the magnetic field is correlated with the direction of \DIFaddbegin \DIFadd{patterns in }\DIFaddend the total intensity of the source \citep{saikia_polarization_1988}.
+        The magnetic field of AGN is thought to be critical to their structure \citep{sikora_magnetic_2013}. A strong magnetic field is required to eject and collimate the jets \citep{lovelace_dynamo_1976} and the magnetic environment influences the structure of the jets \citep{osullivan_magnetic_2015}. Polarisation provides a probe for measuring this magnetic field. Radiative- and jet-mode AGN have different fractional polarisations, with jet-mode AGN having a much wider range of fractional polarisations ($p \sim [0, 30]$ per cent) compared to radiative-mode AGN (limited to $p \lessapprox 15$ per cent), with this difference attributable to the magnetic environment \citep{osullivan_magnetic_2015}. Steep-spectrum ($\alpha > 0.5$) and flat-spectrum ($\alpha < 0.5$) AGN have differing fractional polarisations, with steep-spectrum sources having much higher fractional polarisation for frequencies $> 5$~GHz and flat-spectrum sources having higher fractional polarisation for frequencies $< 1$~GHz due to frequency-dependent depolarisation of the steep-spectrum sources \citep{saikia_polarization_1988}. \DIFdelbegin \DIFdel{Hotspots }\DIFdelend \DIFaddbegin \DIFadd{Hot-spots }\DIFaddend of FRII radio galaxies have low polarisation ($<10$ per cent) while the more diffuse sections may have much greater polarisation ($>20$ per cent) \citep{saikia_polarization_1988}. The direction of the magnetic field is correlated with the direction of \DIFaddbegin \DIFadd{patterns in }\DIFaddend the total intensity of the source \citep{saikia_polarization_1988}.
 
     \subsection{AGN luminosity}
     \label{sec:agn-throughout}
@@ -1027,7 +1035,7 @@ I also gave a number of conference talks:
 
         AGN are an important part of galaxy evolution, though the exact mechanisms of this are not currently known. Understanding galaxy evolution requires understanding the links between it and AGN, and thus requires the study of AGN.
 
-        There are established relationships between AGN parameters and galaxy parameters: the mass of the central black hole is correlated with the stellar mass and velocity dispersion near the core in elliptical galaxies \citep{cattaneo_role_2009} as well as the luminosity of the bulge \citep{kormendy_inward_1995}. Massive galaxies seem to be more likely to contain an AGN rather than an inactive galactic nucleus \citep{hardcastle20feedback}. The large-scale behaviour of AGN (e.g. the Fanaroff-Riley divide) may be caused by interactions within the host galaxy \citep{hardcastle20feedback} and this interaction would be a significant energy contribution to the \DIFdelbegin \DIFdel{interstellar medium}\DIFdelend \DIFaddbegin \DIFadd{ISM}\DIFaddend .
+        There are established relationships between AGN parameters and galaxy parameters: \DIFdelbegin \DIFdel{the }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend mass of the central black hole is correlated with the stellar mass and velocity dispersion near the core in elliptical galaxies \citep{cattaneo_role_2009} as well as the luminosity of the bulge \citep{kormendy_inward_1995}. Massive galaxies seem to be more likely to contain an AGN rather than an inactive galactic nucleus \citep{hardcastle20feedback}. The large-scale behaviour of AGN (e.g. the Fanaroff-Riley divide) may be caused by interactions within the host galaxy \citep{hardcastle20feedback} and this interaction would be a significant energy contribution to the \DIFdelbegin \DIFdel{interstellar medium}\DIFdelend \DIFaddbegin \DIFadd{ISM}\DIFaddend .
 
         Perhaps the biggest topic in this field is that of \defn{AGN feedback}, the role of AGN in the enhancement or quenching of star formation within their host galaxies. Star formation requires cold gas; AGN can push gas out of the galaxy \citep{zubovas_clearing_2012} or heat it so that it can no longer form stars. But the rapid expansion of AGN jets can produce shocks in the local environment, compressing gas, triggering collapse of gas clouds, and potentially increasing the star formation rate \citep{zubovas_collapse_2014}.
 
@@ -1043,11 +1051,11 @@ I also gave a number of conference talks:
     \subsection{Statistical and manual classification of AGN}
     \label{sec:manual-classification}
 
-        Manual and statistical approaches to classifying AGN have dominated the radio astronomy literature until very recently, due to the comparative lack of computational power as well as a lack of good automated methods. Manual methods amount to examining the structure of a resolved source and determining its class: this is how we usually identify bent radio galaxies, head-tail radio galaxies, X-shaped radio galaxies, and those radio galaxies with more unusual morphologies. Statistical approaches identify properties of the source that can be combined and thresholded to separate the sources into categories en masse. Modern machine learning techniques for classification of radio sources can be thought of as an extension of these statistical methods, where the properties and their combinations are identified automatically, but we will discuss these separately in \autoref{sec:ml-classification-of-agn}.
+        Manual and statistical approaches to classifying AGN have dominated the radio astronomy literature until very recently, due to the comparative lack of computational power as well as a lack of good automated methods. Manual methods amount to examining the structure of a resolved source and determining its class\DIFdelbegin \DIFdel{: this }\DIFdelend \DIFaddbegin \DIFadd{. This }\DIFaddend is how we usually identify bent radio galaxies, head-tail radio galaxies, X-shaped radio galaxies, and those radio galaxies with more unusual morphologies. Statistical approaches identify properties of the source that can be combined and thresholded to separate the sources into categories en masse. Modern machine learning techniques for classification of radio sources can be thought of as an extension of these statistical methods, where the properties and their combinations are identified automatically, but we will discuss these separately in \autoref{sec:ml-classification-of-agn}.
 
         Arguably the most well-known radio classification scheme, FRI and FRII, was originally defined on well-resolved radio galaxies by computing the ratio of the distance between the regions of highest brightness on opposite lobes and the total extent of the radio emission \citep{fanaroff1974}. Sources with a ratio under 0.5 were called FRI and those with a ratio greater than 0.5 were called FRII. This classification has over time evolved into a less precise divide, with classification generally now morphological and based on the structure (diffuse, wavy plumes versus hot-spots and lobes for FRI and FRII respectively). The FRI and FRII divide has been further complicated by other related categorisations such as the so-called ``Fanaroff-Riley type 0'' sources which seem to be the lower end of a continuum of radio sources with diffuse plumes \citep{garofalo_fr0_2019,capetti_lofar_2020} as well as hybrid morphology radio sources (HyMoRS) which appear to be FRI on one side and FRII on the other \citep{gopal-krishna_extragalactic_2000,kapinska_radio_2017}. Many classes are defined by explicitly statistical means; for example, steep- and flat-spectrum sources are divided by spectral index at $\alpha = 0.5$ \citep{urry95unified}. For convenient analysis, radio sources are often also grouped into ``observational'' classes that don't have a physical analogue based on their apparent structure, e.g. the GLEAM survey classifies radio sources into the number of apparent components, which is highly dependent on the observational parameters \citep{white_gleam_2020}.
 
-        More unusual or more loosely defined classes, such as X-shaped radio galaxies and giants, have often been identified by manual searches through large datasets, e.g. \citet{cheung_first_2007,dabhade_search_2020} and notably the recent ROGUE I catalogue of 32~616 morphologically classified radio galaxies \citep{zywucka_catalogue_2020}. These searches are often aided by computer algorithms \citep[e.g.][]{proctor_morphological_2011,dabhade_search_2020}.
+        More unusual or more loosely defined classes, such as X-shaped radio galaxies and giants, have often been identified by manual searches through large datasets, e.g. \citet{cheung_first_2007,dabhade_search_2020}\DIFaddbegin \DIFadd{, }\DIFaddend and notably the recent ROGUE I catalogue of 32~616 morphologically classified radio galaxies \citep{zywucka_catalogue_2020}. These searches are often aided by computer algorithms \citep[e.g.][]{proctor_morphological_2011,dabhade_search_2020}.
 
         Radio sources are also more generally classified, such as into AGN or non-AGN emission \citep{koziel-wierzbowska_identifying_2020}, often using optical emission lines or optical/infrared magnitude.
 
@@ -1071,7 +1079,7 @@ I also gave a number of conference talks:
 \section{Cross-identification}
 \label{sec:xid}
 
-    \defn{Cross-identification} is the problem of matching an observed astronomical object at one wavelength with its counterpart in a survey at some other wavelength. Sometimes the counterpart in question can be obvious, such as when the object being matched is compact and well-aligned in both wavelengths. This is not the case for radio, though: radio galaxies can be very extended and, due to environmental interactions, this extended structure may be complicated and have no obvious relationship to the galaxy at other wavelengths. The galaxy itself in radio cross-identification is called the \defn{host galaxy} as it hosts the central AGN.
+    \defn{Cross-identification} is the problem of matching an observed astronomical object at one wavelength with its counterpart in a survey at some other wavelength. Sometimes the counterpart in question can be obvious, such as when the object being matched is compact and well-aligned in both wavelengths. This is not the case for radio, though: \DIFdelbegin \DIFdel{radio }\DIFdelend \DIFaddbegin \DIFadd{Radio }\DIFaddend galaxies can be very extended and, due to environmental interactions, this extended structure may be complicated and have no obvious relationship to the galaxy at other wavelengths. The galaxy itself in radio cross-identification is called the \defn{host galaxy} as it hosts the central AGN.
 
     \subsection{Why do we need to cross-identify?}
     \label{sec:xid-why}
@@ -1088,7 +1096,7 @@ I also gave a number of conference talks:
         \subsubsection{Positional matching}
         \label{sec:xid-posmatch}
 
-            The simplest automated method for cross-identification is simply to look for the closest optical or infrared galaxy to some radio emission, a strategy called \defn{positional matching} or \defn{nearest neighbours}\footnote{Not to be confused with the machine learning algorithm also called `nearest neighbours', which does not make an appearance in this thesis.}. The distance to the nearest potential host galaxy is usually limited to some small value, so that distant spurious relations are excluded. This distance is usually about $5''$ for infrared and $1''$ for optical but may be much further. Some authors modify this approach to selecting the nearest \emph{bright} galaxy or some other constraints \citep[e.g.][]{kimball08}. This approach generally works quite well for compact objects but extended radio structures may overlap with unrelated galaxies on the sky, leading to spurious cross-identifications.
+            The simplest automated method for cross-identification is simply to look for the closest optical or infrared galaxy to some radio emission, a strategy called \defn{positional matching} or \defn{nearest neighbours}\footnote{Not to be confused with the machine learning algorithm also called `nearest neighbours', which does not make an appearance in this thesis.}. The distance to the nearest potential host galaxy is usually limited to some small value, so that distant spurious relations are excluded. This distance is usually about $5''$ for infrared and $1''$ for optical but may be much further. Some authors modify this approach \DIFdelbegin \DIFdel{to }\DIFdelend \DIFaddbegin \DIFadd{by }\DIFaddend selecting the nearest \emph{bright} galaxy or \DIFaddbegin \DIFadd{adding }\DIFaddend some other constraints \citep[e.g.][]{kimball08}. This approach generally works quite well for compact objects but extended radio structures may overlap with unrelated galaxies on the sky, leading to spurious cross-identifications.
 
             The rate of spurious identification with this approach can be estimated by a simple model, assuming that the true host galaxy is not visible (either too faint or not nearby). Assume that a small circular region of the sky with radius $a$ contains $K$ potential host galaxies. The probability that a randomly selected potential host galaxy is within $r\ \mathrm{rad}$ of a given point is $r^2 / a^2$, with $r < a$. The probability of no potential host galaxy falling within $r\ \mathrm{rad}$ of a given point is therefore $(1 - r^2 / a^2)^K$ and the probability of coincidental cross-identification is $1 - (1 - r^2 / a^2)^K$. The All\emph{WISE} survey contains 747~634~026 infrared sources, over $4\pi\ \mathrm{sr}$, so it has an average source density of approximately $6 \times 10^7\ \mathrm{sr}^{-1}$. With $r = 5''$, and $a = 1^\circ$ (corresponding to an area of $9.57 \times 10^{-4}\ \mathrm{sr}$ and thus 57~420 sources), we have a coincidental cross-identification rate of 10.5 per cent when the host galaxy is not visible.
 
@@ -1102,9 +1110,9 @@ I also gave a number of conference talks:
 \section{Aggregating Radio Components}
 \label{sec:aggregation}
 
-    Unlike emission from galaxies observed at other wavelengths, the extended emission from radio galaxies can be disconnected when observed: a single radio galaxy may appear in observations as multiple discrete components. This is partly due to inhomogeneous emission over the radio galaxy structure---e.g. FRII hot-spots can be much brighter than the rest of the galaxy, so they might be visible while the rest of the galaxy is too faint to see---and partly due to the technique through which many radio observations are made, \defn{interferometry}, which may screen out diffuse emission.
+    Unlike emission from galaxies observed at other wavelengths, the extended emission from radio galaxies can be disconnected when observed: \DIFdelbegin \DIFdel{a }\DIFdelend \DIFaddbegin \DIFadd{A }\DIFaddend single radio galaxy may appear in observations as multiple discrete components. This is partly due to inhomogeneous emission over the radio galaxy structure---e.g. FRII hot-spots can be much brighter than the rest of the galaxy, so they \DIFdelbegin \DIFdel{might }\DIFdelend \DIFaddbegin \DIFadd{may }\DIFaddend be visible while the rest of the galaxy is too faint to see---and partly due to the technique through which many radio observations are made, \defn{interferometry}, which may screen out diffuse emission.
 
-    This potential of a radio galaxy to be split into multiple discrete blobs of emission also leads to a linguistic ambiguity not present at other wavelengths. A \defn{radio source} may be either a single physical object that emits radio, or a single blob of disconnected radio emission. The same is true for \defn{radio object}. There is no agreed-upon terminology. We will therefore adopt the following terminology from this point on, adapted from our paper \citep{alger18radio} based on the Radio Galaxy Zoo terminology: a \defn{radio source} or \defn{radio galaxy} refers to all radio emission observed that comes from a single physical object, and a \defn{radio component} refers to a single, contiguous region of radio emission above the noise level of an observation. We will avoid using \defn{radio object}. Note that in the literature a \defn{radio component} may be either a Gaussian fit to an observation or it may be a region of connected emission; in works where the former is the case (particularly in source-finding literature) the latter is often called a \defn{radio island}.
+    This potential of a radio galaxy to be split into multiple discrete blobs of emission also leads to a linguistic ambiguity not present at other wavelengths. A \defn{radio source} may be either a single physical object that emits radio, or a single blob of disconnected radio emission. The same is true for \defn{radio object}. There is no agreed-upon terminology. We will therefore adopt the following terminology from this point on, adapted from our paper \citep{alger18radio} based on the Radio Galaxy Zoo terminology: \DIFdelbegin \DIFdel{a }\DIFdelend \DIFaddbegin \DIFadd{A }\DIFaddend \defn{radio source} or \defn{radio galaxy} refers to all radio emission observed that comes from a single physical object, and a \defn{radio component} refers to a single, contiguous region of radio emission above the noise level of an observation. \DIFdelbegin \DIFdel{We will avoid using \defn{radio object}. }\DIFdelend Note that in the literature a \defn{radio component} may be either a Gaussian fit to an observation or it may be a region of connected emission; in works where the former is the case (particularly in source-finding literature) the latter is often called a \defn{radio island}.
 
     Since radio galaxies can appear disconnected, aggregating observed radio components into physical sources is integral to understanding radio galaxies. Aggregating disparate components into a single source is important for two reasons. Firstly, without all components, the total luminosity of a source is dramatically underestimated. Secondly, we need all components to accurately examine the morphology of the source.
 
@@ -1126,13 +1134,13 @@ I also gave a number of conference talks:
             \caption[A single dish telescope and a radio array.]{\label{fig:telescopes} (a) A single-dish telescope and (b) an array. Images: CSIRO.}
         \end{figure}
 
-        Radio observations may be made either with \defn{single-dish telescopes}, like the famous Parkes Radio Telescope (Murriyang), or \defn{radio arrays}, like the Australia Telescope Compact Array (ATCA), both shown in \autoref{fig:telescopes}. Both have their advantages. Single-dish telescopes are able to measure absolute brightnesses (while arrays can only measure relative brightnesses, and must therefore be calibrated to a source of known brightness). Interferometric arrays can achieve incredibly high resolution, as the resolution is inversely proportional to the distance between the most distant array elements (while the resolution of single dish telescopes is inversely proportional to the diameter of the dish).
+        Radio observations \DIFdelbegin \DIFdel{may be made either with }\DIFdelend \DIFaddbegin \DIFadd{are made with either }\DIFaddend \defn{single-dish telescopes}, like the famous Parkes Radio Telescope (Murriyang), or \defn{radio arrays}, like the Australia Telescope Compact Array (ATCA), both shown in \autoref{fig:telescopes}. Both have their advantages. Single-dish telescopes are able to measure absolute brightnesses (while arrays can only measure relative brightnesses, and must therefore be calibrated to a source of known brightness). Interferometric arrays can achieve incredibly high resolution, as the resolution is inversely proportional to the distance between the most distant array elements (while the resolution of single dish telescopes is inversely proportional to the diameter of the dish).
 
         Radio telescopes can be thought of as sampling the \defn{$u$-$v$ plane}, the Fourier transform of the sky. The $u$-$v$ plane is perpendicular to the line-of-sight. Each pair of antennae in an array samples two points on this plane, each corresponding to the vector between the antennae projected onto the $u$-$v$ plane, called a \defn{baseline}. Longer baselines therefore correspond to higher (spatial) frequencies, which is why long baselines provide high resolution. Diffuse emission is characterised mainly by low (spatial) frequency components, while compact emission is characterised by a broad range of frequency components\DIFdelbegin \DIFdel{, so }\DIFdelend \DIFaddbegin \DIFadd{. This means that }\DIFaddend large angular scale, diffuse emission both a) takes up less space on the $u$-$v$ plane than compact sources and b) occupies spaces much closer to the origin on the $u$-$v$ plane. Some intuition on this can be obtained by examining the Fourier transform of a 2D Gaussian:
         \begin{equation}
             \mathcal F_{x, y}\left[\frac{1}{2\pi\sigma^2} e^{-(x^2 + y^2) / 2\sigma^2}\right] = e^{-2\sigma^2 \pi^2(u^2 + v^2)}.
         \end{equation}
-        From this equation we can see that the Fourier transform of a fairly \emph{compact} Gaussian \DIFaddbegin \DIFadd{(small $\sigma$) }\DIFaddend would be quite broad, taking up many frequencies in the $u$-$v$ plane, while a very \emph{diffuse} Gaussian \DIFaddbegin \DIFadd{(large $\sigma$) }\DIFaddend would have a very narrow Fourier transform. The upshot of this is that long baselines sacrifice sensitivity to diffuse emission for high resolution. Single-dish radio telescopes are unable to make the same tradeoff, as they are only able to sample a disc centred on the origin\footnote{This is, incidentally, why single-dish telescopes can measure the absolute brightness while arrays cannot: there is no way to measure the origin in the $u$-$v$ plane as there is no way for two array antennae to be infinitely close together (forming a zero-length baseline), and the origin contains the absolute brightness information, much like how the centre of a Fourier transform contains the mean.}. This loss of larger scale diffuse emission is often called \defn{resolving out}. An example of this is shown in \autoref{fig:resolved-out}, where (a) and (b) are the same radio galaxy observed with the same telescope, the Very Large Array, with the only difference being that the VLA was in B configuration for (a) and the D configuration for (b). The B configuration moves the antennae of the VLA far apart, while the D configuration keeps them close together.
+        From this equation we can see that the Fourier transform of a fairly \emph{compact} Gaussian \DIFaddbegin \DIFadd{(small $\sigma$) }\DIFaddend would be quite broad, taking up many frequencies in the $u$-$v$ plane, while a very \emph{diffuse} Gaussian \DIFaddbegin \DIFadd{(large $\sigma$) }\DIFaddend would have a very narrow Fourier transform. The upshot of this is that long baselines sacrifice sensitivity to diffuse emission for high resolution. Single-dish radio telescopes are unable to make the same tradeoff, as they are only able to sample a disc centred on the origin\footnote{This is, incidentally, why single-dish telescopes can measure the absolute brightness while arrays cannot: \DIFdelbegin \DIFdel{there }\DIFdelend \DIFaddbegin \DIFadd{There }\DIFaddend is no way to measure the origin in the $u$-$v$ plane as there is no way for two array antennae to be infinitely close together (forming a zero-length baseline), and the origin contains the absolute brightness information, much like how the centre of a Fourier transform contains the mean.}. This loss of larger scale diffuse emission is often called \defn{resolving out}. An example of this is shown in \autoref{fig:resolved-out}, where (a) and (b) are the same radio galaxy observed with the same telescope, the Very Large Array, with the only difference being that the VLA was in \DIFaddbegin \DIFadd{the }\DIFaddend B configuration for (a) and the D configuration for (b). The B configuration moves the antennae of the VLA far apart, while the D configuration keeps them close together.
 
         \begin{figure}
             \centering
@@ -1152,17 +1160,17 @@ I also gave a number of conference talks:
     \subsection{Methods of aggregation}
     \label{sec:methods-aggregation}
 
-        Most large radio catalogues are of \emph{components} rather than sources, most likely because manual methods remain the best way to aggregate components into sources. Many component catalogues have source catalogues of some interesting subset later derived from them by manual inspection \citep[e.g.][]{dabhade_discovery_2017}. Such manual searches are often assisted by automated methods \citep[e.g.][]{proctor_morphological_2011}. The Radio Galaxy Zoo citizen science project has also, with the help of over 10~000 volunteers, aggregated over 75~000 sources from FIRST (Wong et al. in prep) and ATLAS \citep{banfield15}, which is one of the largest (if not the largest) extant catalogues of manually aggregated sources.
+        Most large radio catalogues are of \emph{components} rather than sources, most likely because manual methods remain the best way to aggregate components into sources. Many component catalogues have source catalogues of some interesting subset later derived from them by manual inspection \citep[e.g.][]{dabhade_discovery_2017}. Such manual searches are often assisted by automated methods \citep[e.g.][]{proctor_morphological_2011}. The Radio Galaxy Zoo citizen science project has also, with the help of over 10~000 volunteers, aggregated over 75~000 sources from FIRST (Wong et al. in prep\DIFaddbegin \DIFadd{.}\DIFaddend ) and ATLAS \citep{banfield15}, which is one of the largest (if not the largest) extant catalogues of manually aggregated sources.
 
-        Automated methods have been developing steadily as data volumes have grown. A Bayesian approach, fitting models of sources to component locations, was introduced by \citet{fan15} and later expanded upon \citep{fan_optimal_2020}. Machine learning methods have also become increasingly popular. \citet{proctor_selection_2016} aggregated radio components using a decision tree classifier and used the results to search for giant radio galaxies \citep[see also][]{proctor_morphological_2011,proctor06}. \citet{wu19claran} applied a deep learning model to identify radio sources from an image of radio components, training this model on the Radio Galaxy Zoo FIRST dataset. Most recently \citet{galvin_cataloguing_2020} used a nested self-organising map, a kind of neural network, to cluster similar sources and then aggregated them into sources using manual labelling of the clusters and some heuristics.
+        Automated methods have been developing steadily as data volumes \DIFdelbegin \DIFdel{have grown}\DIFdelend \DIFaddbegin \DIFadd{grow}\DIFaddend . A Bayesian approach, fitting models of sources to component locations, was introduced by \citet{fan15} and later expanded upon \citep{fan_optimal_2020}. Machine learning methods have also become increasingly popular. \citet{proctor_selection_2016} aggregated radio components using a decision tree classifier and used the results to search for giant radio galaxies \citep[see also][]{proctor_morphological_2011,proctor06}. \citet{wu19claran} applied a deep learning model to identify radio sources from an image of radio components, training this model on the Radio Galaxy Zoo FIRST dataset. Most recently \citet{galvin_cataloguing_2020} used a nested self-organising map, a kind of neural network, to cluster similar sources and then aggregated them into sources using manual labelling of the clusters and some heuristics.
 
-        Any method for cross-identification of components can also be used to aggregate components. Cross-identify all components with their host galaxies, then components that share a host are almost always part of the same radio source. It is this approach we will later take to aggregating sources in \autoref{cha:rlfs}. There is no obvious inverse algorithm (to go from aggregate sources to cross-identifications) although some algorithms attempt to solve both problems simultaneously \citep{fan_optimal_2020,fan15}.
+        Any method for cross-identification of components can also be used to aggregate components. Cross-identify all components with their host galaxies, then components that share a host are almost always part of the same radio source. It is this approach \DIFaddbegin \DIFadd{that }\DIFaddend we will later take to aggregating sources in \autoref{cha:rlfs}. There is no obvious inverse algorithm (to go from aggregate sources to cross-identifications) although some algorithms attempt to solve both problems simultaneously \citep{fan_optimal_2020,fan15}.
 
 
 \section{Summary: radio sources}
 \label{sec:summary-radio}
 
-    The radio sky is vibrant and exciting, and current and new wide-area radio surveys are opening up new avenues of exploring this space. In this chapter we introduced radio sources that you might see in the radio sky, including the often-extended AGN. We discussed their radio emission and emission mechanisms, and described some aspects of their morphology and structure. We also looked at ways that radio sources can be classified, aggregated, and cross-identified with their counterparts at other wavelengths. In the next chapter, we will introduce machine learning concepts that we will use to develop methods for exploiting the vast amount of data radio telescopes provide on radio sources.
+    The radio sky is vibrant and exciting, and current and new wide-area radio surveys are opening up new avenues of exploring this space. In this chapter we introduced radio sources that you might see in the radio sky, including the often-extended AGN. We discussed their radio emission and emission mechanisms, and described some aspects of their morphology and structure. We also looked at ways that radio sources can be classified, aggregated, and cross-identified with their counterparts at other wavelengths. In the next chapter, we will introduce machine learning concepts that we will use to develop methods for exploiting the vast amount of data \DIFaddbegin \DIFadd{that }\DIFaddend radio telescopes provide on radio sources.
 
     % \begin{itemize}
     %     \item machine learning in astronomy and radio astronomy (literature review)
@@ -1200,7 +1208,7 @@ I also gave a number of conference talks:
 \chapter{Machine Learning for Astroinformatics}
 \label{cha:background-ml}
 
-Machine learning was once described to me by an anonymous supervisor as ``the statistics kept at the back of the textbook''. But even accepting its grounding in statistics, is this really an accurate description of the field? I think of machine learning as a \DIFaddbegin \DIFadd{combination of three pieces: a }\DIFaddend data-driven way of formalising predictive problems\DIFdelbegin \DIFdel{and }\DIFdelend \DIFaddbegin \DIFadd{, a way of }\DIFaddend converting between different kinds of statistical problems, \DIFdelbegin \DIFdel{as well as an accompanying }\DIFdelend \DIFaddbegin \DIFadd{and a }\DIFaddend set of methods and practices for handling data and uncertainty. The eventual goal is to design some method or algorithm that automatically discovers useful patterns in (potentially very large) data sets. There are three core components of machine learning: the data, the model, and learning \citep{deisenroth_mathematics_2020}. Before discussing these, we will look at the kinds of problems that machine learning solves.
+Machine learning was once described to me by an anonymous supervisor as ``the statistics kept at the back of the textbook''. But even accepting its grounding in statistics, is this really an accurate description of the field? I think of machine learning as a \DIFaddbegin \DIFadd{combination of three pieces: a }\DIFaddend data-driven way of formalising predictive problems\DIFdelbegin \DIFdel{and }\DIFdelend \DIFaddbegin \DIFadd{, a way of }\DIFaddend converting between different kinds of statistical problems, \DIFdelbegin \DIFdel{as well as an accompanying }\DIFdelend \DIFaddbegin \DIFadd{and a }\DIFaddend set of methods and practices for handling data and uncertainty. The eventual goal is to design some method or algorithm that automatically discovers useful patterns in (potentially very large) \DIFdelbegin \DIFdel{data sets}\DIFdelend \DIFaddbegin \DIFadd{datasets}\DIFaddend . There are three core components of machine learning: the data, the model, and learning \citep{deisenroth_mathematics_2020}. Before discussing these, we will look at the kinds of problems that machine learning solves.
 
 \section{Prediction}
 
@@ -1218,36 +1226,36 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
 
         Some predictors can be described as a probabilistic model. In this case a predictor is a joint probability distribution between observations and hidden parameters \citep{deisenroth_mathematics_2020}. Using a probabilistic predictor allows us to formally describe and work with uncertainty both in the input space and output space. Such a predictor is usually parametrised by a finite set of parameters, which already includes most common probability distributions.
 
-        We will generally assume that our data are generated from some unobserved, true function called the \defn{groundtruth}. This might be a physical process, or a complicated sampling function from some unknown vector space. The assumptions we make on this generative function can greatly change the way we approach machine learning problems.
+        We \DIFdelbegin \DIFdel{will }\DIFdelend generally assume that our data are generated from some unobserved, true function called the \defn{groundtruth}. This might be a physical process, or a complicated sampling function from some unknown vector space. The assumptions we make on this generative function can greatly change the way we approach machine learning problems.
 
-        In some sense, the goal of machine learning is to identify a good predictor from within the space of all possible predictors. Of course, this begs the question: what is a `good' predictor? We will return to this when we discuss learning, but for now, a good predictor is one that approximates the groundtruth well.
+        In some sense, the goal of machine learning is to identify a good predictor from within the space of all possible predictors. Of course, this begs the question: \DIFdelbegin \DIFdel{what }\DIFdelend \DIFaddbegin \DIFadd{What }\DIFaddend is a `good' predictor? We will return to this when we discuss learning, but for now, a good predictor is one that approximates the groundtruth well.
 
     \subsection{Classification}
     \label{sec:classification}
 
         \defn{Classification} is the machine learning task of predicting discrete, unstructured values \citep{deisenroth_mathematics_2020}. These values are called \defn{classes}. Classification is arguably the most important prediction task, as many other problems can be formalised as classification. Astronomy has its fair share of classification tasks, from classical astronomy tasks like galaxy morphology classification \citep[appearing in machine learning literature as e.g.][]{dieleman15cnn} to transient detection \citep[e.g.][]{scalzo_skymapper_2017}; see \autoref{sec:classification-of-agn} for more examples.
 
-        A classification problem seeks a predictor where $\mathcal Y$ represents a finite, discrete set of classes. Classification tasks are usually delineated by the number of classes: there are either two classes or more than two classes. The former are called \defn{binary classification} tasks and the latter are \defn{multiclass classification} tasks. The reason for this split is that binary classes are dramatically easier to reason about and analyse, and many special cases exist for binary where they do not for multiclass.
+        A classification problem seeks a predictor where $\mathcal Y$ represents a finite, discrete set of classes. Classification tasks are usually delineated by the number of classes: \DIFdelbegin \DIFdel{there }\DIFdelend \DIFaddbegin \DIFadd{There }\DIFaddend are either two classes or more than two classes. The former are called \defn{binary classification} tasks and the latter are \defn{multiclass classification} tasks. The reason for this split is that binary classes are dramatically easier to reason about and analyse, and many special cases exist for binary where they do not for multiclass.
 
         $\mathcal Y$ for a binary task is usually represented as $\mathcal Y = \{0, 1\}$. $1$ is called the \defn{positive class}; $0$ is called the \defn{negative class}.
 
         An easy way to see why many tasks can be formalised as classification can be found by taking any prediction problem $\mathcal X \to \mathcal Y$ and reinterpreting it as the binary classification problem $\mathcal X \times \mathcal Y \to \{0, 1\}$, i.e. instead of taking an input and predicting an output, take an input and a potential output and determine if they should be related. Of course this is not always the most efficient way to solve a prediction problem but the many known properties of classification make it an appealing framework to cast problems into. In \autoref{cha:cross-id}, we will cast the radio astronomy problem of cross-matching galaxies seen in different wavelengths into a binary classification problem, and in \autoref{cha:faraday} we will classify radio observations as Faraday complex or Faraday simple.
 
-        There are three different formalisms for the output of a binary classifier. The output may be a \defn{score}, a \defn{class probability estimate}, or a \defn{predicted class}. A predicted class is what first comes to mind as a representation of binary classes: the classifier outputs either 0 or 1, with no way of representing ambiguity. A class probability estimate is a number from 0 to 1 which represents the probability that an example is in the positive class, i.e. if $f$ is a classifier then $f(x) = p(y = 1 \mid x)$. Class probability estimates may be output by probabilistic classifiers, or may be estimated from non-probabilistic classifiers. Finally, a score is a value that tends to be larger for elements of the positive class, with less ambiguous examples being given a higher score. Scores are often converted into class probability estimates by applying a sigmoid (see \autoref{sec:logistic-regression}). There are multiple ways to generalise these concepts to multiclass classification. Having a score or a class probability estimate can be more useful than only having a predicted class. For example, you could sort your examples by how likely they are to be a member of the positive class. This underpins our approach to casting cross-identification as binary classification in \autoref{cha:cross-id}.
+        There are three different formalisms for the output of a binary classifier. The output may be a \defn{score}, a \defn{class probability estimate}, or a \defn{predicted class}. A predicted class is what first comes to mind as a representation of binary classes: \DIFdelbegin \DIFdel{the }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend classifier outputs either 0 or 1, with no way of representing ambiguity. A class probability estimate is a number from 0 to 1 which represents the probability that an example is in the positive class, i.e. if $f$ is a classifier then $f(x) = p(y = 1 \mid x)$. Class probability estimates may be output by probabilistic classifiers, or may be estimated from non-probabilistic classifiers. Finally, a score is a value that tends to be larger for elements of the positive class, with less ambiguous examples being given a higher score. Scores are often converted into class probability estimates by applying a sigmoid (see \autoref{sec:logistic-regression}). There are multiple ways to generalise these concepts to multiclass classification. Having a score or a class probability estimate can be more useful than only having a predicted class. For example, you could sort your examples by how likely they are to be a member of the positive class. This underpins our approach to casting cross-identification as binary classification in \autoref{cha:cross-id}.
 
     \subsection{Regression}
     \label{sec:regression}
 
-        The other main kind of supervised prediction task is \defn{regression}, which is the machine learning task of predicting ordered (and usually continuous) values. In a regression problem, we seek a predictor where $\mathcal Y$ is a set of ordered values, usually a subset of $\mathbb R^k$ for some positive natural $k$. Regression is ubiquitous in astronomy, from simple linear relationships like the famous Tully-Fisher relation \citep{tully_new_1977} to estimation of redshifts from photometric observations \citep[called \defn{photometric redshifts}; first introduced by][]{baum_photoelectric_1962}. We will not directly address any regression problems in this thesis, but we will make use of their results.
+        The other main kind of supervised prediction task is \defn{regression}, which is the machine learning task of predicting ordered (and usually continuous) values. In a regression problem, we seek a predictor where $\mathcal Y$ is a set of ordered values, usually a subset of $\mathbb R^k$ for some positive natural $k$. Regression is ubiquitous in astronomy, from simple linear relationships like the famous Tully-Fisher relation \citep{tully_new_1977} to estimation of redshifts from photometric observations \citep[called \defn{photometric redshifts}; first introduced by][]{baum_photoelectric_1962}. \DIFdelbegin \DIFdel{We will }\DIFdelend \DIFaddbegin \DIFadd{This thesis does }\DIFaddend not directly address any regression problems\DIFdelbegin \DIFdel{in this thesis, but we will }\DIFdelend \DIFaddbegin \DIFadd{, but does }\DIFaddend make use of their results.
 
 \section{Data and representation}
 \label{sec:data-and-representation}
 
     Machine learning is centred on data and the extraction of useful information from that data. Data can include anything from numeric information, documents, or images, to spectra or galaxies. A collection of data is called a \defn{dataset} and an element of this dataset is (interchangably) called an \defn{example} or \defn{instance}. Generally, data are not easy to work with in their original form and must be converted into a numerical representation before use. We usually convert our data into real vectors in $\mathbb R^n$ as it is relatively easy to work with both numerically and analytically. Each axis of this vector space is called a \defn{feature} and the space as a whole is called the \defn{feature space}. Features are non-trivial to choose, and finding good features often requires the expertise of a human who is well-versed in the original dataset (a \defn{domain expert}). The process of finding features is called \defn{feature selection}, \defn{feature design}, or \defn{feature engineering}.
 
-    What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, easy to extract, behave nicely, and work well with our model. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on finding good methods to automatically develop features (generally called \defn{feature extraction}), and much early applied machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training (see \autoref{sec:cnns}). These deep learning features can be useful (e.g. when it is hard or slow to define good features manually), but are usually hard to interpret. A good feature space will have a structure that reflects the components of the intrinsic structure of the input data which are useful for the prediction task at hand. Good features may also be useful in other related tasks, such as dataset exploration, dataset visualisation, or other prediction tasks. \autoref{cha:faraday} largely focuses on finding good features for identifying Faraday complexity in polarised sources.
+    What makes a feature good? Intuitively, we want to transform our data into a space where it is easy to work with: a space where properties we care about are obvious, easy to extract, behave nicely, and work well with our model. For this reason, features will vary tremendously depending on the problem being faced, and the same data may be represented in many different ways. Much of early machine learning literature focused on finding good methods to automatically develop features (generally called \defn{feature extraction}), and much early applied machine learning focused on identifying these features manually so that good predictors could be easily found. An astronomical example is \citet{proctor06}, who developed features for representing radio galaxies for the purpose of sorting them. State-of-the-art models like deep neural networks \citep[e.g.][]{dieleman15cnn} can be viewed as developing their own task-specific features as part of their training (see \autoref{sec:cnns}). These deep learning features can be useful (e.g. when it is hard or slow to define good features manually), but are usually hard to interpret. A good feature space \DIFdelbegin \DIFdel{will have }\DIFdelend \DIFaddbegin \DIFadd{has }\DIFaddend a structure that reflects the components of the intrinsic structure of the input data which are useful for the prediction task at hand. Good features may also be useful in other related tasks, such as dataset exploration, dataset visualisation, or other prediction tasks. \autoref{cha:faraday} largely focuses on finding good features for identifying Faraday complexity in polarised sources.
 
-    \defn{Labels} comprise another very important piece of the machine learning puzzle. Training a predictor with supervised learning requires some known pairs of inputs and outputs, and the known outputs are called labels. Like features, labels also need to be encoded in some way, and this depends on the specific task. Much like features, we want to embed the labels into a space which is easy to work with and has a meaningful structure. For problems where we know the outputs we wish to obtain, this can be a lot simpler than feature selection. For example, a binary classification problem will have only two possible outputs. Common representations for this would be $\{0, 1\}$ as described in \autoref{sec:classification}, but we could also represent the labels as $\{[1, 0]^T, [0, 1]^T\}$, called a \defn{one-hot encoding}. The advantage of the former is its simplicity and ease of integration into binary classification equations, but the advantage of the latter is that it is easily extended into multiclass classification without imposing order on the classes. Despite being simpler to encode, labels can carry a lot more difficulty than features due to their comparative rarity: in essence, features are cheap and labels are expensive. We will discuss labels in more detail in \autoref{sec:labels}.
+    \defn{Labels} comprise another very important piece of the machine learning puzzle. Training a predictor with supervised learning requires some known pairs of inputs and outputs, and the known outputs are called labels. Like features, labels also need to be encoded in some way, and this depends on the specific task. Much like features, we want to embed the labels into a space which is easy to work with and has a meaningful structure. For problems where we know the outputs we wish to obtain, this can be a lot simpler than feature selection. For example, a binary classification problem \DIFdelbegin \DIFdel{will have }\DIFdelend \DIFaddbegin \DIFadd{has }\DIFaddend only two possible outputs. Common representations for \DIFdelbegin \DIFdel{this would be }\DIFdelend \DIFaddbegin \DIFadd{these are }\DIFaddend $\{0, 1\}$ as described in \autoref{sec:classification}, but we could also represent the labels as $\{[1, 0]^T, [0, 1]^T\}$, called a \defn{one-hot encoding}. The advantage of the former is its simplicity and ease of integration into binary classification equations, but the advantage of the latter is that it is easily extended into multiclass classification without imposing order on the classes. Despite being simpler to encode, labels can carry a lot more difficulty than features due to their comparative rarity: \DIFdelbegin \DIFdel{in }\DIFdelend \DIFaddbegin \DIFadd{In }\DIFaddend essence, features are cheap and labels are expensive. We will discuss labels in more detail in \autoref{sec:labels}.
 
 \section{Loss functions}
 \label{sec:training}
@@ -1256,9 +1264,9 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
 
     Put simply, a loss function is a function of a predictor and a dataset which is chosen to be a proxy for how good the predictor is at predicting that dataset. We try to choose loss functions that are high-valued for a predictor that poorly describes the dataset, and are low-valued for a predictor that well-describes the dataset. Sometimes (and in both cases listed in this section) the loss is minimised at zero, when the predictor perfectly captures the dataset (though whether this is possible, or whether this is even a desired result, is another question).
 
-    What should the loss function be for a given problem? The answer is not always obvious. Take for example a binary classification problem. The ``obvious'' loss would be the complement of the accuracy: the rate at which the predictor incorrectly guesses the label. This is easy to compute and we would like our predictor to have a high accuracy. But this is not a good choice: it is tremendously hard to work with as it takes on discrete values, because the accuracy is the number of correct predictions divided by the total number of examples. It is hard to motivate with probabilistic arguments. Finally, it is unclear how the accuracy should work in the case of a probabilistic model.
+    What should the loss function be for a given problem? The answer is not always obvious. Take for example a binary classification problem. The ``obvious'' loss would be the complement of the accuracy: the rate at which the predictor incorrectly guesses the label. This is easy to compute and we would like our predictor to have a high accuracy. But this is not a good choice: \DIFdelbegin \DIFdel{it }\DIFdelend \DIFaddbegin \DIFadd{It }\DIFaddend is tremendously hard to work with as it takes on discrete values, because the accuracy is the number of correct predictions divided by the total number of examples. It is hard to motivate with probabilistic arguments. Finally, it is unclear how the accuracy should work in the case of a probabilistic model.
 
-    Instead, the loss function is usually derived by making assumptions on the structure of the data and task. The main assumption we usually make is that data are drawn \defn{independently and identically distributed} (IID), that is, each example is drawn from the same distribution and is not dependent on any other examples. We also assume a structure of the noise in the observed labels: training data are almost never completely accurate, and so there will be intrinsic noise in the distribution of labels about their unobserved ``true'' value. To demonstrate these assumptions, we will now derive loss functions for regression and binary classification. The loss function we derive depends on the model we assume for the noise; for example, assuming Gaussian noise gives us the common least-squares loss.
+    Instead, the loss function is usually derived by making assumptions on the structure of the data and task. The main assumption we usually make is that data are drawn \defn{independently and identically distributed} (IID), that is, each example is drawn from the same distribution and is not dependent on any other examples. We also assume a structure of the noise in the observed labels: \DIFdelbegin \DIFdel{training }\DIFdelend \DIFaddbegin \DIFadd{Training }\DIFaddend data are almost never completely accurate, \DIFdelbegin \DIFdel{and so there will be }\DIFdelend \DIFaddbegin \DIFadd{so there is usually }\DIFaddend intrinsic noise in the distribution of labels about their unobserved ``true'' value. To demonstrate these assumptions, we will now derive loss functions for regression and binary classification. The loss function we derive depends on the model we assume for the noise; for example, assuming Gaussian noise gives us the common least-squares loss.
 
         \subsection{Loss function for regression}
         \label{sec:loss-regression}
@@ -1342,7 +1350,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
 \section{Models}
 \label{sec:models}
 
-    This section describes some common models for classification. There are a plethora of different classification models and variations on these models, but I will present here only those relevant to this thesis: logistic regression, decision tree ensembles, and neural networks. These are, not coincidentally, also the most common models in astroinformatics. Logistic regression provides reliable and interpretable results. Decision tree ensembles are a fantastic off-the-shelf choice which work on a large variety of datasets. Neural networks have proved extremely effective for a wide variety of tasks, especially in computer vision.
+    This section describes some common models for classification. There are a plethora of different classification models and variations on these models, but I will present here only those relevant to this thesis: logistic regression, decision tree ensembles, and neural networks. These are, not coincidentally, also the most common models in astroinformatics. Logistic regression provides reliable and interpretable results. Decision tree ensembles are a fantastic off-the-shelf choice which work on a large variety of datasets. Neural networks have \DIFdelbegin \DIFdel{proved }\DIFdelend \DIFaddbegin \DIFadd{proven }\DIFaddend extremely effective for a wide variety of tasks, especially in computer vision.
 
     \subsection{Logistic regression}
     \label{sec:logistic-regression}
@@ -1361,7 +1369,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
         \end{equation}
         The output of logistic regression applied to an example $x$ is the probability that $x$ is in the positive class. $\sigma$, and thus logistic regression, has a domain of $(-\infty, \infty)$ and a range of $(0, 1)$. This enforces the output to be like a probability. $w^T x= 0$ defines a $d$-dimensional hyperplane, called the \defn{separating hyperplane} or \defn{decision surface}. Logistic regression is differentiable, which allows us to optimise its parameters $w$ using gradient descent. Interpreting the classifier is possible through examining the weights vector, with a larger absolute value of a weight corresponding to a `more important' feature. The weights from logistic regression can be used to produce scores or class probability estimates (\autoref{sec:classification}): $w^T x$ is a score, $\sigma(x^T x)$ is a class probability estimate, and thresholding either the score or the class probability estimate at $0$ gives a discrete class.
 
-        A limitation of logistic regression is its sensitivity to scale. Features need to be of approximately the same order of magnitude and should have a standard deviation of approximately 1. An implicit assumption is that each features has a mean of 0 across the dataset. This can be enforced by normalising and scaling: subtract the mean of the dataset and divide by the new standard deviation.
+        A limitation of logistic regression is its sensitivity to scale. Features need to be of approximately the same order of magnitude and should have a standard deviation of approximately 1. An implicit assumption is that each \DIFdelbegin \DIFdel{features }\DIFdelend \DIFaddbegin \DIFadd{feature }\DIFaddend has a mean of 0 across the dataset. This can be enforced by normalising and scaling: subtract the mean of the dataset and divide by the new standard deviation.
 
         We apply logistic regression to binary classification problems in \autoref{cha:cross-id} and \autoref{cha:faraday}.
 
@@ -1378,7 +1386,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
             \item With many low-information features, decision trees have quite poor performance \citep{breiman01random-forest}.
         \end{itemize}
 
-        A \defn{decision tree ensemble} aims to reduce some of these limitations by training multiple, slightly different, independently-trained decision trees. Depending on the implementation each constituent decision tree may only have access to some of the features or some of the data. To predict, each tree produces a prediction and `votes' for this prediction; the votes can be combined to produce the overall prediction (e.g. with majority voting). A simple example of such an ensemble is decision tree bagging \citep{breiman_bagging_1996}, which trains each tree with a random subset of the training data and takes a plurality vote. Decision tree ensembles decrease variance, increase the usability of low-information features, and increase stability of the trained model \citep{breiman01random-forest}. Averaging over the classifications produced by each tree gives a number that can be interpreted as a class probability estimate.
+        A \defn{decision tree ensemble} aims to reduce some of these limitations by training multiple, slightly different, independently-trained decision trees. Depending on the implementation each constituent decision tree may only have access to some of the features or some of the data. To predict, each tree produces a prediction and `votes' for this prediction; the votes \DIFdelbegin \DIFdel{can be }\DIFdelend \DIFaddbegin \DIFadd{are }\DIFaddend combined to produce the overall prediction (e.g. with majority voting). A simple example of such an ensemble is decision tree bagging \citep{breiman_bagging_1996}, which trains each tree with a random subset of the training data and takes a plurality vote. Decision tree ensembles decrease variance, increase the usability of low-information features, and increase stability of the trained model \citep{breiman01random-forest}. Averaging over the classifications produced by each tree gives a number that can be interpreted as a class probability estimate.
 
         The most well-known description of decision tree ensembles is the \defn{random forest} \citep{breiman01random-forest}, which has found common use in astronomy partly to its readily available \texttt{Python} implementation in \texttt{scikit-learn} \citep{pedregosa11sklearn}. Splits are decided from a subset of features and training samples are randomly drawn with replacement from the total training set. One downside of random forests is the large number of hyperparameters that need to be set, and these vary a lot depending on the problem being addressed.
 
@@ -1395,7 +1403,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
         \end{align}
         where $a$ is the activation function. $h_i$ are called \defn{hidden layers}. In fact, neural networks are usually described by their layer structure rather than graph structure, with the addition of `concatenation layers' to combine outputs from previous layers. Neural networks may be used for regression or for classification; these are structured the same but for classification the last activation function is replaced by sigmoid (for binary classification) or its multiclass counterpart softmax.
 
-        \defn{Convolutional neural networks} \citep[CNN;][]{lecun98} are a variant of neural networks that are particularly well-suited to inputs that have local structure, such as images or spectra. Layers in the network may be \defn{dense layers} of the same form as \autoref{eq:hidden-layer}, or \defn{convolutional layers}, where the weights are convolved with the input rather than multiplied. These convolutional weights are called \defn{filters} and they are small compared to the dimensionality of the input. CNNs are translation-invariant \citep{waibel_phoneme_1989} and derive features from local relationships thanks to the trainable filters.
+        \defn{Convolutional neural networks} \citep[CNN;][]{lecun98} are \DIFdelbegin \DIFdel{a variant }\DIFdelend \DIFaddbegin \DIFadd{variants }\DIFaddend of neural networks that are particularly well-suited to inputs that have local structure, such as images or spectra. Layers in the network may be \defn{dense layers} of the same form as \autoref{eq:hidden-layer}, or \defn{convolutional layers}, where the weights are convolved with the input rather than multiplied. These convolutional weights are called \defn{filters} and they are small compared to the dimensionality of the input. CNNs are translation-invariant \citep{waibel_phoneme_1989} and derive features from local relationships thanks to the trainable filters.
 
         We apply CNNs to binary classification problems in \autoref{cha:cross-id} and \autoref{cha:rlfs}, and compare our results to a state-of-the-art CNN in \autoref{cha:faraday}.
 
@@ -1407,7 +1415,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
     \subsection{Where do labels come from?}
     \label{sec:sources-of-labels}
 
-        We previously said that labels were `expensive'. This is to be interpreted as expensive in either or both time and money: labelling can be a slow, manual process, and labelling can be costly. Labelling is usually completed by hand, manually examining instances and determining what class they belong to (for classification) or what target they ought to be associated with (for regression). In astronomy this usually amounts to expert astronomers examining imagery at multiple wavelengths and making an educated guess as to what the true label should be, but labelling may also involve follow-up observations (perhaps at higher resolution, greater sensitivity, or at a different wavelength).
+        We previously said that labels were `expensive'. This is to be interpreted as expensive in either or both time and money: \DIFdelbegin \DIFdel{labelling }\DIFdelend \DIFaddbegin \DIFadd{Labelling }\DIFaddend can be a slow, manual\DIFdelbegin \DIFdel{process, and labelling can be costly. Labelling }\DIFdelend \DIFaddbegin \DIFadd{, and process. It }\DIFaddend is usually completed by hand, manually examining instances and determining \DIFdelbegin \DIFdel{what }\DIFdelend \DIFaddbegin \DIFadd{which }\DIFaddend class they belong to (for classification) or what target they ought to be associated with (for regression). In astronomy this usually amounts to expert astronomers examining imagery at multiple wavelengths and making an educated guess as to what the true label \DIFdelbegin \DIFdel{should be}\DIFdelend \DIFaddbegin \DIFadd{is}\DIFaddend , but labelling may also involve follow-up observations (perhaps at higher resolution, greater sensitivity, or at a different wavelength).
 
         An increasingly popular option for labelling large amounts of data is \defn{citizen science}: asking volunteers who are interested in contributing to science to label our data. Citizen science projects can be a fantastic opportunity for both science and outreach. For example, the ABC's `Stargazing Live' television programme engaged viewers and with their help found four exoplanets in just 48 hours \citep{miller_stargazing_2017} and labelled 120~000 SkyMapper images\footnote{Citizen scientists actually produced around 5 million labels---these were aggregated to 120~000 to reduce noise.} in just three days \citep{tucker_stargazing_2017}. The downside of citizen science is that non-expert labellers may be less accurate than experts, and indeed some may even be malicious and provide intentionally incorrect labels \citep{zhang_learning_2016}.
 
@@ -1416,7 +1424,7 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
     \subsection{Label noise}
     \label{sec:label-noise}
 
-        \defn{Label noise} is the presence of incorrect labels in the training or validation data set. In classical machine learning there is no such thing: labels are assumed to come from some always-correct `oracle'. In reality, though, labels can be wrong. There is intrinsic noise in data, and even expert astronomers can disagree on labels due to ambiguities \citep[e.g. around 10 per cent of Radio Galaxy Zoo is extremely divisive amongst expert labellers;][]{banfield15}. All is not lost for machine learning: many optimisation targets are robust to label noise \citep{menon15cpe}. One way to think about this is that the loss function for machine learning `smooths over' or `averages out' the noise.
+        \defn{Label noise} is the presence of incorrect labels in the training or validation data set. In classical machine learning there is no such thing: \DIFdelbegin \DIFdel{labels }\DIFdelend \DIFaddbegin \DIFadd{Labels }\DIFaddend are assumed to come from some always-correct `oracle'. In reality, though, labels can be wrong. There is intrinsic noise in data, and even expert astronomers \DIFdelbegin \DIFdel{can }\DIFdelend \DIFaddbegin \DIFadd{may }\DIFaddend disagree on labels due to ambiguities \citep[e.g. around 10 per cent of Radio Galaxy Zoo is extremely divisive amongst expert labellers;][]{banfield15}. All is not lost for machine learning: \DIFdelbegin \DIFdel{many }\DIFdelend \DIFaddbegin \DIFadd{Many }\DIFaddend optimisation targets are robust to label noise \citep{menon15cpe}. One way to think about this is that the loss function for machine learning `smooths over' or `averages out' the noise.
 
         It is important to note that label noise affects training and validation differently. While it is perfectly possible to train a good model with noisy labels, performance measures are not as robust to label noise. Noise in the validation set can change the reported performance in unpredictable ways and wherever possible should be avoided.
 
@@ -1438,7 +1446,10 @@ Machine learning was once described to me by an anonymous supervisor as ``the st
 
 This chapter is based on my paper \emph{Radio Galaxy Zoo: Machine learning for radio source host galaxy cross-identification}, by M. J. Alger, J. K. Banfield, C. S. Ong, L. Rudnick, O. I. Wong, C. Wolf, H. Andernach, R. P. Norris, and S. S. Shabala; published in the \emph{Monthly Notices of the Royal Astronomical Society} in 2018. Some minor changes have been made to match the rest of this thesis.\\
 
-In this chapter, we consider the problem of determining the host galaxies of radio sources by cross-identification. This has traditionally been done manually, which will be intractable for upcoming and ongoing wide-area radio surveys like the Evolutionary Map of the Universe (EMU). {Automated cross-identification will be critical for these future surveys, and machine learning may provide the tools to develop such methods. We applied a standard approach from computer vision to cross-identification, introducing one possible way of automating this problem, and explored the pros and cons of this approach}. We applied our method to the $1.4$~GHz Australian Telescope Large Area Survey (ATLAS) observations of the \emph{Chandra} Deep Field South (CDFS) and the ESO Large Area ISO Survey South 1 (ELAIS-S1) fields by cross-identifying them with the \emph{Spitzer} Wide-area Infrared Extragalactic (SWIRE) survey. We trained our method with two sets of data: expert cross-identifications of CDFS from the initial ATLAS data release and crowdsourced cross-identifications of CDFS from Radio Galaxy Zoo. {We found that a simple strategy of cross-identifying a radio component with the nearest galaxy performs comparably to our more complex methods, though our estimated best-case performance is near 100 per cent. ATLAS contains 87 complex radio sources that have been cross-identified by experts, so there are not enough complex examples to learn how to cross-identify them accurately. Much larger datasets are therefore required for training methods like ours. We also showed that training our method on Radio Galaxy Zoo cross-identifications gives comparable results to training on expert cross-identifications, demonstrating the value of crowdsourced training data.}
+In this chapter, we consider the problem of determining the host galaxies of radio sources by cross-identification. This has traditionally been done manually, which will be intractable for upcoming and ongoing wide-area radio surveys like the Evolutionary Map of the Universe (EMU). {Automated cross-identification will be critical for these future surveys, and machine learning may provide the tools to develop such methods.
+\DIFaddbegin 
+
+\DIFaddend We applied a standard approach from computer vision to cross-identification, introducing one possible way of automating this problem, and explored the pros and cons of this approach}. We applied our method to the $1.4$~GHz Australian Telescope Large Area Survey (ATLAS) observations of the \emph{Chandra} Deep Field South (CDFS) and the ESO Large Area ISO Survey South 1 (ELAIS-S1) fields by cross-identifying them with the \emph{Spitzer} Wide-area Infrared Extragalactic (SWIRE) survey. We trained our method with two sets of data: expert cross-identifications of CDFS from the initial ATLAS data release and crowdsourced cross-identifications of CDFS from Radio Galaxy Zoo. {We found that a simple strategy of cross-identifying a radio component with the nearest galaxy performs comparably to our more complex methods, though our estimated best-case performance is near 100 per cent. ATLAS contains 87 complex radio sources that have been cross-identified by experts, so there are not enough complex examples to learn how to cross-identify them accurately. Much larger datasets are therefore required for training methods like ours. We also showed that training our method on Radio Galaxy Zoo cross-identifications gives comparable results to training on expert cross-identifications, demonstrating the value of crowdsourced training data.}
 
 \section{Introduction to cross-identification}
 \label{sec:atlas-xid-intro-cross-id}
@@ -1462,9 +1473,9 @@ In this chapter, we consider the problem of determining the host galaxies of rad
                  Compact and resolved components are defined by \autoref{eq:atlas-compact}.}
     \end{figure}
 
-    Next generation radio telescopes such as the Australian SKA Pathfinder \citep[ASKAP;][]{johnston07} and Apertif \citep{verheijen08} will conduct increasingly wide, deep, and high-resolution radio surveys, producing large amounts of data. The Evolutionary Map of the Universe \citep[EMU;][]{norris11} survey using ASKAP is expected to detect over 70 million radio sources, compared to the 2.5 million radio sources currently known \citep{banfield15}. An important part of processing these data is cross-identifying observed radio emission regions with observations of their host galaxy in surveys at other wavelengths.
+    Next generation radio telescopes such as the Australian SKA Pathfinder \citep[ASKAP;][]{johnston07} and Apertif \citep{verheijen08} will conduct increasingly wide, deep, and high-resolution radio surveys, producing large amounts of data. The Evolutionary Map of the Universe \citep[EMU;][]{norris11} survey using ASKAP is expected to detect over 70 million radio sources, compared to the 2.5 million radio sources currently known \citep{banfield15}. An important part of processing these data is cross-identifying observed radio emission regions with observations of their host \DIFdelbegin \DIFdel{galaxy }\DIFdelend \DIFaddbegin \DIFadd{galaxies }\DIFaddend in surveys at other wavelengths.
 
-    In the presence of extended radio emission cross-identification of the host can be a
+    In the presence of extended radio emission\DIFaddbegin \DIFadd{, }\DIFaddend cross-identification of the host can be a
     difficult task. {Radio emission may extend far from the host galaxy
     and emission regions from a single physical object may appear disconnected. As a result, the
     observed structure of a radio source may have a complex relationship
@@ -1475,7 +1486,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     but this is impractical for larger surveys.
 
     One approach to cross-identification of large numbers of sources is crowdsourcing, where volunteers
-    cross-identify radio sources with their host galaxy. This is the premise of Radio Galaxy
+    cross-identify radio sources with their host \DIFdelbegin \DIFdel{galaxy}\DIFdelend \DIFaddbegin \DIFadd{galaxies}\DIFaddend . This is the premise of Radio Galaxy
     Zoo\footnote{\url{https://radio.galaxyzoo.org}} \citep{banfield15}, a
     citizen science project hosted on the Zooniverse platform \citep{lintott08}.
     Volunteers are shown radio and infrared images and are asked to
@@ -1483,7 +1494,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     explanation of the project can be found in \citet{banfield15}. The first
     data release for Radio Galaxy Zoo will provide a large dataset of over
     75~000 radio-host cross-identifications and radio source morphologies
-    (Wong et al., in prep). While this is a much larger number of visual
+    (Wong et al., in prep\DIFaddbegin \DIFadd{.}\DIFaddend ). While this is a much larger number of visual
     cross-identifications than have been made by experts \citep[e.g.,
     ][]{taylor2007,Gendre2008,grant2010,norris06,middelberg08} it is still far
     short of the millions of radio sources expected to be detected in upcoming
@@ -1496,7 +1507,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     are composed of a core radio component and two lobe components. The core
     radio component is coincident with the host galaxy, so cross-identification
     amounts to finding the galaxy coincident with the core radio component in
-    the most likely model fit. This method is easily extended to use other, more
+    the most likely model fit. This method \DIFdelbegin \DIFdel{is }\DIFdelend \DIFaddbegin \DIFadd{could be }\DIFaddend easily extended to use other, more
     complex models, but it is purely geometric. It does not incorporate
     other information such as the physical properties of the potential host
     galaxy. Additionally, there may be new classes of radio source detected in
@@ -1511,8 +1522,9 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {One possibility is that machine learning techniques can
     be developed to automatically cross-identify catalogues drawn from new surveys}. Machine learning
     describes a class of methods that learn approximations to functions. {If
-    cross-identification can be cast as a function approximation problem, then machine learning will allow data
-    sets such as Radio Galaxy Zoo to be generalised to work on new data. Data sets from
+    cross-identification can be cast as a function approximation problem, then machine learning will allow \DIFdelbegin \DIFdel{data
+    sets }\DIFdelend \DIFaddbegin \DIFadd{datasets
+    }\DIFaddend such as Radio Galaxy Zoo to be generalised to work on new data. \DIFdelbegin \DIFdel{Data sets }\DIFdelend \DIFaddbegin \DIFadd{Datasets }\DIFaddend from
     citizen scientists have already been used to train machine learning methods.
     Some astronomical examples can be found in \citet{marshall15citizen}.}
 
@@ -1532,7 +1544,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {Throughout this chapter, a `radio source' refers to all radio emission observed associated with a single host galaxy, and a `radio component' refers to a single, contiguous
     region of radio emission. Multiple components may arise from a single
     source. A `compact' source is composed of a {single unresolved component. \autoref{eq:atlas-compact} shows the definition of a resolved component. We
-    assume that all unresolved components are compact sources, i.e. we assume that each unresolved component has its own host galaxy\footnote{{This will be incorrect if the unresolved components are actually compact lobes or hotspots, but determining which components correspond to unique radio sources is outside the scope of this thesis.}}.} An `extended'
+    assume that all unresolved components are compact sources, i.e. we assume that each unresolved component has its own host galaxy\footnote{{This will be incorrect if the unresolved components are actually compact lobes or \DIFdelbegin \DIFdel{hotspots}\DIFdelend \DIFaddbegin \DIFadd{hot-spots}\DIFaddend , but determining which components correspond to unique radio sources is outside the scope of this thesis.}}.} An `extended'
     source is a non-compact source, i.e. resolved single-component sources or a
     multi-component source. \autoref{fig:definitions} illustrates these definitions.}
 
@@ -1565,7 +1577,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         \citet{middelberg08} & Manual & 0 & 1366\\
         \citet{fan15} & Bayesian models & 784 & 0\\
         \citet{weston18lrpy} & Likelihood ratio & 3078 & 2113\\
-        Wong et al. (in prep) & Crowdsourcing & 2460 & 0 \\
+        Wong et al. (in prep\DIFaddbeginFL \DIFaddFL{.}\DIFaddendFL ) & Crowdsourcing & 2460 & 0 \\
         \hline\hline
       \end{tabular}
     \end{table}
@@ -1613,7 +1625,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     Release 1 catalogue will only include cross-identifications for which over
     65 per cent of volunteers agree. However, we use a preliminary catalogue containing volunteer
     cross-identifications for all components.} is generated can be found in Wong
-    et al. (in prep).
+    et al. (in prep\DIFaddbegin \DIFadd{.}\DIFaddend ).
 
     The ATLAS~CDFS radio components that appear in Radio Galaxy Zoo {are drawn from a prerelease version of} the third data release
     of ATLAS by \citet{franzen15}. In this release, each radio component was fit with a
@@ -1621,7 +1633,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     one Gaussian may be fit to one region of radio emission. Each of these
     Gaussian fits is listed as a radio component in the ATLAS component catalogue. The
     brightest radio component from the multiple-Gaussian fit is called the
-    `primary component'. {If there was only one Gaussian fit then this Gaussian is the primary component}. Each primary component found in the ATLAS
+    `primary component'. {If there \DIFdelbegin \DIFdel{was }\DIFdelend \DIFaddbegin \DIFadd{is }\DIFaddend only one Gaussian fit then this Gaussian is the primary component}. Each primary component found in the ATLAS
     component catalogue appears in Radio Galaxy Zoo. Non-primary components
     may appear within the image of a primary component, but do not have their
     own entry in Radio Galaxy Zoo. We will henceforth only discuss the primary
@@ -1690,13 +1702,13 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     the sky centred on a radio component {and potentially other information about
     objects in the image (such as the redshift or infrared colour)}. {Images at other wavelengths (notably infrared) might be
     useful, but we defer this for now as it complicates the task.
-    {We chose a $2' \times 2'$ image to match} the size of the images used
+    {We \DIFdelbegin \DIFdel{chose }\DIFdelend \DIFaddbegin \DIFadd{choose }\DIFaddend a $2' \times 2'$ image to match} the size of the images used
     by Radio Galaxy Zoo. To avoid solving the separate task of identifying
     which radio components are associated with the same source, we assume
     that each radio image represents a single extended
     source\footnote{Limitations of this assumption are discussed in
     \autoref{sec:atlas-xid-limitations}.}. Radio cross-identification can then
-    be formalised as follows: given a radio image centred on a radio
+    be formalised as follows: \DIFdelbegin \DIFdel{given }\DIFdelend \DIFaddbegin \DIFadd{Given }\DIFaddend a radio image centred on a radio
     component, locate the host galaxy of the source containing this radio
     component. This is a standard computer vision problem called `object
     detection', and we apply a common technique called a `sliding-window'
@@ -1741,7 +1753,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
         }
 
         \KwRet{$host$}
-        \caption{Cross-identifying a radio component given a radio image of the component, a catalogue of infrared candidate host galaxies and a binary classifier.
+        \caption{Cross-identifying a radio component given a radio image of the component, a catalogue of infrared candidate host galaxies\DIFaddbegin \DIFadd{, }\DIFaddend and a binary classifier.
           {$\sigma$ is a parameter of the method.}}
         \label{alg:xid}
     \end{algorithm}
@@ -1774,7 +1786,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     as input, we need to represent candidate host galaxies by vectors. We
     describe this in \autoref{vector-representation-of-infrared-sources}.
     There are many options for modelling $f$. In this chapter we apply three
-    different models: logistic regression, random forests and convolutional
+    different models: logistic regression, random forests\DIFaddbegin \DIFadd{, }\DIFaddend and convolutional
     neural networks.}
 
     {We cross-identify each radio component in turn. The classifier $f$
@@ -1783,7 +1795,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     component we are currently cross-identifying. If there are other nearby host
     galaxies, then multiple candidate hosts may have high scores (e.g.
     \autoref{fig:broken-isolation}). This difficulty is necessary---a classifier
-    with dependence on radio object would be impossible to train. We
+    with dependence on \DIFaddbegin \DIFadd{the }\DIFaddend radio object would be impossible to train. We
     need multiple positive examples (i.e. host galaxies) to train a binary classifier, but
     for any specific radio component there is only one host galaxy. As a
     result, the candidate classification task aims to answer the general question
@@ -1797,8 +1809,8 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     equivalent to a nearest neighbours approach where we select the nearest
     infrared object to the radio component as the host galaxy. In the limit
     where $\sigma \to \infty$, we maximise the score output by the
-    classifier as above. We take $\sigma = 30''$ as this was the best value
-    found by a grid search \DIFaddbegin \DIFadd{maximising cross-identification accuracy}\DIFaddend . {Note that the optimum width will depend on
+    classifier as above. We take $\sigma = 30''$\DIFdelbegin \DIFdel{as this was }\DIFdelend \DIFaddbegin \DIFadd{, }\DIFaddend the best value
+    found by a grid search \DIFaddbegin \DIFadd{maximising cross-identification accuracy}\DIFaddend . {Note that the optimum width \DIFdelbegin \DIFdel{will depend }\DIFdelend \DIFaddbegin \DIFadd{depends }\DIFaddend on
     the density of radio sources on the sky, the angular separation of the
     host galaxy and its radio components and the angular resolution of the survey.}
 
@@ -1881,7 +1893,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     emission may extend past the edges of the window and we may miss critical
     information required to identify the galaxy as a host galaxy. If the
     window is too large, then irrelevant information will be included and it
-    may be difficult or computationally expensive to score. We chose a
+    may be difficult or computationally expensive to score. We \DIFdelbegin \DIFdel{chose }\DIFdelend \DIFaddbegin \DIFadd{choose }\DIFaddend a
     window size of $32 \times 32$ pixels, corresponding to approximately $48'' \times 48''$ in
     ATLAS. This is shown as squares in \autoref{fig:windows} and
     \autoref{fig:broken-window-size}. These kinds of size problems are
@@ -1904,7 +1916,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     (\autoref{vector-representation-of-infrared-sources}) and to improve
     efficiency. Our method is applicable even when host galaxies are not detected in
     the infrared by considering every pixel of the radio image as a candidate
-    location as would be done in the original computer vision approach. {If the host galaxy location does not correspond to an infrared source, the radio source would be classified as infrared-faint.}
+    location as would be done in the original computer vision approach. {If the host galaxy location does not correspond to an infrared source, the radio source \DIFdelbegin \DIFdel{would }\DIFdelend \DIFaddbegin \DIFadd{can }\DIFaddend be classified as infrared-faint.}
 
     Our assumptions impose an upper bound on how well we can cross-identify
     radio sources. We estimate this upper bound in \autoref{sec:atlas-xid-cdfs-results}.
@@ -1949,7 +1961,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     a good avenue for potential improvement in our pipeline but this is beyond
     the scope of this initial study.
 
-  \subsection{Binary Classifiers}\label{sec:atlas-xid-classifiers}
+  \subsection{Binary \DIFdelbegin \DIFdel{Classifiers}\DIFdelend \DIFaddbegin \DIFadd{classifiers}\DIFaddend }\label{sec:atlas-xid-classifiers}
 
     We use three different binary classification models: logistic regression,
     convolutional neural networks, and random forests. These models cover
@@ -1983,7 +1995,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
       \includegraphics[width=0.6\columnwidth, trim={0cm 0.5cm 0cm 0.5cm}, clip]{atlas-images/quadrants.pdf}
       \caption[CDFS field training and testing quadrants.]{CDFS field training and testing quadrants labelled 0 -- 3. The
         central dot is located at $\alpha = 03^\text{h}31^\text{m}12^\text{s},
-        \delta = -28^\circ{}06'00''$. The quadrants were chosen such that
+        \delta = -28^\circ{}06'00''$. The quadrants \DIFdelbeginFL \DIFdelFL{were }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{are }\DIFaddendFL chosen such that
         there are similar numbers of radio sources in each
         quadrant.\label{fig:quadrants}}
     \end{figure}
@@ -2016,7 +2028,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     they can be used to train binary classifiers. There are two challenges with this conversion:
     \begin{itemize}
       \item We can only say that an object is \emph{a} host galaxy, not which radio object it is associated with, and
-      \item We cannot disambiguate between non-host infrared objects and host galaxies that were not in the cross-identification catalogue.
+      \item We cannot disambiguate between non-host infrared objects and host galaxies that \DIFdelbegin \DIFdel{were }\DIFdelend \DIFaddbegin \DIFadd{are }\DIFaddend not in the cross-identification catalogue.
     \end{itemize}
 
     We use the Gaussian weighting described in \autoref{sec:atlas-xid-as-binary-classification} to address the first issue.
@@ -2028,10 +2040,10 @@ In this chapter, we consider the problem of determining the host galaxies of rad
 
     We first generate positive labels from a cross-identification catalogue.
     We decide that if an infrared object is listed in the catalogue, then it
-    is assigned a positive label as a host galaxy. We then assign every other galaxy a negative label. This has some problems
-   ---an example is that if the cross-identification catalogue did not include a radio
-    object (e.g.~it was below the signal-to-noise ratio) then the host galaxy
-    of that radio object would receive a negative label. This occurs with
+    is assigned a positive label as a host galaxy. We then assign every other galaxy a negative label. This has some \DIFdelbegin \DIFdel{problems
+   ---an }\DIFdelend \DIFaddbegin \DIFadd{problems---an }\DIFaddend example is that if the cross-identification catalogue \DIFdelbegin \DIFdel{did }\DIFdelend \DIFaddbegin \DIFadd{does }\DIFaddend not include a radio
+    object (e.g.~it \DIFdelbegin \DIFdel{was }\DIFdelend \DIFaddbegin \DIFadd{is }\DIFaddend below the signal-to-noise ratio) then the host galaxy
+    of that radio object \DIFdelbegin \DIFdel{would receive }\DIFdelend \DIFaddbegin \DIFadd{receives }\DIFaddend a negative label. This occurs with
     \citet{norris06} cross-identifications, as these are associated with the
     first data release of ATLAS. The first data release went to a 5$\sigma$
     flux density level of $S_{1.4} \geq \unit{200}{\micro\jansky}\text{
@@ -2044,7 +2056,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     classifiers on infrared objects within a 1~arcmin radius of an ATLAS radio
     component.
 
-  \subsection{Experimental Setup}
+  \subsection{Experimental \DIFdelbegin \DIFdel{Setup}\DIFdelend \DIFaddbegin \DIFadd{setup}\DIFaddend }
   \label{sec:atlas-xid-experimental-setup}
 
     We trained binary classifiers on infrared objects in the CDFS field using
@@ -2107,7 +2119,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     We then used the scores to predict the host galaxy
     for each radio component cross-identified by both \citet{norris06} and
     Radio Galaxy Zoo. {We followed \autoref{alg:xid}:
-    the score of each SWIRE object within 1~arcmin of a given radio
+    \DIFdelbegin \DIFdel{the }\DIFdelend \DIFaddbegin \DIFadd{The }\DIFaddend score of each SWIRE object within 1~arcmin of a given radio
     component was weighted by a Gaussian function of angular separation from the
     radio component and the object with the highest
     weighted score was chosen as the host galaxy.} The
@@ -2169,7 +2181,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {We can assess trained binary classifiers either by their performance on
     the candidate classification task or by their performance on the
     cross-identification task when used in our method. Both performances are
-    useful: performance on the candidate classification task provides a robust
+    useful: \DIFdelbegin \DIFdel{performance }\DIFdelend \DIFaddbegin \DIFadd{Performance }\DIFaddend on the candidate classification task provides a robust
     and simple way to compare binary classifiers without the limitations of
     our specific formulation, and performance on the cross-identification task
     can be compared with other cross-identification methods. We therefore
@@ -2189,7 +2201,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     {that after thresholding} there can be
     many `false positives' that do not affect cross-identification. An example
     of this is shown in \autoref{fig:positives}, where the classifier has
-    identified 8 `host galaxies'. However, there are only three true host
+    identified \DIFdelbegin \DIFdel{8 }\DIFdelend \DIFaddbegin \DIFadd{eight }\DIFaddend `host galaxies'. However, there are only three true host
     galaxies in this image---one per radio component---and so in the
     cross-identification task, only three of these galaxies will be identified
     as hosts.}
@@ -2209,13 +2221,13 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     useful binary classifier to produce better
     results than this, so this represents the lowest expected
     cross-identification performance.} The upper estimates, lower estimates,
-    and nearest-neighbour accuracy are shown as horizontal lines in
+    and \DIFdelbegin \DIFdel{nearest-neighbour }\DIFdelend \DIFaddbegin \DIFadd{nearest neighbour }\DIFaddend accuracy are shown as horizontal lines in
     \autoref{fig:ba}.
 
     In \autoref{fig:cross-id-accuracy} we plot the performance {of our
     method using different binary classification models}, as well as the
     performance of Radio Galaxy Zoo, nearest neighbours, and the perfect and
-    random binary classifiers, on the full set of ATLAS~DR1 radio components
+    random binary classifiers \DIFdelbegin \DIFdel{, }\DIFdelend on the full set of ATLAS~DR1 radio components
     using the pipeline in \autoref{fig:flowchart}. The accuracy
     {associated with each classification model} and training label set
     averaged across all four quadrants is shown in \aref{sec:atlas-xid-accuracies}.
@@ -2245,32 +2257,33 @@ In this chapter, we consider the problem of determining the host galaxies of rad
     attains nearly 100 per cent accuracy on the compact test set. Our results
     do not improve on nearest neighbours for resolved objects. However, our
     method does allow for improvement on nearest neighbours with a
-    sufficiently good binary classifier: a `perfect' binary classifier attains
+    sufficiently good binary classifier: \DIFdelbegin \DIFdel{a }\DIFdelend \DIFaddbegin \DIFadd{A }\DIFaddend `perfect' binary classifier attains
     nearly 100 per cent accuracy on resolved sources. This shows that our
     method may be useful provided that a good binary classifier can be
     trained. The most obvious place for improvement is in feature selection:
-    we use pixels of radio images directly and these are likely not conducive
+    \DIFdelbegin \DIFdel{we }\DIFdelend \DIFaddbegin \DIFadd{We }\DIFaddend use pixels of radio images directly and these are likely not conducive
     to good performance on the candidate classification task. Convolutional
     neural networks, which are able to extract features from images,
     \emph{should} work better, but these require far more training data than
-    the other methods we have applied and the small size of ATLAS thus limits their performance.
+    the other methods \DIFdelbegin \DIFdel{we have }\DIFdelend \DIFaddbegin \DIFadd{that we }\DIFaddend applied and the small size of ATLAS thus limits their performance.
 
     We noted in \autoref{sec:atlas-xid-labels} that the test set of expert labels,
     derived from the initial ATLAS data release, was less deep than the third
     data release used by Radio Galaxy Zoo and this chapter, introducing a source
     of label noise in the testing labels. Specifically, true host galaxies may
-    be misidentified as non-host galaxies if the associated radio source was
-    below the 5 signal-to-noise limit in ATLAS~DR1 but not in ATLAS~DR3. This
+    be misidentified as non-host galaxies if the associated radio source \DIFdelbegin \DIFdel{was
+    }\DIFdelend \DIFaddbegin \DIFadd{is
+    }\DIFaddend below the 5 signal-to-noise limit in ATLAS~DR1 but not in ATLAS~DR3. This
     has the effect of reducing the accuracy for Radio Galaxy Zoo-trained
     classifiers.
 
     {We report the scores predicted by each classifier for each
     SWIRE object in \aref{sec:atlas-xid-scores} and the predicted
     cross-identification for each ATLAS object in \aref{sec:atlas-xid-xids}.
-    Scores reported for a given object were predicted by binary
+    Scores \DIFdelbegin \DIFdel{reported }\DIFdelend \DIFaddbegin \DIFadd{we report }\DIFaddend for a given object were predicted by binary
     classifiers tested on the quadrant containing that object. The reported scores are not weighted.}
 
-    In \autoref{fig:examples} we show 5 resolved sources where the most classifiers disagreed on the correct cross-identification.
+    In \autoref{fig:examples} we show \DIFdelbegin \DIFdel{5 }\DIFdelend \DIFaddbegin \DIFadd{five }\DIFaddend resolved sources where the most classifiers disagreed on the correct cross-identification.
 
 \subsection{Application to ATLAS-ELAIS-S1}
   \label{sec:atlas-xid-elais}
@@ -2280,7 +2293,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   \includegraphics[]{atlas-images/elais-grid-new.pdf}
   \caption[Performance of different classification models on the binary classification task, tested on ELAIS-S1.]{Performance of different classification models trained on CDFS and tested on
   resolved and compact sources in ELAIS-S1. Points represent classification models
-  trained on different quadrants of CDFS, with markers, lines and axes as in
+  trained on different quadrants of CDFS, with markers, lines\DIFaddbeginFL \DIFaddFL{, }\DIFaddendFL and axes as in
   \autoref{fig:ba}. The balanced acccuracy of expert-trained random forest
   binary classifiers falls below the axis and the corresponding mean accuracy is
   shown by an arrow. The estimated best attainable accuracy is almost 100 per cent.
@@ -2390,20 +2403,20 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   Nearest neighbours approaches outperform most methods we investigated,
   notably including Radio Galaxy Zoo. This is due to the large number of
   compact or partially-resolved objects in ATLAS. This result shows that for
-  compact and partially-resolved objects methods that do not use machine
+  compact and partially-resolved objects\DIFaddbegin \DIFadd{, }\DIFaddend methods that do not use machine
   learning such as a nearest neighbours approach or likelihood ratio
   \citep{weston18lrpy} should be preferred to machine learning methods. It
-  also shows that ATLAS is not an ideal data set for developing machine
+  also shows that ATLAS is not an ideal \DIFdelbegin \DIFdel{data set }\DIFdelend \DIFaddbegin \DIFadd{dataset }\DIFaddend for developing machine
   learning methods like ours. Our use of ATLAS is motivated by its status as a
   pilot survey for EMU, so methods developed for ATLAS should also work for
   EMU. New methods developed should work well with extended radio sources, but
   this goal is almost unsupported by ATLAS as it has very few examples of such
   sources. This makes both training and testing difficult---there are too
   few extended sources to train on and performance on such a small test set
-  may be unreliable. Larger data sets with many extended sources like FIRST
+  may be unreliable. Larger \DIFdelbegin \DIFdel{data sets }\DIFdelend \DIFaddbegin \DIFadd{datasets }\DIFaddend with many extended sources like FIRST
   exist, but these are considerably less deep than and at a different
   resolution to EMU, so there is no reason to expect methods trained on such
-  data sets to be applicable to EMU.
+  \DIFdelbegin \DIFdel{data sets }\DIFdelend \DIFaddbegin \DIFadd{datasets }\DIFaddend to be applicable to EMU.
 
   The accuracies of our trained cross-identification methods generally fall
   far below the estimated best possible accuracy attainable using our approach,
@@ -2432,7 +2445,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   sizes, but this is considerably more expensive.
 
   Larger training sets, better model selection, and larger window sizes would
-  improve performance, but only so far: we would still be bounded above by the
+  improve performance, but only so far: \DIFdelbegin \DIFdel{we }\DIFdelend \DIFaddbegin \DIFadd{We }\DIFaddend would still be bounded above by the
   estimated `perfect' classifier accuracy. From this point, the performance
   can only be improved by addressing our broken assumptions. We detailed
   these assumptions in \autoref{sec:atlas-xid-limitations}, and we will discuss here how
@@ -2489,14 +2502,15 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   disambiguate between candidate host
   galaxies selected by model-based algorithms, or used to weight candidate
   host galaxies while a source detector attempts to associate radio
-  components. Our method can also be extended using other data sources: for
-  example, information from source identification algorithms could be
+  components. Our method can also be extended using other data sources: \DIFdelbegin \DIFdel{for
+  }\DIFdelend \DIFaddbegin \DIFadd{For
+  }\DIFaddend example, information from source identification algorithms could be
   incorporated into the feature set of candidate host galaxies.
 
 \section{Summary}
 
   We presented a machine learning approach for cross-identification of radio
-  components with their corresponding infrared host galaxy. Using the CDFS
+  components with their corresponding infrared host \DIFdelbegin \DIFdel{galaxy}\DIFdelend \DIFaddbegin \DIFadd{galaxies}\DIFaddend . Using the CDFS
   field of ATLAS as a training set we trained our
   methods on expert and crowdsourced cross-identification catalogues.
   Applying these methods on both fields of ATLAS, we found that:
@@ -2549,7 +2563,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   Aeronautics and Space Administration. The National Radio Astronomy
   Observatory is a facility of the National Science Foundation operated under
   cooperative agreement by Associated Universities, Inc. The figures
-  in this work made use of Astropy, a community-developed core Python package
+  in this work \DIFdelbegin \DIFdel{made }\DIFdelend \DIFaddbegin \DIFadd{make }\DIFaddend use of Astropy, a community-developed core Python package
   for Astronomy \citep{astropy}. The Australia Telescope Compact Array is part
   of the Australia Telescope, which is funded by the Commonwealth of Australia
   for operation as a National Facility managed by CSIRO. \DIFaddbegin \DIFadd{We acknowledge the Gomeroi people as the traditional custodians of the Observatory site.
@@ -2570,7 +2584,7 @@ In this chapter, we consider the problem of determining the host galaxies of rad
   regression, convolutional neural networks, and random forests.
 }
 
-  \subsection{\DIFadd{Logistic Regression}}
+  \subsection{\DIFadd{Logistic regression}}
   \label{sec:atlas-logistic-regression}
     \DIFadd{Logistic regression is linear in the feature space and outputs the
     probability that the input has a positive label. The model is
@@ -2621,7 +2635,7 @@ to implement our CNN, accounting for
       concatenate layer flattens the output of the previous layer and adds the
       10 features derived from the candidate host in SWIRE, i.e. the flux
       ratios, stellarity indices, and distance. The dropout layer randomly
-      sets $25\%$ of its inputs to zero during training to prevent
+      sets $25$ per cent of its inputs to zero during training to prevent
       overfitting. Diagram based on }\url{ https://github.com/dnouri/nolearn}\DIFaddFL{.}}
       \label{fig:cnn}
     \end{figure}
@@ -2635,7 +2649,7 @@ to implement our CNN, accounting for
     architecture we used is shown in }\autoref{fig:cnn}\DIFadd{.
 }
 
-  \subsection{\DIFadd{Random Forests}}
+  \subsection{\DIFadd{Random forests}}
   \label{sec:atlas-random-forests}
 
     \DIFadd{Random forests are an ensemble of decision
@@ -2826,7 +2840,7 @@ cross-identifications of CDFS and ELAIS-S1 respectively.
     }\item \emph{\DIFadd{RGZ host}}\DIFadd{---Whether the candidate host galaxy is a host galaxy according to Radio Galaxy Zoo cross-identifications \mbox{%DIFAUXCMD
 \citep{wong21rgz}}\hspace{0pt}%DIFAUXCMD
 . This is always `no' for ELAIS-S1 objects.
-    }\item \emph{\DIFadd{$C$/$L$/$D$}}\DIFadd{---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in }\autoref{sec:atlas-xid-experimental-setup}\DIFadd{.
+    }\item \emph{\DIFadd{$C$/$L$/$D$}}\DIFadd{---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression, or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in }\autoref{sec:atlas-xid-experimental-setup}\DIFadd{.
   }\end{itemize}
 
   \begin{sidewaystable}
@@ -2962,9 +2976,9 @@ for CDFS and ELAIS-S1 respectively.
 .
     }\item \emph{\DIFadd{RGZ radio consensus}}\DIFadd{---Percentage agreement of Radio Galaxy Zoo volunteers on the radio component configuration.
     }\item \emph{\DIFadd{RGZ IR consensus}}\DIFadd{---Percentage agreement of Radio Galaxy Zoo volunteers on the host galaxy of this radio component.
-    }\item \emph{\DIFadd{$C$ / $L$ / $D$}}\DIFadd{---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact' or `Resolved' for each respective subset defined in }\autoref{sec:atlas-xid-experimental-setup}\DIFadd{.
-    }\item \emph{\DIFadd{$C$/ $L$ / $D$ RA}}\DIFadd{---Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
-    }\item \emph{\DIFadd{$C$/ $L$ / $D$ Dec}}\DIFadd{---Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$ and $D$ are defined as for designation.
+    }\item \emph{\DIFadd{$C$ / $L$ / $D$}}\DIFadd{---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR', or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in }\autoref{sec:atlas-xid-experimental-setup}\DIFadd{.
+    }\item \emph{\DIFadd{$C$/ $L$ / $D$ RA}}\DIFadd{---Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
+    }\item \emph{\DIFadd{$C$/ $L$ / $D$ Dec}}\DIFadd{---Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
   }\end{itemize}
 
   \begin{sidewaystable}
@@ -3991,7 +4005,7 @@ Faraday complexity describes whether a spectropolarimetric observation has simpl
 
   \autoref{sec:faraday-background} provides a background to our work, including a summary of prior work and our assumptions on FDFs. \autoref{sec:faraday-approach} describes our approach to the Faraday complexity problem. \autoref{sec:faraday-experiment-classification} explains how we trained and evaluated our method. Finally, \autoref{sec:faraday-discussion} discusses these results.
 
-\section{Faraday Complexity}
+\section{Faraday \DIFdelbegin \DIFdel{Complexity}\DIFdelend \DIFaddbegin \DIFadd{complexity}\DIFaddend }
 \label{sec:faraday-background}
 
     Faraday complexity is an observational property of a source: if multiple Faraday depths are observed within the same apparent source (e.g. due to multiple lines-of-sight being combined within a beam), then the source is complex. A source composed of multiple Faraday screens may produce observations consistent with many models \citep{sun15comparison}, including simple sources, so there is some overlap between simple and complex sources. Faraday thickness is also a source of Faraday complexity: when the intervening medium between a polarised source and the observer also emits polarised light, the FDF cannot be characterised by a simple Faraday screen. As discussed in \autoref{sec:faraday-fdfs} we defer Faraday thick sources to future work. In this section we summarise existing methods of Faraday complexity estimation and explain our assumptions and model of simple and complex polarised FDFs.
