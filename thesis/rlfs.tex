@@ -25,8 +25,8 @@ megaparsec scales. As a vital part of galaxy evolution, we want to understand
 how radio AGN interact with their host galaxies, in what kinds of galaxies
 these AGN are found, and how these populations change over cosmic time.
 
-Mechanical energy from AGN is needed to explain the star-formation history of galaxies throughout the Universe \citep[e.g.][]{raouf17agn,hardcastle20feedback}. The radio luminosity function (RLF) of extended radio sources characterises the energy output of galaxies capable of significant energy impact into their local environment. The local RLF of primarily compact sources is estimated and
-described in detail by \citet{mauch07rlf}, \citet{pracy16rlf} and
+Mechanical energy from AGN is needed to explain the star-formation history of galaxies throughout the Universe \citep[e.g.][]{raouf17agn,hardcastle20feedback}. The radio luminosity function (RLF) of extended radio sources characterises the energy output of galaxies capable of significant energy impact into their local environments. The local RLF of primarily compact sources is estimated and
+described in detail by \citet{mauch07rlf}, \citet{pracy16rlf}, and
 \citet{condon19rlf}, each with complete volume-limited samples. However, the RLF of extended radio sources has not been
 characterised as a separate sample, because estimating this RLF would need a large number of extended sources with known
 redshifts. Such redshifts are usually obtained by cross-matching the radio
@@ -187,7 +187,7 @@ by a logistic regression model. Non-image features (i.e. colours and the
 that are output by the final \texttt{ResNet18} layer. Using \texttt{Adam}
 \citep{kingma14adam} to optimise our weights, we train this model on our
 task until binary cross-entropy loss starts to increase on a
-randomly-selected 20 per cent validation set. We use \texttt{PyTorch}
+randomly selected 20 per cent validation set. We use \texttt{PyTorch}
 \citep{paszke2017pytorch} to implement this model. The scores of each FIRST
 component are weighted by a one-dimensional Gaussian function of angular separation, and the
 candidate maximising this weighted score is selected as the host galaxy. We
@@ -231,7 +231,7 @@ host'.
   where $z$ is redshift and $d$ is luminosity distance (a function of $z$). The average $k$-correction was $0.92$.
   Uncertainties in comoving density were estimated as described in \aref{sec:rlfs-rlf-desc}. Completeness estimates are shown in \aref{sec:rlfs-completeness}. We discuss biases in our methods and results in \autoref{sec:rlfs-bias}.
 
-  We compared our RLFs with \citet{mauch07rlf}, who estimated RLFs from 7~824
+  We compared our RLFs with \citet{mauch07rlf}, who estimated RLFs from 7824
   manually cross-identified radio sources in the NRAO VLA Sky Survey \citep[NVSS;][]{condon98nvss}.
   Their RLFs were split into AGN and star-forming radio sources. While we
   did not make this split explicitly in our catalogue, we expected both RGZ-Ex
@@ -289,7 +289,7 @@ host'.
       distant.
 
       Spheroids, which are hosts in the mid-infrared region corresponding to ellipticals and stars \citep{wright10wise}, comprise the majority of radio galaxies at $10^{23}$~W~Hz$^{-1}$,
-      and have a peak density at $10^{22}$~W~Hz$^{-1}$. The common host galaxies for radio-loud AGN tend to be passively-evolving spheroids. It is not surprising that they are more common than star-forming galaxies at luminosities greater than $10^{22}$~W~Hz$^{-1}$. Above
+      and have a peak density at $10^{22}$~W~Hz$^{-1}$. The common host galaxies for radio-loud AGN tend to be passively evolving spheroids. It is not surprising that they are more common than star-forming galaxies at luminosities greater than $10^{22}$~W~Hz$^{-1}$. Above
       $10^{25}$~W~Hz$^{-1}$ they are less common than intermediate galaxies and
       their contribution to the luminosity function drops rapidly. This is likely due to the loss of $W3$ detections moving spheroids into the intermediate set, and we hypothesise that with deeper $W3$ observations spheroids may dominate above $10^{25}$~W~Hz$^{-1}$.
 
@@ -351,15 +351,15 @@ host'.
 
     Our host galaxy redshifts may be biased. Incorrectly identifying the host galaxy may introduce sources with incorrect redshifts into the RLF, an effect which will be dominated by misidentifying galaxies as hosts where the true host is not detected. Since we are matching to optical spectra in SDSS to find
     redshifts, we are biased toward brighter host galaxies which are more
-    likely to have such spectra. Without an optically-complete sample---currently impossible on such scales---this effect is unavoidable.
+    likely to have such spectra. Without an optically complete sample---currently impossible on such scales---this effect is unavoidable.
     Brighter optical sources appear at lower redshifts, so we likely
     undersample higher-redshift (and hence higher-luminosity) galaxies.
 
-    Our requirement for radio emission to be extended misses radio galaxies that would be resolved and extended if they were not aligned with the line-of-sight. We therefore must be underestimating the population of extended sources (though assuming a random distribution of orientations, the majority of galaxies are not aligned close to the line-of-sight). The requirement for extended radio emission also imposes a lower limit on linear size, which varies with redshift: At $z = 0.6$ the effect will be strongest and we will see no sources with linear size under $33.5$ kpc. This causes us to underestimate the population of radio galaxies with linear sizes between $10$--$30$ kpc. On the other hand, we likely avoid significant overestimation of radio luminosity due to relativistic beaming, since we filter out sources aligned along the line-of-sight.
+    Our requirement for radio emission to be extended misses radio galaxies that would be resolved and extended if they were not aligned with the line-of-sight. We therefore must be underestimating the population of extended sources (though assuming a random distribution of orientations, the majority of galaxies are not aligned close to the line-of-sight). The requirement for extended radio emission also imposes a lower limit on linear size, which varies with redshift: At $z = 0.6$ the effect is strongest and we cannot see sources with linear size under $33.5$ kpc. This causes us to underestimate the population of radio galaxies with linear sizes between $10$--$30$ kpc. On the other hand, we likely avoid significant overestimation of radio luminosity due to relativistic beaming, since we filter out sources aligned along the line-of-sight.
 
     We estimate uncertainties in our RLF from Poisson noise in the histogram bins. We
     likely underestimate these uncertainties as it is difficult to
-    estimate uncertainty in our algorithm, though in future we anticipate that we can
+    estimate uncertainty in our algorithm, though in future we anticipate that we will be able to
     employ an ensemble of classifiers to estimate this \citep[e.g.][]{lakshminarayanan17uncertainty}.
 
   \subsection{Extended radio galaxies in the low-$z$ Universe}
@@ -368,7 +368,7 @@ host'.
 
       We see a significant star-forming population in our extended sample, which means that we are likely resolving some discs in radio. While the 1/$V_{\max}$ method ensures that our RLFs account for similar galaxies throughout the Universe, even though we only resolve very nearby discs, some of the star-forming population is not included. The difference between our RLF and existing RLFs must be due to the latter containing low-luminosity sources that are compact even when very nearby.
 
-      Can we use our RLFs to estimate the kinetic energy contribution of AGN to the galaxy halo and beyond? The extended population of AGN is the population that contributes the most mechanical energy: The major part of the energy in the jet expands the radio lobes, drives shocks, or is stored in the jet magnetic field, rather than being emitted as radiation \citep{godfrey16power, hardcastle14lobes}. Extended radio sources should therefore represent the bulk of AGN feedback: Radio galaxies with extended jets inject mechanical energy out to larger distances from the core of the host galaxies than those with smaller jets. This is supported by e.g. \citet{turner15agn}, who found that extended sources comprise the bulk of the mechanical energy contribution. By assuming a relationship between radio luminosity and radio jet mechanical energy, we can use our extended source RLFs to estimate the contribution of extended AGN to energy in the intergalactic/circumgalactic medium (IGM/CGM). But assuming such a relationship is not without problems: The radio lobe luminosity experiences significant evolution \citep[e.g.][]{bicknell97css}, the surrounding IGM/CGM may interact with the radio lobe expansion in non-trivial ways \citep[e.g.][]{hardcastle13lobes}, and the relationship between the mechanical energy and radio luminosity has high scatter on individual radio sources \citep{hardcastle13lobes}. With our sample size, these effects should be diminished, and with these caveats in mind we will estimate the energy contribution of extended sources to the IGM. We assume a scaling relation of $\ln Q = \beta \ln L_\nu + Q_0$, where $Q$ is the jet power and $L_\nu$ is the monochromatic radio luminosity at frequency $\nu$. The values for $\beta$ and $Q_0$ vary significantly across the literature, based on different physical assumptions and samples. \citet{willott99radio} presented a widely-used relationship:
+      Can we use our RLFs to estimate the kinetic energy contribution of AGN to the galaxy halo and beyond? The extended population of AGN is the population that contributes the most mechanical energy: The major part of the energy in the jet expands the radio lobes, drives shocks, or is stored in the jet magnetic field, rather than being emitted as radiation \citep{godfrey16power, hardcastle14lobes}. Extended radio sources should therefore represent the bulk of AGN feedback: Radio galaxies with extended jets inject mechanical energy out to larger distances from the core of the host galaxies than those with smaller jets. This is supported by e.g. \citet{turner15agn}, who found that extended sources comprise the bulk of the mechanical energy contribution. By assuming a relationship between radio luminosity and radio jet mechanical energy, we can use our extended source RLFs to estimate the contribution of extended AGN to energy in the intergalactic/circumgalactic medium (IGM/CGM). But assuming such a relationship is not without problems: The radio lobe luminosity experiences significant evolution \citep[e.g.][]{bicknell97css}, the surrounding IGM/CGM may interact with the radio lobe expansion in non-trivial ways \citep[e.g.][]{hardcastle13lobes}, and the relationship between the mechanical energy and radio luminosity has high scatter on individual radio sources \citep{hardcastle13lobes}. With our sample size, these effects should be diminished, and with these caveats in mind we will estimate the energy contribution of extended sources to the IGM. We assume a scaling relation of $\ln Q = \beta \ln L_\nu + Q_0$, where $Q$ is the jet power and $L_\nu$ is the monochromatic radio luminosity at frequency $\nu$. The values for $\beta$ and $Q_0$ vary significantly across the literature, based on different physical assumptions and samples. \citet{willott99radio} presented a widely used relationship:
       \begin{equation}
         \ln Q = \ln (f^{3/2} 3 \times 10^{38}) + \frac{6}{7} \ln \left[\frac{L_{151~\mathrm{MHz}}}{10^{28}~\mathrm{W\ Hz}^{-1}}\right],
       \end{equation}
@@ -686,7 +686,7 @@ Astronomy \citep{astropy}. Partial support for this work for L.R. and A.F.G. com
       redshift $z_{\mathrm{max}}$.
     \item The count for each luminosity bin is the sum over $1 / V_{\max}$ for
       each source in the bin. We divide these counts by the estimated completeness (\aref{sec:rlfs-completeness}) to account for redshift incompleteness.
-      We account for the fact FIRST does not cover the
+      We account for the fact that FIRST does not cover the
       whole sky by multiplying by the total area of the sky divided by the area
       of our selection.
   \end{enumerate}
@@ -758,11 +758,11 @@ Astronomy \citep{astropy}. Partial support for this work for L.R. and A.F.G. com
       \end{tabular}\end{footnotesize}
     \end{table*}
 
-    This appendix describes our search for giant radio galaxies in RGZ-Ex, and the results of this search. To identify radio sources we assumed that if any two components had the same host galaxy then they were part of the same source. This would be a reasonable assumption if all host galaxies were correctly identified, which was not the case. This assumption therefore introduced spurious sources due to galaxies incorrectly identified as host galaxies: Not all sources used in this chapter are real sources, and in particular sources of large angular size are likely to be incorrect. Nevertheless RGZ-Ex provides a useful catalogue of \emph{candidate} radio sources, and visual follow-up can confirm whether sources of interest are real.
+    This appendix describes our search for giant radio galaxies in RGZ-Ex, and the results of this search. To identify radio sources we assumed that if any two components had the same host galaxy then they were part of the same source. This would be a reasonable assumption if all host galaxies were correctly identified, which was not the case. This assumption therefore introduced spurious sources due to galaxies that were incorrectly identified as host galaxies: Not all sources used in this chapter are real sources, and in particular sources of large angular size are likely to be incorrect. Nevertheless RGZ-Ex provides a useful catalogue of \emph{candidate} radio sources, and visual follow-up can confirm whether sources of interest are real.
 
     H.A. and M.J.A. examined all 296 candidate sources in the RGZ-Ex catalogue with an estimated physical extent larger than 1~Mpc. Of these, 40 were real giant radio galaxies, which we show in \autoref{tab:grg}. We defined `giant radio galaxy' as a radio galaxy with emission extended to physical sizes $\geq 1.0$~Mpc. Other thresholds, such as $0.7$~Mpc, also exist in literature. The physical extents of the remaining 256 candidate sources were overestimated
 mostly due to sidelobes/artefacts (103), incorrect source grouping (82), or incorrect SDSS matches (21). The citizen scientists who identified giants were WizardHowl, DolorousEdd, antikodon, csunjoto, sisifolibre, JeanTate, JKD, PADV, and firejuggler. H.A., together with his summer students, had previously identified 29 of these giants.
 
-    Note that this is a particularly challenging set: Sources that were misidentified often have unusually large estimated extents due to the inclusion of spurious components. The error rate in this set therefore does not reflect the rest of the catalogue.
+    Note that this is a particularly challenging set: Sources that were misidentified often had unusually large estimated extents due to the inclusion of spurious components. The error rate in this set therefore does not reflect the rest of the catalogue.
 
 \unappendix

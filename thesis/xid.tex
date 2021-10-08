@@ -69,7 +69,7 @@ We applied a standard approach from computer vision to cross-identification, int
     are composed of a core radio component and two lobe components. The core
     radio component is coincident with the host galaxy, so cross-identification
     amounts to finding the galaxy coincident with the core radio component in
-    the most likely model fit. This method could be easily extended to use other, more
+    the most likely model fit. This method could easily be extended to use other, more
     complex models, but it is purely geometric. It does not incorporate
     other information such as the physical properties of the potential host
     galaxy. Additionally, there may be new classes of radio source detected in
@@ -530,7 +530,7 @@ We applied a standard approach from computer vision to cross-identification, int
     probabilistic binary classification model. It is linear in the feature
     space and outputs the probability that the input has a positive
     label~\citep[Chap. 4]{bishop06ml}. Convolutional neural networks (CNN) are
-    biologically-inspired prediction models with image inputs.
+    biologically inspired prediction models with image inputs.
     They have recently produced good results on large image-based datasets in
     astronomy \citep[e.g.]{lukic18compact, dieleman15cnn}. Random
     forests are an ensemble of decision trees~\citep{breiman01random-forest}.
@@ -963,8 +963,8 @@ We applied a standard approach from computer vision to cross-identification, int
 
   Nearest neighbours approaches outperform most methods we investigated,
   notably including Radio Galaxy Zoo. This is due to the large number of
-  compact or partially-resolved objects in ATLAS. This result shows that for
-  compact and partially-resolved objects, methods that do not use machine
+  compact or partially resolved objects in ATLAS. This result shows that for
+  compact and partially resolved objects, methods that do not use machine
   learning such as a nearest neighbours approach or likelihood ratio
   \citep{weston18lrpy} should be preferred to machine learning methods. It
   also shows that ATLAS is not an ideal dataset for developing machine
@@ -1161,7 +1161,7 @@ We applied a standard approach from computer vision to cross-identification, int
   \subsection{Convolutional neural networks}
   \label{sec:atlas-convolutional-neural-networks}
 
-    Convolutional neural networks (CNN) are a biologically-inspired prediction
+    Convolutional neural networks (CNN) are a biologically inspired prediction
     model for prediction with image inputs. The input image is convolved with
     a number of filters to produce output images called feature maps. These
     feature maps can then be convolved again with other filters on subsequent
@@ -1180,7 +1180,7 @@ We applied a standard approach from computer vision to cross-identification, int
       the size of output layers as a tuple (width, height, depth).} The
       concatenate layer flattens the output of the previous layer and adds the
       10 features derived from the candidate host in SWIRE, i.e. the flux
-      ratios, stellarity indices, and distance. The dropout layer randomly
+      ratios, stellarity indices, and distances. The dropout layer randomly
       sets $25$ per cent of its inputs to zero during training to prevent
       overfitting. Diagram based on \url{ https://github.com/dnouri/nolearn}.}
       \label{fig:cnn}
@@ -1219,10 +1219,10 @@ We applied a standard approach from computer vision to cross-identification, int
 
   \begin{table*}
     \caption[Balanced accuracies for different binary classification models on CDFS.]{Balanced accuracies for different binary classification models trained and tested on SWIRE objects in CDFS.
-    The `Labeller' column states what set of training labels
-    were used to train the classifier, and the `Classifier' column states what
+    The `Labeller' column states which set of training labels
+    were used to train the classifier, and the `Classifier' column states which
     classification model was used. `CNN' is a convolutional neural network,
-    `LR' is logistic regression and `RF' is random forests. Accuracies are evaluated against the expert
+    `LR' is logistic regression, and `RF' is random forests. Accuracies are evaluated against the expert
     label set derived from \citet{norris06}. The standard deviation of balanced accuracies evaluated across the four quadrants of
     CDFS (\autoref{fig:quadrants}) is also shown. The `compact' set refers to SWIRE
     objects within $1'$ of a compact radio component, the `resolved' set refers to
@@ -1277,8 +1277,8 @@ We applied a standard approach from computer vision to cross-identification, int
   \begin{table*}
     \caption[Cross-identification accuracies for different classification
     models on CDFS.]{Cross-identification accuracies for different classification
-    models on CDFS. The `Labeller' column states what set of training labels
-    were used to train the method, and the `Classifier' column states what
+    models on CDFS. The `Labeller' column states which set of training labels
+    were used to train the method, and the `Classifier' column states which
     classification model was used. `CNN' is a convolutional neural network,
     `LR' is logistic regression, `RF' is random forests, and `Labels' is the
     accuracy of the label set itself. `Perfect' indicates that the true labels
@@ -1359,12 +1359,12 @@ We applied a standard approach from computer vision to cross-identification, int
 
   The columns of the score tables are defined as follows:
   \begin{itemize}
-    \item \emph{SWIRE}---SWIRE designation for candidate host galaxy.
-    \item \emph{RA}---Right ascension (J2000).
-    \item \emph{Dec}---Declination (J2000).
-    \item \emph{Expert host}---Whether the candidate host galaxy is a host galaxy according to \citet{norris06} or \citet{middelberg08} cross-identifications of CDFS and ELAIS-S1 respectively.
-    \item \emph{RGZ host}---Whether the candidate host galaxy is a host galaxy according to Radio Galaxy Zoo cross-identifications \citep{wong21rgz}. This is always `no' for ELAIS-S1 objects.
-    \item \emph{$C$/$L$/$D$}---Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR' or `RF' for CNN, logistic regression, or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
+    \item \emph{SWIRE}: SWIRE designation for candidate host galaxy.
+    \item \emph{RA}: Right ascension (J2000).
+    \item \emph{Dec}: Declination (J2000).
+    \item \emph{Expert host}: Whether the candidate host galaxy is a host galaxy according to \citet{norris06} or \citet{middelberg08} cross-identifications of CDFS and ELAIS-S1 respectively.
+    \item \emph{RGZ host}: Whether the candidate host galaxy is a host galaxy according to Radio Galaxy Zoo cross-identifications \citep{wong21rgz}. This is always `no' for ELAIS-S1 objects.
+    \item \emph{$C$/$L$/$D$}: Score assigned by binary classifier $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR', or `RF' for CNN, logistic regression, or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
   \end{itemize}
 
   \begin{sidewaystable}
@@ -1466,22 +1466,22 @@ All & Compact & Resolved & All & Compact & Resolved & All & Compact & Resolved &
 
   The columns of the cross-identification tables are defined as follows:
   \begin{itemize}
-    \item \emph{ATLAS}---ATLAS designation for radio component.
-    \item \emph{RA}---Right ascension of radio component (J2000).
-    \item \emph{Dec}---Declination of radio component (J2000).
-    \item \emph{CID}---Radio Galaxy Zoo component ID.
-    \item \emph{Zooniverse ID}---Radio Galaxy Zoo Zooniverse ID.
-    \item \emph{Norris/Middelberg}---Designation of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
-    \item \emph{Norris/Middelberg RA}---Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
-    \item \emph{Norris/Middelberg Dec}---Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
-    \item \emph{RGZ}---Designation of SWIRE cross-identification from Radio Galaxy Zoo \citep{wong21rgz}.
-    \item \emph{RGZ RA}---Right ascension of SWIRE cross-identification from Radio Galaxy Zoo \citep{wong21rgz}.
-    \item \emph{RGZ Dec}---Right ascension of SWIRE cross-identification from Radio Galaxy Zoo \citep{wong21rgz}.
-    \item \emph{RGZ radio consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the radio component configuration.
-    \item \emph{RGZ IR consensus}---Percentage agreement of Radio Galaxy Zoo volunteers on the host galaxy of this radio component.
-    \item \emph{$C$ / $L$ / $D$}---Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR', or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
-    \item \emph{$C$/ $L$ / $D$ RA}---Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
-    \item \emph{$C$/ $L$ / $D$ Dec}---Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
+    \item \emph{ATLAS}: ATLAS designation for radio component.
+    \item \emph{RA}: Right ascension of radio component (J2000).
+    \item \emph{Dec}: Declination of radio component (J2000).
+    \item \emph{CID}: Radio Galaxy Zoo component ID.
+    \item \emph{Zooniverse ID}: Radio Galaxy Zoo Zooniverse ID.
+    \item \emph{Norris/Middelberg}: Designation of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
+    \item \emph{Norris/Middelberg RA}: Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
+    \item \emph{Norris/Middelberg Dec}: Right ascension of SWIRE cross-identification from \citet{norris06} or \citet{middelberg08} for CDFS and ELAIS-S1 respectively.
+    \item \emph{RGZ}: Designation of SWIRE cross-identification from Radio Galaxy Zoo \citep{wong21rgz}.
+    \item \emph{RGZ RA}: Right ascension of SWIRE cross-identification from Radio Galaxy Zoo \citep{wong21rgz}.
+    \item \emph{RGZ Dec}: Right ascension of SWIRE cross-identification from Radio Galaxy Zoo \citep{wong21rgz}.
+    \item \emph{RGZ radio consensus}: Percentage agreement of Radio Galaxy Zoo volunteers on the radio component configuration.
+    \item \emph{RGZ IR consensus}: Percentage agreement of Radio Galaxy Zoo volunteers on the host galaxy of this radio component.
+    \item \emph{$C$ / $L$ / $D$}: Designation of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$ may be `CNN', `LR', or `RF' for CNN, logistic regression or random forests respectively. $L$ may be `Norris' or `RGZ' for expert and Radio Galaxy Zoo labels respectively. $D$ may be `All', `Compact', or `Resolved' for each respective subset defined in \autoref{sec:atlas-xid-experimental-setup}.
+    \item \emph{$C$/ $L$ / $D$ RA}: Right ascension (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
+    \item \emph{$C$/ $L$ / $D$ Dec}: Declination (J2000) of SWIRE cross-identification made by our method using classification model $C$ trained on label set $L$ of $D$ candidate host galaxies. $C$, $L$, and $D$ are defined as for designation.
   \end{itemize}
 
   \begin{sidewaystable}
